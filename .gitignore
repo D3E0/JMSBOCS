@@ -12,6 +12,7 @@
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
+.idea/**/dataSources.xml
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
@@ -85,3 +86,17 @@ fabric.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+.idea/artifacts/
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/vcs.xml
+target/classes/config.properties
+target/classes/mapper/userMapper.xml
+target/classes/mybatis-config.xml
+target/classes/spring-config.xml
+target/generated-sources/
+target/generated-test-sources/
+
+/src/main/resources/config.properties
