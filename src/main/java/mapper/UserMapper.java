@@ -1,7 +1,7 @@
 package mapper;
 
-import entity.UserEntity;
+import entity.User;
 
 public interface UserMapper {
-    UserEntity getUser(String username);
+    User getUser(String username);
 }

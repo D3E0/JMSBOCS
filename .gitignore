@@ -100,3 +100,10 @@ target/generated-sources/
 target/generated-test-sources/
 
 /src/main/resources/config.properties
+src/main/java/config/
+src/main/java/controller/
+src/main/java/util/
+web/WEB-INF/views/
+web/static/css/
+web/static/images/
+web/static/js/
