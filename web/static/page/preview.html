@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0px;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+<body>
+<iframe align="center"
+        src="https://view.officeapps.live.com/op/embed.aspx?src=http%3A%2F%2Fphpto40g1%2Ebkt%2Eclouddn%2Ecom%3A80%2Ftemp%2Edocx&amp;wdStartOn=1&amp;wdEmbedCode=0&amp;wdPrint=0"
+        width="1240" height="100%" frameborder="0" name="_blank" id="_blank">
+</iframe>
+<button onclick="up()">up</button>
+<button onclick="down()">down</button>
+<script>
+
+    var ifm = document.getElementById("_blank");
+
+    ifm.height = document.documentElement.clientHeight;
+
+    var x = "https://view.officeapps.live.com/op/embed.aspx?src=";
+
+    var y = "&amp;wdStartOn=1&amp;wdEmbedCode=0&amp;wdPrint=0";
+
+    function up() {
+        ifm.setAttribute("src", x + "http://phpto40g1.bkt.clouddn.com/os.doc" + y);
+    }
+
+    function down() {
+        ifm.setAttribute("src", x + "http://phpto40g1.bkt.clouddn.com/temp.docx" + y);
+    }
+
+
+</script>
+</body>
+</html>
