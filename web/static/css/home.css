@@ -1,0 +1,44 @@
+body{
+    background-color: #eeeeee;
+    color: #495060;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+}
+.nav{
+   background: #FFFFFF;
+}
+.layui-nav .layui-nav-item a{
+    color: #000;
+}
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a{
+    color: #2d8cf0;
+}
+.layui-nav .layui-this:after, .layui-nav-bar{
+    background-color: #2d8cf0;
+}
+.navbar{
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+.layui-icon-face-smile:hover{
+    color: #2d8cf0;
+}
+.logo{
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 20px;
+    float: left;
+    line-height: 60px;
+    color: #000000;
+}
+.fa-fw{
+    margin: 2px;
+}
+.contentapp{
+    margin: 0 6%;
+    margin-top: 40px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+}
+.contentapp:hover{
+    box-shadow: 0 1px 9px 4px rgba(0,0,0,.1);
+}
