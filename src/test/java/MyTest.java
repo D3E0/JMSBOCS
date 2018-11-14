@@ -24,7 +24,7 @@ public class MyTest {
         //...生成上传凭证，然后准备上传
         String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
         String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
-        String bucket = "Job-management-system-based-on-open-cloud-storage";
+        String bucket = "JobEntity-management-system-based-on-open-cloud-storage";
 //        String bucket = "open-test";
 
         //构造一个带指定Zone对象的配置类
