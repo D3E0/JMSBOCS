@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="panel">
+    <div class="panel-title">最近公告 <button class="layui-btn layui-btn-normal refresh">Refresh</button></div>
+    <div class="content">
+        <ul class="list">
+            <li>
+                <div class="title">
+                    <a href="">你的高数作业</a>
+                </div>
+                <div class="creator">
+                    By root
+                </div>
+                <div class="date">
+                    2017-12-22 10:05:08
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    <a href="">你的高数作业</a>
+                </div>
+                <div class="creator">
+                    By root
+                </div>
+                <div class="date">
+                    2017-12-22 10:05:08
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    <a href="">你的高数作业</a>
+                </div>
+                <div class="creator">
+                    By root
+                </div>
+                <div class="date">
+                    2017-12-22 10:05:08
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    <a href="">你的高数作业</a>
+                </div>
+                <div class="creator">
+                    By root
+                </div>
+                <div class="date">
+                    2017-12-22 10:05:08
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="mypage"></div>
+<script>
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        //执行一个laypage实例m
+        laypage.render({
+            elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: 50 //数据总数，从服务端得到
+        });
+    });
+</script>
+</body>
+</html>

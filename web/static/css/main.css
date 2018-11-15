@@ -1,0 +1,65 @@
+
+.panel-title{
+    font-size: 21px;
+    font-weight: 500;
+    margin: 20px 10px;
+    line-height: 30px;
+    padding: 5px 15px;
+    text-align:left;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.panel{
+    text-align:center;
+    background-color: #FFFFFF;
+}
+.list li{
+    text-align:left;
+    padding: 15px;
+    list-style: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 16px;
+    color: #495060;
+    border-bottom: 1px solid hsla(0,0%,73%,.5);
+}
+.title{
+    display: inline-block;
+    text-align: left;
+    padding-left: 10px;
+}
+.date{
+    display: inline-block;
+    text-align: left;
+    padding-left: 10px;
+    margin-right: 5%;
+    float: right;
+}
+.creator{
+    display: inline-block;
+    text-align: left;
+    padding-left: 10px;
+    margin-right: 5%;
+    float: right;
+}
+.list li a:hover{
+    color:#2d8cf0 ;
+}
+.refresh{
+    background-color: #57c5f7;
+    border-radius: 5px;
+    position: absolute;
+    right: 15px;
+    top:20px;
+}
+#mypage{
+    float: right;
+    margin-top: 20px;
+    margin-right: 2%;
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+    background-color: #2d8cf0;
+}
+#mypage a:hover{
+    color: #2d8cf0;
+}
