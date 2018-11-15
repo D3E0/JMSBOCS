@@ -10,14 +10,40 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class MyTest {
 
     private Client httpManager = new Client();
     String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
     String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
+    private static final Logger logger = LogManager.getLogger(MyTest.class);
+
+    @Test
+    public void testLog() {
+        logger.trace("trace message");
+        logger.debug("debug message");
+        logger.info("info message");
+        logger.warn("warn message");
+        logger.error("error message");
+        logger.fatal("fatal message");
+        System.out.println("Hello World!");
+
+        Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getResourceAsStream("config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logger.info(properties.toString());
+        logger.info(properties.getProperty("database.driver"));
+    }
 
     @Test
     public void testUpload() {
