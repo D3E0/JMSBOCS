@@ -10,7 +10,8 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
-import org.apache.ibatis.io.Resources;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,9 +23,30 @@ public class MyTest {
     private Client httpManager = new Client();
     String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
     String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
+    private static final Logger logger = LogManager.getLogger(MyTest.class);
 
     @Test
-    public void testUpload()  {
+    public void testLog() {
+        logger.trace("trace message");
+        logger.debug("debug message");
+        logger.info("info message");
+        logger.warn("warn message");
+        logger.error("error message");
+        logger.fatal("fatal message");
+        System.out.println("Hello World!");
+
+        Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getResourceAsStream("config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logger.info(properties.toString());
+        logger.info(properties.getProperty("database.driver"));
+    }
+
+    @Test
+    public void testUpload() {
         //...生成上传凭证，然后准备上传
         String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
         String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
@@ -36,6 +58,7 @@ public class MyTest {
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
+
         String localFilePath = "C:\\Users\\ACM-PC\\IdeaProjects\\JMSBOCO\\src\\main\\resources\\Dictionary.md";
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = "Dictionary.md";
@@ -152,10 +175,5 @@ public class MyTest {
             Assert.assertNotNull(e.response.reqId);
             Assert.assertEquals(e.response.statusCode, 400);
         }
-    }
-    @Test
-    public void testProperties() throws IOException {
-        Properties properties=Resources.getResourceAsProperties("config.properties");   
-        System.out.println(properties.getProperty("database.password"));
     }
 }
