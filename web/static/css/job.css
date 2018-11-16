@@ -1,0 +1,60 @@
+body{
+    color: #495060;
+    background-color: #FFFFFF;
+    font-size: 16px;
+}
+.panel-title{
+    font-size: 21px;
+    font-weight: 500;
+    margin: 20px 10px;
+    line-height: 30px;
+    padding: 5px 15px;
+    text-align:left;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.title{
+    font-size: 20px;
+    font-weight: 400;
+    padding: 5px 15px;
+    margin: 5px 20px;
+    color: #3091f2;
+    text-align: left;
+}
+.content{
+    padding: 5px 30px;
+    margin: 10px 20px;
+    text-align: left;
+}
+.rightbar{
+    float: right;
+    display: inline-block;
+    width: 18%;
+    margin-top: 40px;
+}
+.job-content{
+    float: left;
+    display: inline-block;
+    width: 80%;
+}
+.list li{
+    text-align:center;
+    padding: 5px 15px;
+    list-style: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    display: inline-block;
+    color: #495060;
+    border-bottom: 1px solid hsla(0,0%,73%,.5);
+}
+.info{
+    margin-left: 20px;
+    padding: 5px 15px;
+}
+.layui-upload{
+    padding: 5px 30px;
+    margin: 0 20px;
+    margin-bottom: 200px;
+    text-align: left;
+}

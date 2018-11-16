@@ -1,4 +1,6 @@
-
+body{
+    background-color: #FFFFFF;
+}
 .panel-title{
     font-size: 21px;
     font-weight: 500;
@@ -15,7 +17,7 @@
 }
 .list li{
     text-align:left;
-    padding: 15px;
+    margin-top: 10px;
     list-style: none;
     margin-left: 20px;
     margin-right: 20px;
@@ -46,6 +48,7 @@
     color:#2d8cf0 ;
 }
 .refresh{
+    font-size:10px;
     background-color: #57c5f7;
     border-radius: 5px;
     position: absolute;

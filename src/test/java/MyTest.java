@@ -10,8 +10,12 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import org.apache.ibatis.io.Resources;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class MyTest {
 
@@ -20,7 +24,7 @@ public class MyTest {
     String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
 
     @Test
-    public void testUpload() {
+    public void testUpload()  {
         //...生成上传凭证，然后准备上传
         String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
         String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
@@ -32,7 +36,6 @@ public class MyTest {
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
-
         String localFilePath = "C:\\Users\\ACM-PC\\IdeaProjects\\JMSBOCO\\src\\main\\resources\\Dictionary.md";
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = "Dictionary.md";
@@ -149,5 +152,10 @@ public class MyTest {
             Assert.assertNotNull(e.response.reqId);
             Assert.assertEquals(e.response.statusCode, 400);
         }
+    }
+    @Test
+    public void testProperties() throws IOException {
+        Properties properties=Resources.getResourceAsProperties("config.properties");   
+        System.out.println(properties.getProperty("database.password"));
     }
 }

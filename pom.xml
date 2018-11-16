@@ -63,6 +63,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache</groupId>
+            <artifactId>ibatis.io</artifactId>
+            <version></version>
+        </dependency>
     </dependencies>
 
 </project>
