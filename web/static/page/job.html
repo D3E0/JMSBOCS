@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,6 +10,11 @@
 </head>
 <body>
 <div class="panel">
+    <script>
+        window.onload=function () {
+            window.parent.setIframeHeight();
+        };
+    </script>
     <div class="job-content">
         <div class="panel-title">高数第一次作业</div>
         <p class="title">作业描述</p>
@@ -30,7 +34,7 @@
         <p class="title">作业提交</p>
         <div class="layui-upload">
             <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
-            <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+            <button type="button" class="layui-btn uploadbtn" id="testListAction">开始上传</button>
             <div class="layui-upload-list">
                 <table class="layui-table "lay-skin="nob">
                     <thead>
@@ -58,6 +62,9 @@
             </li>
             <li>
                 状态：可提交
+            </li>
+            <li>
+                <a href="main.html" style="color: #3091f2">查看已提交作业</a>
             </li>
         </ul>
     </div>

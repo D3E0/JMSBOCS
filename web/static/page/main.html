@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,12 @@
 </head>
 <body>
 <div class="panel">
-    <div class="panel-title">最近公告 <button class="layui-btn layui-btn-normal refresh">Refresh</button></div>
+    <div class="panel-title">最近公告 <button class="layui-btn refresh">Refresh</button></div>
     <div class="content">
         <ul class="list">
             <li>
                 <div class="title">
-                    <a href="">你的高数作业</a>
+                    <a href="job.html">你的高数作业</a>
                 </div>
                 <div class="creator">
                     By root
@@ -63,12 +63,15 @@
 <div id="mypage"></div>
 <script>
     layui.use('laypage', function(){
-        var laypage = layui.laypage;
+        var laypage = layui.laypage,$=layui.$;
         //执行一个laypage实例m
         laypage.render({
             elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
             ,count: 50 //数据总数，从服务端得到
         });
+        window.onload=function () {
+            window.parent.setIframeHeight();
+        };
     });
 </script>
 </body>

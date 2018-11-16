@@ -13,10 +13,10 @@
 <div class="navbar">
     <ul class="layui-nav nav" lay-filter="">
         <li class="logo">基于开放云储存的作业提交管理系统</li>
-        <li class="layui-nav-item layui-this"><a class="" href=""><i class="fa fa-home fa-fw" ></i>&nbsp;首页</a></li>
-        <li class="layui-nav-item"><a href=""><i class="fa fa-book fa-fw" ></i>&nbsp;课程</a></li>
-        <li class="layui-nav-item"><a href=""><i class="fa fa-tasks fa-fw" ></i>&nbsp;作业</a></li>
-        <li class="layui-nav-item"><a href=""><i class="fa fa-mortar-board fa-fw" ></i>&nbsp;讨论</a></li>
+        <li class="layui-nav-item layui-this"><a class="" href="javascript:;"><i class="fa fa-home fa-fw" ></i>&nbsp;首页</a></li>
+        <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-book fa-fw" ></i>&nbsp;课程</a></li>
+        <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-tasks fa-fw" ></i>&nbsp;作业</a></li>
+        <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-mortar-board fa-fw" ></i>&nbsp;讨论</a></li>
         <li class="layui-nav-item" style="float: right;margin-right: 1%;">
             <a href="javascript:;"><i class="fa fa-user fa-fw" ></i>用户<i class="fa fa-angle-down fa-fw"></i></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
@@ -28,7 +28,7 @@
     </ul>
 </div>
 <div class="contentapp">
-    <iframe src="job.html" id="myiframe" width="100%" scrolling="yes" frameborder="0" onload="setIframeHeight(this)">
+    <iframe src="joblist.html" id="myiframe" width="100%" scrolling="no" frameborder="0" onload="setIframeHeight(this)">
     </iframe>
     <script>
         layui.use('element', function(){
@@ -42,6 +42,7 @@
             else
                 iframe=test;
             if (iframe) {
+                iframe.height=0;
                 var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
                 if (iframeWin.document.body) {
                     iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
@@ -49,7 +50,6 @@
                 console.info("sds");
             }
         }
-        // window.setInterval("setIframeHeight()", 1000);
     </script>
 </div>
 </body>

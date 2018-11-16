@@ -18,8 +18,8 @@ layui.use('upload', function(){
                     ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
                     ,'<td>等待上传</td>'
                     ,'<td>'
-                    ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                    ,'<button class="layui-btn layui-btn-sm uploadbtn demo-reload layui-hide">重传</button>'
+                    ,'<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                     ,'</td>'
                     ,'</tr>'].join(''));
                 //单个重传
