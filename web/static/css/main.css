@@ -1,5 +1,7 @@
 body{
     background-color: #FFFFFF;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 .panel-title{
     font-size: 21px;
@@ -8,8 +10,6 @@ body{
     line-height: 30px;
     padding: 5px 15px;
     text-align:left;
-    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
 }
 .panel{
     text-align:center;
@@ -51,7 +51,7 @@ body{
 .refresh{
     font-size:10px;
     background-color: #29b6f6;
-    border-radius: 5px;
+    border-radius: 4px;
     position: absolute;
     margin-right: 5%;
     right: 15px;

@@ -31,9 +31,9 @@
     <iframe src="joblist.html" id="myiframe" width="100%" scrolling="no" frameborder="0" onload="setIframeHeight(this)">
     </iframe>
     <script>
-        layui.use('element', function(){
-            var element = layui.element;
-            //…
+        layui.use('element','layer', function(){
+            element = layui.element;
+            layer = layui.layer;
         });
         var test;
         function setIframeHeight(iframe) {

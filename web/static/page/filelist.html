@@ -1,0 +1,72 @@
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <link href="../css/list.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="panel">
+    <div class="content">
+        <ul class="list">
+            <li>
+                <img class="icon" src="../img/file.png" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+            <li>
+                <img class="icon" src="../img/file.png" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+            <li>
+                <img class="icon" src="../img/file.png" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="mypage"></div>
+<script>
+    layui.use('laypage', function () {
+        var laypage = layui.laypage, $ = layui.$;
+        //执行一个laypage实例m
+        laypage.render({
+            elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
+            , count: 50 //数据总数，从服务端得到
+        });
+        $(document).ready(function(){
+            window.parent.setIframeHeight();
+        });
+    });
+</script>
+</body>
+</html>

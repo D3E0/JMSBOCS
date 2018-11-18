@@ -5,75 +5,123 @@
     <title>Title</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <script src="../layui/layui.js"></script>
-    <link href="../css/joblist.css" rel="stylesheet">
+    <link href="../css/list.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="panel">
-    <div class="panel-title">最近作业 </div>
-    <button class="layui-btn addjob"><a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业</button></div>
-    <div class="content">
-        <ul class="list">
-            <li>
-                <img class="icon" src="../img/job.png"  height="60px">
-                <div class="job">
-                    <div class="title">
-                        <a href="job.html">高数作业第一次作业</a>
-                    </div>
-                    <div class="time">
-                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
-                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7days
-                    </div>
+    <div class="panel-title">最近作业</div>
+    <button class="layui-btn additem" id="addjob"><a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
+    </button>
+</div>
+<div class="content">
+    <ul class="list">
+        <li>
+            <img class="icon" src="../img/job.png" height="60px">
+            <div class="item">
+                <div class="title">
+                    <a href="job.html">高数作业第一次作业</a>
                 </div>
-                <div class="state">
-                    <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+                <div class="time">
+                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                    <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7hours
+                    <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>高数
                 </div>
-            </li>
-            <li>
-                <img class="icon" src="../img/job.png"  height="60px">
-                <div class="job">
-                    <div class="title">
-                        <a href="job.html">高数作业第一次作业</a>
-                    </div>
-                    <div class="time">
-                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
-                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7days
-                    </div>
+            </div>
+            <div class="state">
+                <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+            </div>
+        </li>
+        <li>
+            <img class="icon" src="../img/job.png" height="60px">
+            <div class="item">
+                <div class="title">
+                    <a href="job.html">高数作业第一次作业</a>
                 </div>
-                <div class="state">
-                    <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+                <div class="time">
+                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                    <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7hour
+                    <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>j2ee
                 </div>
-            </li>
-            <li>
-                <img class="icon" src="../img/job.png"  height="60px">
-                <div class="job">
-                    <div class="title">
-                        <a href="job.html">高数作业第一次作业</a>
-                    </div>
-                    <div class="time">
-                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
-                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7days
-                    </div>
+            </div>
+            <div class="state">
+                <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+            </div>
+        </li>
+        <li>
+            <img class="icon" src="../img/job.png" height="60px">
+            <div class="item">
+                <div class="title">
+                    <a href="job.html">高数作业第一次作业</a>
                 </div>
-                <div class="state">
-                    <span class="layui-badge-dot reddot"></span>&nbsp;&nbsp;Ended
+                <div class="time">
+                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                    <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7hour
+                    <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>j2ee
                 </div>
-            </li>
-        </ul>
-    </div>
+            </div>
+            <div class="state">
+                <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+            </div>
+        </li>
+        <li>
+            <img class="icon" src="../img/job.png" height="60px">
+            <div class="item">
+                <div class="title">
+                    <a href="job.html">高数作业第一次作业</a>
+                </div>
+                <div class="time">
+                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                    <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7hour
+                    <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>j2ee
+                </div>
+            </div>
+            <div class="state">
+                <span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway
+            </div>
+        </li>
+        <li>
+            <img class="icon" src="../img/job.png" height="60px">
+            <div class="item">
+                <div class="title">
+                    <a href="job.html">高数作业第一次作业</a>
+                </div>
+                <div class="time">
+                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                    <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>7hours
+                    <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>java程序设计
+                </div>
+            </div>
+            <div class="state">
+                <span class="layui-badge-dot reddot"></span>&nbsp;&nbsp;Ended
+            </div>
+        </li>
+    </ul>
+</div>
 </div>
 <div id="mypage"></div>
 <script>
-    layui.use('laypage', function(){
-        var laypage = layui.laypage,$=layui.$;
-        //执行一个laypage实例m
+    layui.use(['laypage', 'element', 'layer'], function () {
+        var laypage = layui.laypage, $ = layui.$;
         laypage.render({
             elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: 50 //数据总数，从服务端得到
+            , count: 50 //数据总数，从服务端得到
         });
-        window.onload=function () {
+        $('#addjob').click(function () {
+            console.info("click");
+            window.parent.layui.use(['layer'], function () {//调用父页面的layer
+                var layer = window.parent.layui.layer;
+                layer.open({
+                    title: false,
+                    area: ['500px', '500px'],
+                    type: 2,
+                    content: ['addjob.html', 'no']
+                });
+            });
+        });
+        $(document).ready(function(){
             window.parent.setIframeHeight();
-        };
+        });
     });
 </script>
 </body>
