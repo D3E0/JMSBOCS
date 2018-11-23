@@ -1,10 +1,13 @@
 package service;
 
+import entity.UserEntity;
 import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -16,7 +19,11 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void getUser() {
-        logger.info(userMapper.getUser("user"));
+    public UserEntity getUser() {
+        return userMapper.getUser("user");
+    }
+
+    public List<UserEntity> getUserList() {
+        return userMapper.getUserList();
     }
 }

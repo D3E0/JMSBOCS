@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valine</title>
+    <script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<p>HTML</p>
+<script>
+    axios.get('/comments').then(function (response) {
+        var objs = response.data.data;
+        console.log(response.status);
+        console.log(objs.length);
+        for (let i of objs) {
+            console.log(i);
+            console.info(i.commentTime, i.commentId, i.commentContent);
+        }
+    });
+
+    const defaultComment = {
+        comment: '',
+        rid: '',
+        nick: 'Guest',
+        mail: '',
+        link: '',
+        ua: navigator.userAgent,
+        url: '/D:/IDM下载/压缩文档/Valine-master/index.html',
+        pin: 0,
+        like: 0
+    };
+    // 存储服务
+    var {Query, User} = AV;
+    AV.init('mdNWo7q2N2Ogm5QLa3TmemmG-gzGzoHsz', 'wzlT4YYto2fxB2K3y1tFiju8');
+    let query = new AV.Query('Comment');
+    query.equalTo('url', defaultComment['url']);
+    query.descending('createdAt');
+    console.info(query);
+
+    let cq = query;
+    cq.limit('5');
+    cq.find().then(rets => {
+        let len = rets.length;
+        if (len) {
+            for (let i = 0; i < len; i++) {
+                var ret = rets[i];
+                console.info("id: " + ret.id + " createdAt: " + ret.get('createdAt') + " " + ret.get('comment'));
+                console.info("------------")
+            }
+        }
+    });
+    // let Ct = AV.Object.extend('Comment');
+    // // 新建对象
+    // let comment = new Ct();
+
+    // for (let i in defaultComment) {
+    //     if (defaultComment.hasOwnProperty(i)) {
+    //         let _v = defaultComment[i];
+    //         comment.set(i, _v);
+    //     }
+    // }
+
+    // console.info(comment);
+    // comment.save().then((ret) => {
+    //     console.info(ret);
+    // });
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Valine - A simple comment system based on Leancloud.</title>
+
+    <script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://localhost:8088/dist/Valine.min.js"></script>
+    <link rel="stylesheet" href="test.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="placeholder"></div>
+        <div class="content">
+            <div class="comment"></div>
+        </div>
+    </div>
+
+    <script>
+        var valine = new Valine();
+        valine.init({
+            el: '.comment',
+            app_id: 'mdNWo7q2N2Ogm5QLa3TmemmG-gzGzoHsz',
+            app_key: 'wzlT4YYto2fxB2K3y1tFiju8',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            path: window.location.pathname,
+            avatar: 'mm', // 1.1.7 新增(mm/identicon/monsterid/wavatar/retro)
+            // guest_info: ['nick'] // 默认 ['nick', 'mail', 'link']
+        })
+    </script>
+</body>
+
+</html>

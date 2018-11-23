@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import util.RestResult;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -24,6 +25,12 @@ public class MyTest {
     String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
     String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
     private static final Logger logger = LogManager.getLogger(MyTest.class);
+
+    @Test
+    public void testResult() {
+        logger.info(new RestResult.Builder(200).message("msg").count(1).data("a").build());
+        logger.info(new RestResult.Builder(200).build());
+    }
 
     @Test
     public void testLog() {

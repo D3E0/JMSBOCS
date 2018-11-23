@@ -8,4 +8,9 @@
         from user
         where username = #{username}
     </select>
+    <select id="getUserList" resultType="entity.UserEntity">
+        select *
+        from user
+    </select>
+
 </mapper>

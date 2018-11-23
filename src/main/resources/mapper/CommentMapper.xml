@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CommentMapper">
+
+    <select id="getComments" resultType="entity.CommentEntity">
+        select *
+        from comment
+    </select>
+
+    <select id="getCommentsDetail" resultMap="commentDetail">
+        SELECT c.comment_id       as cid,
+               c.comment_content  as content,
+               c.comment_time     as ctime,
+               c.reply_comment_id as rid,
+               c.root_comment_id  as pid,
+               c.course_id        as course,
+               c.user_id          as uid,
+               u.username         as username
+        FROM comment c,
+             user u
+        where c.user_id = u.user_id
+        order by pid desc, cid
+    </select>
+
+    <select id="getCommentDetail" resultMap="commentDetail">
+        SELECT c.comment_id       as cid,
+               c.comment_content  as content,
+               c.comment_time     as ctime,
+               c.reply_comment_id as rid,
+               c.root_comment_id  as pid,
+               c.course_id        as course,
+               c.user_id          as uid,
+               u.username         as username
+        FROM comment c,
+             user u
+        where c.user_id = u.user_id and c.comment_id = #{cid}
+        order by pid desc, cid
+    </select>
+
+    <resultMap id="commentDetail" type="dto.CommentDTO">
+        <id column="cid" property="commentId"/>
+        <result column="content" property="commentContent"/>
+        <result column="ctime" property="commentTime"/>
+        <result column="rid" property="replyCommentId"/>
+        <result column="pid" property="rootCommentId"/>
+        <result column="course" property="courseId"/>
+        <result column="uid" property="userId"/>
+        <result column="username" property="username"/>
+    </resultMap>
+
+    <select id="getComment" resultType="entity.CommentEntity">
+        SELECT *
+        FROM comment
+        where comment_id = #{id}
+    </select>
+
+    <insert id="saveComment" parameterType="entity.CommentEntity"
+            useGeneratedKeys="true" keyProperty="commentId" keyColumn="comment_id">
+        insert into comment (comment_id,
+                             course_id,
+                             comment_time,
+                             comment_content,
+                             root_comment_id,
+                             reply_comment_id,
+                             user_id)
+        values (#{commentId},
+                #{courseId},
+                #{commentTime},
+                #{commentContent},
+                #{rootCommentId},
+                #{replyCommentId},
+                #{userId})
+    </insert>
+
+    <update id="updateCommentRoot">
+        update comment
+        set root_comment_id = #{pid}
+        where comment_id = #{cid}
+    </update>
+
+
+</mapper>
