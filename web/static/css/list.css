@@ -118,6 +118,6 @@ body{
 }
 .searchdiv:hover{
     border: 1px solid #57a3f3;
-    box-shadow: 0 1px 1px 1px #57a3f37d;
+    box-shadow: 1px 1px 1px 1px #57a3f37d;
 }
 

@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }

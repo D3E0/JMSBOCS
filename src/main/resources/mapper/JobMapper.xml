@@ -18,7 +18,7 @@
           and student_course.student_id = #{studentId}
           and job.course_id = course.course_id
         and (course_name like concat(concat('%',#{keyword}),'%') or job_title like concat(concat('%',#{keyword}),'%'))
-        order by status DESC, job_end_time DESC, course_name+0 ASC, job_title+0 ASC
+        order by status DESC, job_end_time DESC, job_title+0 ASC, course_name+0 ASC
         limit #{cur} ,5;
     </select>
     <select id="countJobByKeyword" parameterType="map" resultType="int">
