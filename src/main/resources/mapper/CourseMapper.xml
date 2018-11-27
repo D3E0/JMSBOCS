@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CourseMapper">
+
+    <select id="findCourseListById" resultType="dto.CourseItemDto">
+        select course_id,course_name, academic_year, semester, username as teacherName
+        from course,
+             user
+        where course_id = #{courseId}
+          and user_id = teacher_id
+    </select>
+
+
+</mapper>

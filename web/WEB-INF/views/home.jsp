@@ -7,78 +7,65 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<html>
 <head>
-    <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
-    <style>
-        body {
-            background-color: #FFFFFF;
-        }
-
-        .content {
-            background: #fff;
-            padding: 10px;
-        }
-
-        * {
-            margin: 0 auto;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", Arial, sans-serif;
-        }
-
-        .v * {
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            line-height: 2;
-            color: #555;
-            -webkit-transition: all .3s ease;
-            transition: all .3s ease;
-        }
-
-        .v .vwarp {
-            border: 1px solid #f0f0f0;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            position: relative;
-            padding: 10px;
-        }
-
-        .v .vwrap input {
-            background: transparent;
-        }
-
-        .v .vinput {
-            border: none;
-            resize: none;
-            outline: none;
-            padding: 10px 5px;
-            max-width: 100%;
-            font-size: .775rem;
-        }
-
-        .v .vwrap .vheader .vinput {
-            width: 33.33%;
-            border-bottom: 1px dashed #dedede;
-        }
-    </style>
+    <link href="<c:url value="/static/css/home.css"/>" rel="stylesheet">
+    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
+    <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
-<html>
-<c:import url="head.jsp"/>
 <body>
-<div class="content">
-    <div class="comment v">
-        <div class="vwarp">
-            <div class="vheader item3">
-                <input name="nick" placeholder="昵称" class="vnick vinput" type="text">
-                <input name="mail" placeholder="邮箱" class="vmail vinput" type="email">
-                <input name="link" placeholder="网址(http://)" class="vlink vinput" type="text">
-            </div>
-        </div>
-    </div>
+<div class="navbar">
+    <ul class="layui-nav nav" lay-filter="">
+        <li class="logo">基于开放云储存的作业提交管理系统</li>
+        <li id="homebtn" class="layui-nav-item layui-this"><a class="" href="javascript:;"><i class="fa fa-home fa-fw" ></i>&nbsp;首页</a></li>
+        <li id="coursebtn" class="layui-nav-item"><a href="javascript:;"><i class="fa fa-book fa-fw" ></i>&nbsp;课程</a></li>
+        <li id="jobbtn" class="layui-nav-item"><a href="javascript:;"><i class="fa fa-tasks fa-fw" ></i>&nbsp;作业</a></li>
+        <li class="layui-nav-item" style="float: right;margin-right: 1%;">
+            <a href="javascript:;"><i class="fa fa-user fa-fw" ></i>用户<i class="layui-icon layui-icon-triangle-d"></i></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="">个人信息</a></dd>
+                <dd><a href="">安全设置</a></dd>
+                <dd><a href="">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<div class="contentapp">
+    <iframe src="/main" id="myiframe" width="100%" scrolling="no" frameborder="0" onload="setIframeHeight(this)">
+    </iframe>
+    <script>
+        layui.use('element','layer', function(){
+            element = layui.element;
+            layer = layui.layer;
+        });
+        $("#jobbtn").click(function () {
+            $("#myiframe").attr("src","/joblist");
+        });
+        $("#coursebtn").click(function () {
+            $("#myiframe").attr("src","/courselist");
+        });
+        $("#homebtn").click(function () {
+            $("#myiframe").attr("src","/main");
+        });
+        var test;
+        function setIframeHeight(iframe) {
+            if(!test)
+                test=iframe;
+            else
+                iframe=test;
+            if (iframe) {
+                iframe.height=0;
+                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                if (iframeWin.document.body) {
+                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                }
+            }
+        }
+    </script>
 </div>
 </body>
 </html>

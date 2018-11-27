@@ -24,4 +24,9 @@ public class HomeController {
         service.getUser();
         return "home";
     }
+    @RequestMapping("/main")
+    public String main() {
+        service.getUser();
+        return "main";
+    }
 }

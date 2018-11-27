@@ -182,4 +182,16 @@ public class JobEntity {
     public void setJobEndTime(Date jobEndTime) {
         this.jobEndTime = jobEndTime;
     }
+
+    @Override
+    public String toString() {
+        return "JobEntity{" +
+                "jobId=" + jobId +
+                ", courseId=" + courseId +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", jobContent='" + jobContent + '\'' +
+                ", jobBeginTime=" + jobBeginTime +
+                ", jobEndTime=" + jobEndTime +
+                '}';
+    }
 }

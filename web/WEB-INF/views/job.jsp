@@ -1,12 +1,21 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: yan
+  Date: 2018/11/24
+  Time: 11:11
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <script src="../layui/layui.js"></script>
-    <link href="../css/job.css" rel="stylesheet">
-    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
+    <script src="<c:url value="/static/layui/layui.js"/>"></script>
+    <link href="<c:url value="/static/css/job.css"/>" rel="stylesheet">
+    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
+    <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
+    <script src="<c:url value="/static/js/fileupload.js"/>"></script>
 </head>
 <body>
 <div class="panel">
@@ -16,16 +25,13 @@
         };
     </script>
     <div class="job-content">
-        <div class="panel-title">高数第一次作业
+        <div class="panel-title"><c:out value="${job.jobTitle}"/>
             <button class="layui-btn delbtn" style="float: right;margin-right: 1%" >删除</button>
             <button class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
         </div>
         <p class="title">作业描述</p>
         <p class="content">
-            有一天, GZS得到一本古代的英文字典, 很可惜, 由于年代久远, 很多单词都看不清楚了. 但是, 这怎么能难倒我们的G神呢, G神想要用这本字典查询一些单词, 下面给出字典中的内容.
-            字典中的单词全部由小写字母组成, 字迹模糊的部分用'?'或者'*'来表示, '?'可以匹配一个小写字母, '*'可以匹配0个或者1个或者多个小写字母. 例如, a?b可以代表aab, abb......azb,
-            而a*b可以代表ab, aab, abb...azb, aaab, aabb......然后给出一部分待查找的单词, 全部由小写字母组成. 如果能在字典中找到这个单词, 请输出1, 否则,
-            输出0.对于这种小事GZS觉得很是无聊, 你快来写个程序帮帮他吧.
+            ${job.jobContent}
         </p>
         <p class="title">作业提交</p>
         <div class="layui-upload">
@@ -51,10 +57,10 @@
         <div class="info"><i class="fa fa-info-circle fa-fw" ></i>&nbsp;&nbsp;作业信息</div>
         <ul class="list">
             <li>
-                开始时间：2017-12-22 10:05:08
+                开始时间：${job.jobBeginTime}
             </li>
             <li>
-                结束时间：2017-12-22 10:05:08
+                结束时间：${job.jobEndTime}
             </li>
             <li>
                 状态：可提交

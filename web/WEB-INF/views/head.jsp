@@ -11,7 +11,7 @@
 <head>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
-    <link href="<c:url value="/static/font-awesome-4.7.0/css/font-awesome.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <style>
         body {
             background-color: #eeeeee;
