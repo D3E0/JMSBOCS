@@ -12,4 +12,5 @@ public interface BaseMapper<T> {
     T selectOne(int id);
 
     List<T> selectAll();
+
 }

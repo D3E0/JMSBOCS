@@ -1,5 +1,8 @@
 package config;
 
+import manager.DeafultHandler;
+import manager.NotifyManager;
+import mapper.NotifyMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +23,7 @@ import java.util.Properties;
 
 @Configuration
 @MapperScan(basePackages = "mapper")
-@ComponentScan(basePackages = {"mapper", "service"},
+@ComponentScan(basePackages = {"mapper", "service", "manager", "controller"},
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
         })
@@ -48,6 +51,12 @@ public class RootConfig {
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
         logger.info("----- SqlSessionFactory Init Success -----");
         return sqlSessionFactoryBean.getObject();
+    }
+
+    @Bean
+    public NotifyManager notifyManager(NotifyMapper notifyMapper, DeafultHandler deafultHandler) {
+        NotifyManager notifyManager = new NotifyManager(notifyMapper, deafultHandler);
+        return notifyManager;
     }
 }
 

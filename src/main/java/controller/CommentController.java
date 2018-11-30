@@ -40,7 +40,6 @@ public class CommentController {
         CommentEntity entity = service.getComment(1);
         return new RestResult.Builder(0).data(entity).build();
     }
-
     @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
     @ResponseBody
     public RestResult addCommentGet(@RequestParam() String commentContent,
@@ -60,15 +59,5 @@ public class CommentController {
         } else {
             return new RestResult.Builder(0).data(service.getCommentDetail(id)).build();
         }
-    }
-
-    @RequestMapping(value = "/test")
-    @ResponseBody
-    public RestResult testPostComment(@RequestBody Map<String, Object> params) {
-        for (String s : params.keySet()) {
-            logger.info(s + " " + params.get(s));
-        }
-        CommentEntity entity = service.getComment(1);
-        return new RestResult.Builder(0).data(entity).build();
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.NotifyMapper">
+
+    <select id="selectOne" resultType="entity.NotifyEntity">
+        SELECT *
+        FROM notify
+        where notify_id = #{id}
+    </select>
+
+    <select id="getUnfinished" resultType="entity.NotifyEntity">
+        SELECT *
+        FROM notify
+        where is_finished = 0
+    </select>
+
+    <insert id="save" parameterType="entity.NotifyEntity"
+            useGeneratedKeys="true" keyProperty="notifyId" keyColumn="notify_id">
+        insert into notify (notify_id,
+                            notify_content,
+                            notify_time,
+                            notify_sender,
+                            notify_receiver,
+                            notify_type,
+                            is_finished)
+        values (#{notifyId},
+                #{notifyContent},
+                #{notifyTime},
+                #{notifySender},
+                #{notifyReceiver},
+                #{notifyType},
+                #{isFinished})
+    </insert>
+
+    <update id="update">
+        update notify
+        set notify_receiver = #{notifyReceiver},
+            notify_sender   = #{notifySender},
+            notify_content  = #{notifyContent},
+            notify_type     = #{notifyType},
+            is_finished     = #{isFinished},
+            notify_time     = #{notifyTime}
+        where notify_id = #{notifyId}
+    </update>
+
+    <delete id="delete">
+        delete
+        from notify
+        where notify_id = #{id}
+    </delete>
+
+</mapper>

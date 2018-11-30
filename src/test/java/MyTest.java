@@ -10,11 +10,11 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import entity.NotifyType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import util.RestResult;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -28,8 +28,9 @@ public class MyTest {
 
     @Test
     public void testResult() {
-        logger.info(new RestResult.Builder(200).message("msg").count(1).data("a").build());
-        logger.info(new RestResult.Builder(200).build());
+        for (NotifyType type : NotifyType.values()) {
+            System.out.println(type);
+        }
     }
 
     @Test

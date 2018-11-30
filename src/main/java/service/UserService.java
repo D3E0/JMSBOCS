@@ -20,10 +20,10 @@ public class UserService {
     }
 
     public UserEntity getUser() {
-        return userMapper.getUser("user");
+        return userMapper.selectOne(1);
     }
 
     public List<UserEntity> getUserList() {
-        return userMapper.getUserList();
+        return userMapper.selectAll();
     }
 }
