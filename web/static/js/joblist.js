@@ -10,7 +10,7 @@ layui.use(['laypage', 'element', 'layer'], function () {
             }, function (data) {
                 count = data;
                 laypage.render({
-                    limit: 8
+                    limit: 10
                     , elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
                     , count: count //数据总数，从服务端得到
                     , jump: function (obj, first) {

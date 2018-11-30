@@ -21,6 +21,20 @@
     <div class="content">
         <ul class="list">
             <li>
+                <img class="icon" src="<c:url value="/static/img/file.png"/>" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+            <li>
+                <img class="icon" src="<c:url value="/static/img/file.png"/>" height="60px">
                 <div class="item">
                     <div class="title">
                         戴霸天.jpg
@@ -58,6 +72,46 @@
                 </div>
                 <button type="button" class="layui-btn downloadbtn">下载</button>
             </li>
+            <li>
+                <img class="icon" src="<c:url value="/static/img/file.png"/>" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+            <li>
+                <img class="icon" src="<c:url value="/static/img/file.png"/>" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+            <li>
+                <img class="icon" src="<c:url value="/static/img/file.png"/>" height="60px">
+                <div class="item">
+                    <div class="title">
+                        戴霸天.jpg
+                    </div>
+                    <div class="time">
+                        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>2017-12-22 10:05:08&nbsp;&nbsp;
+                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>26KB&nbsp;&nbsp;
+                    </div>
+                </div>
+                <button type="button" class="layui-btn downloadbtn">下载</button>
+            </li>
+
         </ul>
     </div>
 </div>

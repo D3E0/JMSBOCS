@@ -19,16 +19,12 @@
 </head>
 <body>
 <div class="panel">
-    <script>
-        window.onload=function () {
-            window.parent.setIframeHeight();
-        };
-    </script>
     <div class="job-content">
         <div class="panel-title"><c:out value="${job.jobTitle}"/>
             <button class="layui-btn delbtn" style="float: right;margin-right: 1%" >删除</button>
             <button class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
         </div>
+        <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
         <p class="title">作业描述</p>
         <p class="content">
             ${job.jobContent}
@@ -51,7 +47,6 @@
                 </table>
             </div>
         </div>
-        <script src="../js/fileupload.js"></script>
     </div>
     <div class="rightbar">
         <div class="info"><i class="fa fa-info-circle fa-fw" ></i>&nbsp;&nbsp;作业信息</div>
@@ -66,10 +61,28 @@
                 状态：可提交
             </li>
             <li>
-                <a href="main.html" style="color: #3091f2">查看已提交作业</a>
+                <a id="filelist" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
             </li>
         </ul>
     </div>
+    <script>
+        window.onload=function () {
+            window.parent.setIframeHeight();
+        };
+        $('#filelist').click(function () {
+            console.info("click");
+            window.parent.layui.use(['layer'], function () {//调用父页面的layer
+                var layer=window.parent.layui.layer;
+                layer.open({
+                    title: false,
+                    area: ['700px','500px'],
+                    type: 2,
+                    scrollbar : true,
+                    content:  ['/jobfilelist', 'no']
+                });
+            });
+        });
+    </script>
 </div>
 </body>
 </html>

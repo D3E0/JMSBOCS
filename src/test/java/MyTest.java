@@ -57,7 +57,7 @@ public class MyTest {
         //...生成上传凭证，然后准备上传
         String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
         String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
-        String bucket = "JobEntity-management-system-based-on-open-cloud-storage";
+        String bucket = "job-management-system-based-on-open-cloud-storage";
 //        String bucket = "open-test";
 
         //构造一个带指定Zone对象的配置类
@@ -66,12 +66,12 @@ public class MyTest {
         UploadManager uploadManager = new UploadManager(cfg);
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
 
-        String localFilePath = "C:\\Users\\ACM-PC\\IdeaProjects\\JMSBOCO\\src\\main\\resources\\Dictionary.md";
+        String localFilePath = "C:\\j2ee\\JMSBOCS\\web\\static\\img\\class.png";
         //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = "Dictionary.md";
-
+        String key="class.png";
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
+        System.out.println(upToken);
 
         try {
             Response response = uploadManager.put(localFilePath, key, upToken);
@@ -111,12 +111,13 @@ public class MyTest {
         Response r = null;
         try {
             String url = "http://api.qiniu.com/v6/domain/list?tbl=<bucketName>";
-            url = url.replace("<bucketName>", "open-test");
+            url = url.replace("<bucketName>", "job-management-system-based-on-open-cloud-storage");
             Auth auth = Auth.create(accessKey, secretKey);
             StringMap parameter = auth.authorization(url);
             r = httpManager.get(url, parameter);
             System.out.println(parameter.get("Authorization"));
-            System.out.println(r.bodyString());
+            String temp=r.bodyString();
+            System.out.println(temp.substring(2,temp.length()-2));
         } catch (QiniuException e) {
             Assert.assertNotNull(e.response.reqId);
         }

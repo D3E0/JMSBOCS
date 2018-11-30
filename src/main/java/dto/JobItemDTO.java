@@ -17,8 +17,17 @@ public class JobItemDTO {
     private String jobEndTime;
 
     private String courseName;
+    private int courseId;
     private int time;
     private boolean status;
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
 
     public int getTime() {
         return time;

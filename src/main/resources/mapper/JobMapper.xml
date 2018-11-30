@@ -18,8 +18,8 @@
           and student_course.student_id = #{studentId}
           and job.course_id = course.course_id
         and (course_name like concat(concat('%',#{keyword}),'%') or job_title like concat(concat('%',#{keyword}),'%'))
-        order by status DESC, job_end_time DESC, job_title+0 ASC, course_name+0 ASC
-        limit #{cur} ,5;
+        order by status DESC, job_end_time DESC, job_title+0 ASC, course_name+0 ASC ,job_id ASC
+        limit #{cur} ,10;
     </select>
     <select id="countJobByKeyword" parameterType="map" resultType="int">
         select COUNT(job.job_id)
@@ -36,9 +36,16 @@
                job_id,
                DATE_FORMAT(job_end_time, '%Y-%m-%d %T')   as jobEndTime,
                DATE_FORMAT(job_begin_time, '%Y-%m-%d %T') as jobBeginTime,
-               job_content
+               job_content,
+               course_id
         from job
         where job_id = #{jobId}
     </select>
-
+    <select id="getQiniuByCourseId" resultType="entity.QiniuEntity">
+        select qiniu.*
+        from qiniu,user,course
+        where course_id=#{courseId}
+        and course.teacher_id=user_id
+        and user.qiniu_id=qiniu.qiniu_id;
+    </select>
 </mapper>

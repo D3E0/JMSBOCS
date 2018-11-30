@@ -1,6 +1,8 @@
+import com.qiniu.util.Auth;
 import config.RootConfig;
 import dto.CourseItemDto;
 import dto.JobItemDTO;
+import entity.QiniuEntity;
 import mapper.CourseMapper;
 import mapper.JobMapper;
 import org.junit.Test;
@@ -34,6 +36,9 @@ public class MapperTest {
     @Test
     public void testJob() {
         List<JobItemDTO> list=jobMapper.findJobListByIdAndKeyword(1,0,"");
+        QiniuEntity qiniuEntity=jobMapper.getQiniuByCourseId(1);
+        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
+        System.out.println(auth.privateDownloadUrl("phptyenkh.bkt.clouddn.com/1/1/1/640.jpg"));
     }
     @Test
     public void testCourse() {

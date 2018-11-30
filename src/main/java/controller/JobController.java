@@ -1,5 +1,6 @@
 package controller;
 
+import com.qiniu.storage.model.FileInfo;
 import dto.JobItemDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.JobService;
+import service.QiniuService;
 
 import java.util.List;
 
@@ -23,6 +25,11 @@ import java.util.List;
 public class JobController {
     private static final Logger logger = LogManager.getLogger(JobController.class);
     private JobService jobService;
+    private QiniuService qiniuService;
+    @Autowired
+    public void setQiniuService(QiniuService qiniuService) {
+        this.qiniuService = qiniuService;
+    }
 
     @Autowired
     public void setJobService(JobService jobService) {
@@ -41,20 +48,39 @@ public class JobController {
     }
 
     @RequestMapping("job")
-    public String job(Model model, @RequestParam int jobId) {
-        logger.info(jobId);
+    public String job(Model model, int jobId) {
         model.addAttribute("job", jobService.findJobById(jobId));
         return "job";
     }
 
     @ResponseBody
     @RequestMapping("countjob")
-    public int countJob(@RequestParam int studentid,@RequestParam(defaultValue = "") String keyword) {
+    public int countJob(int studentid,@RequestParam(defaultValue = "") String keyword) {
         return jobService.countJob(1,keyword);
     }
 
     @RequestMapping(value = "addjob", method = RequestMethod.GET)
     public String addjob(int jobId) {
         return "job";
+    }
+    @ResponseBody
+    @RequestMapping(value = "qiniu")
+    public String getqiniu(int courseId){
+        return qiniuService.getUploadToken(courseId);
+    }
+    @ResponseBody
+    @RequestMapping(value = "uploadfiles")
+    public FileInfo[] getuploadfiles(int courseId,int jobId,int studentId){
+        return qiniuService.getFileList(courseId,jobId,studentId);
+    }
+    @RequestMapping(value = "jobfilelist", method = RequestMethod.GET)
+    public String jobfilelist() {
+        return "jobfilelist";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "domain")
+    public String getdomain(int courseId){
+        return qiniuService.queryDomain(courseId);
     }
 }

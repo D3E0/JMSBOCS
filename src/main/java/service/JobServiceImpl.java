@@ -2,6 +2,8 @@ package service;
 
 import dto.JobItemDTO;
 import mapper.JobMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class JobServiceImpl implements JobService {
+    private static final Logger logger = LogManager.getLogger(JobServiceImpl.class);
 
     private JobMapper jobMapper;
 
@@ -24,7 +27,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobItemDTO> findJobListById(int studentId, int page, String keyword) {
-        return jobMapper.findJobListByIdAndKeyword(studentId, (page - 1) * 5, keyword);
+        return jobMapper.findJobListByIdAndKeyword(studentId, (page - 1) * 10, keyword);
     }
 
     @Override
@@ -36,4 +39,5 @@ public class JobServiceImpl implements JobService {
     public int countJob(int studentId, String keyword) {
         return jobMapper.countJobByKeyword(studentId, keyword);
     }
+
 }
