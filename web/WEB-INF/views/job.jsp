@@ -32,7 +32,7 @@
         <p class="title">作业提交</p>
         <div class="layui-upload">
             <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
-            <button type="button" class="layui-btn uploadbtn" id="testListAction">开始上传</button>
+            <button type="button" class="layui-btn uploadbtn layui-hide" id="testListAction">开始上传</button>
             <div class="layui-upload-list">
                 <table class="layui-table "lay-skin="nob">
                     <thead>

@@ -1,6 +1,5 @@
 package controller;
 
-import com.qiniu.storage.model.FileInfo;
 import dto.JobItemDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.JobService;
 import service.QiniuService;
+import vo.FileVo;
 
 import java.util.List;
 
@@ -70,17 +70,17 @@ public class JobController {
     }
     @ResponseBody
     @RequestMapping(value = "uploadfiles")
-    public FileInfo[] getuploadfiles(int courseId,int jobId,int studentId){
+    public List<FileVo> getuploadfiles(int courseId, int jobId, int studentId){
         return qiniuService.getFileList(courseId,jobId,studentId);
+    }
+    @ResponseBody
+    @RequestMapping(value = "delefile")
+    public int delefile(int courseId, String key){
+        return qiniuService.delefile(courseId,key);
     }
     @RequestMapping(value = "jobfilelist", method = RequestMethod.GET)
     public String jobfilelist() {
         return "jobfilelist";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "domain")
-    public String getdomain(int courseId){
-        return qiniuService.queryDomain(courseId);
-    }
 }

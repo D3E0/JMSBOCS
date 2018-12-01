@@ -41,11 +41,4 @@
         from job
         where job_id = #{jobId}
     </select>
-    <select id="getQiniuByCourseId" resultType="entity.QiniuEntity">
-        select qiniu.*
-        from qiniu,user,course
-        where course_id=#{courseId}
-        and course.teacher_id=user_id
-        and user.qiniu_id=qiniu.qiniu_id;
-    </select>
 </mapper>

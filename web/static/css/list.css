@@ -103,6 +103,12 @@ body{
     background-color: #19be6b;
     float: right;
 }
+.deletebtn{
+    margin-top: 8px;
+    margin-right: 4%;
+    background-color: #ed3f14;
+    float: right;
+}
 #search{
     border:none;
     font-size: 12px;

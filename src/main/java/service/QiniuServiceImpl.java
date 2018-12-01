@@ -15,6 +15,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vo.FileVo;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yan
@@ -23,7 +29,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class QiniuServiceImpl implements QiniuService {
-    private static final Logger logger = LogManager.getLogger(JobServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(QiniuServiceImpl.class);
 
     private QiniuMapper qiniuMapper;
     @Autowired
@@ -37,31 +43,47 @@ public class QiniuServiceImpl implements QiniuService {
         return auth.uploadToken(qiniuEntity.getBucket());
     }
 
-    @Override
-    public String getDownloadToken(int courseId) {
-        Response r = null;
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
-        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
-        return auth.privateDownloadUrl("");
+    public String getDownloadToken(Auth auth,String domain,String key) {
+        String encodedFileName = null;
+        try {
+            encodedFileName = URLEncoder.encode(key, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String publicUrl = String.format("%s/%s", domain, encodedFileName);
+        return auth.privateDownloadUrl(publicUrl);
     }
 
     @Override
-    public FileInfo[] getFileList(int courseId, int jobId, int studentId) {
-
+    public List<FileVo>getFileList(int courseId, int jobId, int studentId) {
         Configuration cfg = new Configuration(Zone.zone0());
-        //...其他参数参考类注释
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
+        auth.privateDownloadUrl("");
         BucketManager bucketManager = new BucketManager(auth, cfg);
         String prefix = courseId+"/"+jobId+"/"+studentId+"/";
         int limit = 1000;
         String delimiter ="";
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiniuEntity.getBucket(), prefix, limit, delimiter);
-        FileInfo[] items = new FileInfo[0];
+        FileInfo[] items;
+        List<FileVo> fileVos=new ArrayList<FileVo>();
         while (fileListIterator.hasNext()) {
             items = fileListIterator.next();
+            for (FileInfo item : items) {
+                FileVo fileVo=new FileVo(item);
+                String encodedFileName = null;
+                try {
+                    encodedFileName = URLEncoder.encode(fileVo.getFileName(), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String publicUrl = String.format("%s/%s", queryDomain(courseId), encodedFileName);
+                String downloadUrl=auth.privateDownloadUrl(publicUrl);
+                fileVo.setDownloadUrl(downloadUrl);
+                fileVos.add(fileVo);
+            }
         }
-        return items;
+        return fileVos;
     }
 
     @Override
@@ -81,6 +103,23 @@ public class QiniuServiceImpl implements QiniuService {
         } catch (QiniuException e) {
             e.printStackTrace();
         }
-        return domain;
+        return "http://"+domain;
     }
+
+    @Override
+    public int delefile(int courseId,String key) {
+        int ans=1;
+        Configuration cfg = new Configuration(Zone.zone0());
+        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
+        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        try {
+            bucketManager.delete(qiniuEntity.getBucket(), key);
+        } catch (QiniuException ex) {
+           ans=0;
+        }
+        logger.info(ans);
+        return ans;
+    }
+
 }
