@@ -3,6 +3,7 @@ layui.use('upload', function () {
     var $ = layui.jquery
         , upload = layui.upload;
     var courseId = $("#courseId").val();
+    test="test";
     $.post('/qiniu', {
             courseId: courseId
         }, function (data) {
@@ -12,7 +13,9 @@ layui.use('upload', function () {
                 elem: '#testList'
                 , url: 'http://upload.qiniup.com'
                 , accept: 'file'
-                , data: {"token": upload_token}
+                , data: {token: upload_token,key:function () {
+                        return test;
+                    }}
                 , multiple: true
                 , auto: false
                 , bindAction: '#testListAction'
@@ -23,17 +26,18 @@ layui.use('upload', function () {
                         var tr = $(['<tr id="upload-' + index + '">'
                             , '<td>' + file.name + '</td>'
                             , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
-                            , '<td>等待上传</td>'
+                            , '<td>正在上传</td>'
                             , '<td>'
                             , '<button class="layui-btn layui-btn-sm uploadbtn demo-reload layui-hide">重传</button>'
                             , '<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                             , '</td>'
                             , '</tr>'].join(''));
+                        obj.resetFile(index, file, '1/1/1/'+file.name);
+                        test='1/1/1/'+file.name;
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {
                             obj.upload(index, file);
                         });
-
                         //删除
                         tr.find('.demo-delete').on('click', function () {
                             delete files[index]; //删除对应的文件
@@ -41,13 +45,12 @@ layui.use('upload', function () {
                             uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
                         });
                         demoListView.append(tr);
+                        $('#testListAction').click();
                         window.parent.setIframeHeight();
                     });
                 }
                 , done: function (res, index, upload) {
                     if (res.error == undefined) { //上传成功
-                        console.info("error "+res.error);
-                        console.info("hash "+res.hash);
                         var tr = demoListView.find('tr#upload-' + index)
                             , tds = tr.children();
                         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
@@ -65,5 +68,4 @@ layui.use('upload', function () {
             });
         }
     );
-    console.info("courseId " + courseId);
 });
