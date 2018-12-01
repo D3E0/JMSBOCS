@@ -15,57 +15,80 @@
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
     <link href="<c:url value="/static/css/home.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
-    <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body>
 <div class="navbar">
-    <ul class="layui-nav nav" lay-filter="">
-        <li class="logo">基于开放云储存的作业提交管理系统</li>
-        <li id="homebtn" class="layui-nav-item layui-this"><a class="" href="javascript:;"><i class="fa fa-home fa-fw" ></i>&nbsp;首页</a></li>
-        <li id="coursebtn" class="layui-nav-item"><a href="javascript:;"><i class="fa fa-book fa-fw" ></i>&nbsp;课程</a></li>
-        <li id="jobbtn" class="layui-nav-item"><a href="javascript:;"><i class="fa fa-tasks fa-fw" ></i>&nbsp;作业</a></li>
-        <li class="layui-nav-item" style="float: right;margin-right: 1%;">
-            <a href="javascript:;"><i class="fa fa-user fa-fw" ></i>用户<i class="layui-icon layui-icon-triangle-d"></i></a>
-            <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                <dd><a href="">个人信息</a></dd>
-                <dd><a href="">安全设置</a></dd>
+    <ul class="layui-nav">
+        <li class="logo">基于开放云储存的作业管理系统</li>
+        <li class="layui-nav-item layui-this">
+            <a href="javascript:f('/main')">
+                <i class="fa fa-home fa-fw"></i>&nbsp;首页
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:f('/courselist')">
+                <i class="fa fa-book fa-fw"></i>&nbsp;课程
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:f('/joblist')">
+                <i class="fa fa-tasks fa-fw"></i>&nbsp;作业
+            </a>
+        </li>
+
+        <li class="layui-nav-item  layout-right">
+            <a href="javascript:">
+                <i class="fa fa-user fa-fw"></i>用户
+                <i class="layui-icon layui-icon-triangle-d"></i>
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:f('/user')">个人信息</a></dd>
                 <dd><a href="">退出登录</a></dd>
             </dl>
+        </li>
+        <li class="layui-nav-item  layout-right">
+            <a href="javascript:f('/user')">
+                <i class="layui-icon layui-icon-notice"></i>
+            </a>
         </li>
     </ul>
 </div>
 <div class="contentapp">
-    <iframe src="/main" id="myiframe" width="100%" scrolling="no" frameborder="0" onload="setIframeHeight(this)">
+    <iframe src="<c:url value="/test"/>" id="myiframe" width="100%" scrolling="no" frameborder="0"
+            onload="setIframeHeight(this)">
     </iframe>
-    <script>
-        layui.use('element','layer', function(){
-            element = layui.element;
-            layer = layui.layer;
-        });
-        $("#jobbtn").click(function () {
-            $("#myiframe").attr("src","/joblist");
-        });
-        $("#coursebtn").click(function () {
-            $("#myiframe").attr("src","/courselist");
-        });
-        $("#homebtn").click(function () {
-            $("#myiframe").attr("src","/main");
-        });
-        var test;
-        function setIframeHeight(iframe) {
-            if(!test)
-                test=iframe;
-            else
-                iframe=test;
-            if (iframe) {
-                iframe.height=0;
-                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                if (iframeWin.document.body) {
-                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                }
+</div>
+<script>
+    layui.use('element', function () {
+        let element = layui.element;
+    });
+    let contextPath = '${pageContext.request.contextPath}';
+
+    let _frame = document.getElementById("myiframe");
+
+    function f(url) {
+        _frame.setAttribute("src", contextPath + url);
+    }
+
+    var test;
+
+    window.onresize = function () {
+        setIframeHeight(this);
+    };
+
+    function setIframeHeight(iframe) {
+        if (!test)
+            test = iframe;
+        else
+            iframe = test;
+        if (iframe) {
+            iframe.height = 0;
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
             }
         }
-    </script>
-</div>
+    }
+</script>
 </body>
 </html>

@@ -1,28 +1,43 @@
-body{
+body {
     background-color: #eeeeee;
     color: #495060;
     overflow: scroll;
-    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
 }
-.nav{
-   background: #FFFFFF;
+
+.navbar {
+    background: #FFFFFF;
+    border-bottom: 1px solid #f6f6f6;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
-.layui-nav .layui-nav-item a{
+
+.layout-right {
+    float: right;
+}
+
+.layui-nav {
+    background: #FFFFFF;
+}
+
+.layui-nav .layui-nav-item a {
     color: #000;
 }
-.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a{
+
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
     color: #2d8cf0;
 }
-.layui-nav .layui-this:after, .layui-nav-bar{
+
+.layui-nav .layui-this:after, .layui-nav-bar {
     background-color: #2d8cf0;
 }
-.navbar{
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-.layui-icon-face-smile:hover{
+
+.layui-icon-face-smile:hover {
     color: #2d8cf0;
 }
-.logo{
+
+.logo {
     margin-left: 2%;
     margin-right: 2%;
     font-size: 20px;
@@ -30,18 +45,21 @@ body{
     line-height: 60px;
     color: #000000;
 }
-.fa-fw{
+
+.fa-fw {
     margin: 2px;
 }
-.contentapp{
-    margin: 0 6%;
-    margin-top: 40px;
+
+.contentapp {
+    margin: 40px 6% 0;
     box-sizing: border-box;
     background-color: #eeeeee;
 }
-.contentapp:hover{
-    box-shadow: 0 1px 9px 4px rgba(0,0,0,.1);
-}
-.layui-nav .layui-nav-child dd.layui-this a{
+
+/*.contentapp:hover {*/
+    /*box-shadow: 0 1px 9px 4px rgba(0, 0, 0, .1);*/
+/*}*/
+
+.layui-nav .layui-nav-child dd.layui-this a {
     background-color: #2d8cf0;
 }
