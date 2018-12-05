@@ -47,14 +47,14 @@
             </dl>
         </li>
         <li class="layui-nav-item  layout-right">
-            <a href="javascript:f('/user')">
+            <a href="javascript:f('/profile')">
                 <i class="layui-icon layui-icon-notice"></i>
             </a>
         </li>
     </ul>
 </div>
 <div class="contentapp">
-    <iframe src="<c:url value="/test"/>" id="myiframe" width="100%" scrolling="no" frameborder="0"
+    <iframe src="<c:url value="/profile"/>" id="myiframe" width="100%" scrolling="no" frameborder="0"
             onload="setIframeHeight(this)">
     </iframe>
 </div>

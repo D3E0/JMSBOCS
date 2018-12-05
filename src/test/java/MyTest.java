@@ -17,6 +17,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class MyTest {
@@ -24,6 +25,7 @@ public class MyTest {
     private Client httpManager = new Client();
     String accessKey = "0ygyCNdhOs4z9SOcS5uBYMo5sv80imPMeb3LhsPQ";
     String secretKey = "KareIDSEvAnMJNgODTQ43CYD4Nj5XIy5NWqsr65x";
+    String bucket = "job-management-system-based-on-open-cloud-storage";
     private static final Logger logger = LogManager.getLogger(MyTest.class);
 
     @Test
@@ -35,12 +37,6 @@ public class MyTest {
 
     @Test
     public void testLog() {
-        logger.trace("trace message");
-        logger.debug("debug message");
-        logger.info("info message");
-        logger.warn("warn message");
-        logger.error("error message");
-        logger.fatal("fatal message");
         System.out.println("Hello World!");
 
         Properties properties = new Properties();
@@ -69,7 +65,7 @@ public class MyTest {
 
         String localFilePath = "C:\\j2ee\\JMSBOCS\\web\\static\\img\\class.png";
         //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key="class.png";
+        String key = "class.png";
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         System.out.println(upToken);
@@ -92,6 +88,13 @@ public class MyTest {
     }
 
     @Test
+    public void testUpload2() {
+        Auth auth = Auth.create(accessKey, secretKey);
+        String upToken = auth.uploadToken(bucket);
+        System.out.println(upToken);
+    }
+
+    @Test
     public void getBucketList() {
 
         Response r = null;
@@ -100,8 +103,10 @@ public class MyTest {
             Auth auth = Auth.create(accessKey, secretKey);
             StringMap parameter = auth.authorization(url);
             r = httpManager.get(url, parameter);
-            System.out.println(parameter.get("Authorization"));
-            System.out.println(r.bodyString());
+            String buffer = r.bodyString();
+            buffer = buffer.replaceAll("[\\[\\]\"]", "");
+            System.out.println(buffer);
+            System.out.println(Arrays.toString(buffer.split(",")));
         } catch (QiniuException e) {
             e.printStackTrace();
         }
@@ -112,13 +117,17 @@ public class MyTest {
         Response r = null;
         try {
             String url = "http://api.qiniu.com/v6/domain/list?tbl=<bucketName>";
-            url = url.replace("<bucketName>", "job-management-system-based-on-open-cloud-storage");
+            url = url.replace("<bucketName>", "-management-system-based-on-open-cloud-storage");
             Auth auth = Auth.create(accessKey, secretKey);
             StringMap parameter = auth.authorization(url);
             r = httpManager.get(url, parameter);
             System.out.println(parameter.get("Authorization"));
-            String temp=r.bodyString();
-            System.out.println(temp.substring(2,temp.length()-2));
+            System.out.println(r.statusCode);
+            System.out.println(r.error);
+            System.out.println(r.toString());
+            String temp = r.bodyString();
+            System.out.println(temp);
+//            System.out.println(temp.substring(2, temp.length() - 2));
         } catch (QiniuException e) {
             Assert.assertNotNull(e.response.reqId);
         }

@@ -39,8 +39,7 @@
 
     <update id="update">
         update user
-        set user_id         = #{userId},
-            username        = #{username},
+        set username        = #{username},
             qiniu_id        = #{qiniuId},
             password        = #{password},
             telephone       = #{telephone},
@@ -50,6 +49,7 @@
             specialty       = #{specialty},
             office          = #{office},
             type            = #{type}
+        where user_id = #{userId}
     </update>
 
     <delete id="delete">
@@ -57,5 +57,33 @@
         from user
         where user_id = #{id}
     </delete>
+
+    <select id="selectUserDTO" resultMap="userDTO">
+        select user_id    as userId,
+               u.username as username,
+               telephone  as telephone,
+               email      as email,
+               office     as office,
+               specialty  as specialty,
+               type       as type,
+               q.qiniu_id as qiniuId,
+               bucket     as bucket
+        from user u,
+             qiniu q
+        where u.user_id = #{id}
+          and q.qiniu_id = u.qiniu_id
+    </select>
+
+    <resultMap id="userDTO" type="dto.UserDTO">
+        <id column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="telephone" property="telephone"/>
+        <result column="email" property="email"/>
+        <result column="office" property="office"/>
+        <result column="specialty" property="specialty"/>
+        <result column="type" property="type"/>
+        <result column="qiniuId" property="qiniuId"/>
+        <result column="bucket" property="bucket"/>
+    </resultMap>
 
 </mapper>

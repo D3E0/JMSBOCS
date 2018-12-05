@@ -1,29 +1,11 @@
 package service;
 
+import dto.UserDTO;
 import entity.UserEntity;
-import mapper.UserMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+public interface UserService extends BaseService<UserEntity> {
+    UserEntity processLogin(Integer id, String password);
 
-@Service
-public class UserService {
-    private static final Logger logger = LogManager.getLogger(UserService.class);
-    private final UserMapper userMapper;
+    UserDTO selectUserDTO(int id);
 
-    @Autowired
-    public UserService(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
-
-    public UserEntity getUser() {
-        return userMapper.selectOne(1);
-    }
-
-    public List<UserEntity> getUserList() {
-        return userMapper.selectAll();
-    }
 }

@@ -1,11 +1,9 @@
-package entity;
+package dto;
 
-import java.util.Date;
+import entity.UserType;
 
-public class UserEntity {
+public class UserDTO {
     private Integer userId;
-
-    private String password;
 
     private String username;
 
@@ -13,15 +11,13 @@ public class UserEntity {
 
     private String email;
 
-    private String role;
-
-    private Date lastLoginTime;
-
     private String specialty;
 
     private String office;
 
     private Integer qiniuId;
+
+    private String bucket;
 
     private UserType type;
 
@@ -33,20 +29,12 @@ public class UserEntity {
         this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
     public String getTelephone() {
@@ -54,7 +42,7 @@ public class UserEntity {
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone == null ? null : telephone.trim();
+        this.telephone = telephone;
     }
 
     public String getEmail() {
@@ -62,23 +50,7 @@ public class UserEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role == null ? null : role.trim();
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+        this.email = email;
     }
 
     public String getSpecialty() {
@@ -86,7 +58,7 @@ public class UserEntity {
     }
 
     public void setSpecialty(String specialty) {
-        this.specialty = specialty == null ? null : specialty.trim();
+        this.specialty = specialty;
     }
 
     public String getOffice() {
@@ -94,7 +66,7 @@ public class UserEntity {
     }
 
     public void setOffice(String office) {
-        this.office = office == null ? null : office.trim();
+        this.office = office;
     }
 
     public Integer getQiniuId() {
@@ -105,11 +77,34 @@ public class UserEntity {
         this.qiniuId = qiniuId;
     }
 
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+
     public UserType getType() {
         return type;
     }
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                ", specialty='" + specialty + '\'' +
+                ", office='" + office + '\'' +
+                ", qiniuId=" + qiniuId +
+                ", bucket='" + bucket + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
