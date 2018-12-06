@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.JobService;
-import service.QiniuService;
-import vo.FileVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -25,11 +24,6 @@ import java.util.List;
 public class JobController {
     private static final Logger logger = LogManager.getLogger(JobController.class);
     private JobService jobService;
-    private QiniuService qiniuService;
-    @Autowired
-    public void setQiniuService(QiniuService qiniuService) {
-        this.qiniuService = qiniuService;
-    }
 
     @Autowired
     public void setJobService(JobService jobService) {
@@ -48,8 +42,9 @@ public class JobController {
     }
 
     @RequestMapping("job")
-    public String job(Model model, int jobId) {
+    public String job(Model model, int jobId, HttpSession session) {
         model.addAttribute("job", jobService.findJobById(jobId));
+        model.addAttribute("jobId",jobId);
         return "job";
     }
 
@@ -60,27 +55,17 @@ public class JobController {
     }
 
     @RequestMapping(value = "addjob", method = RequestMethod.GET)
-    public String addjob(int jobId) {
+    public String addJob(int jobId) {
         return "job";
     }
     @ResponseBody
-    @RequestMapping(value = "qiniu")
-    public String getqiniu(int courseId){
-        return qiniuService.getUploadToken(courseId);
+    @RequestMapping(value = "deleteJob", method = RequestMethod.POST)
+    public void deleteJob(int jobId) {
+        jobService.deleteJob(jobId);
     }
-    @ResponseBody
-    @RequestMapping(value = "uploadfiles")
-    public List<FileVo> getuploadfiles(int courseId, int jobId, int studentId){
-        return qiniuService.getFileList(courseId,jobId,studentId);
-    }
-    @ResponseBody
-    @RequestMapping(value = "delefile")
-    public int delefile(int courseId, String key){
-        return qiniuService.delefile(courseId,key);
-    }
-    @RequestMapping(value = "jobfilelist", method = RequestMethod.GET)
-    public String jobfilelist() {
-        return "jobfilelist";
+    @RequestMapping(value = "updatejob", method = RequestMethod.GET)
+    public String updateJob(int jobId) {
+        return "job";
     }
 
 }

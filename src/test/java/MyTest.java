@@ -117,7 +117,7 @@ public class MyTest {
         Response r = null;
         try {
             String url = "http://api.qiniu.com/v6/domain/list?tbl=<bucketName>";
-            url = url.replace("<bucketName>", "-management-system-based-on-open-cloud-storage");
+            url = url.replace("<bucketName>", "job-management-system-based-on-open-cloud-storage");
             Auth auth = Auth.create(accessKey, secretKey);
             StringMap parameter = auth.authorization(url);
             r = httpManager.get(url, parameter);

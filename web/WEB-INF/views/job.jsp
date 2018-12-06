@@ -21,10 +21,11 @@
 <div class="panel">
     <div class="job-content">
         <div class="panel-title"><c:out value="${job.jobTitle}"/>
-            <button class="layui-btn delbtn" style="float: right;margin-right: 1%" >删除</button>
-            <button class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
+            <button id="delbtn" class="layui-btn delbtn" style="float: right;margin-right: 1%" >删除</button>
+            <button id="updatebtn" class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
         </div>
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
+        <input id="jobId" hidden value="<c:out value="${jobId}"/>">
         <p class="title">作业描述</p>
         <p class="content">
             ${job.jobContent}
@@ -69,6 +70,14 @@
         window.onload=function () {
             window.parent.setIframeHeight();
         };
+        $("#delbtn").click(function () {
+            var jobId=$("#jobId").val();
+            $.post('/deleteJob',{
+                jobId:jobId
+            },function (data) {
+                window.location.href='/joblist';
+            })
+        });
         $('#filelist').click(function () {
             console.info("click");
             window.parent.layui.use(['layer'], function () {//调用父页面的layer

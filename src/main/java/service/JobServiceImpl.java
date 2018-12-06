@@ -1,6 +1,7 @@
 package service;
 
 import dto.JobItemDTO;
+import entity.JobEntity;
 import mapper.JobMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,21 @@ public class JobServiceImpl implements JobService {
     @Override
     public int countJob(int studentId, String keyword) {
         return jobMapper.countJobByKeyword(studentId, keyword);
+    }
+
+    @Override
+    public void deleteJob(int jobId) {
+        jobMapper.delete(jobId);
+    }
+
+    @Override
+    public void updateJob(JobEntity jobEntity) {
+        jobMapper.update(jobEntity);
+    }
+
+    @Override
+    public void addJob(JobEntity jobEntity) {
+        jobMapper.save(jobEntity);
     }
 
 }

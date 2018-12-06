@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import util.QiniuUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -53,6 +54,11 @@ public class MapperTest {
         Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
         System.out.println(auth.privateDownloadUrl(publicUrl));
 
+    }
+    @Test
+    public void testQiniu(){
+        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(1);
+        QiniuUtil.queryDomain(qiniuEntity);
     }
     @Test
     public void testCourse() {
