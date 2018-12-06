@@ -1,10 +1,5 @@
 package controller;
 
-import com.qiniu.common.QiniuException;
-import com.qiniu.http.Client;
-import com.qiniu.http.Response;
-import com.qiniu.util.Auth;
-import com.qiniu.util.StringMap;
 import dto.UserDTO;
 import entity.UserEntity;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +32,12 @@ public class UserController {
         return "userProfile";
     }
 
+    /**
+     * 通过 userId 获取用户信息 个人资料
+     *
+     * @param id 用户 Id
+     * @return UserDTO
+     */
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getUser(@RequestParam int id) {
@@ -45,6 +46,15 @@ public class UserController {
         return new RestResult.Builder(200).data(entity).build();
     }
 
+    /**
+     * 学生修改个人资料
+     *
+     * @param id       id
+     * @param phone    联系方式
+     * @param email    邮箱
+     * @param response post 请求 跨域 开发用
+     * @return success || fail
+     */
     @RequestMapping(value = "/api/user/stu", method = RequestMethod.POST)
     @ResponseBody
     public RestResult updateStu(@RequestParam int id,
@@ -62,6 +72,16 @@ public class UserController {
         return new RestResult.Builder(200).message(res == 1 ? "success" : "fail").build();
     }
 
+    /**
+     * 教师修改个人资料
+     *
+     * @param id
+     * @param phone
+     * @param email
+     * @param office
+     * @param response post 请求 跨域 开发用
+     * @return success || fail
+     */
     @RequestMapping(value = "/api/user/tch", method = RequestMethod.POST)
     @ResponseBody
     public RestResult updateTch(@RequestParam int id,
@@ -81,6 +101,16 @@ public class UserController {
         return new RestResult.Builder(200).message(res == 1 ? "success" : "fail").build();
     }
 
+    /**
+     * 用户修改登陆密码
+     *
+     * @param id
+     * @param oldPass
+     * @param newPass
+     * @param checkPass
+     * @param response  post 请求 跨域 开发用
+     * @return success || fail
+     */
     @RequestMapping(value = "/api/user/pwd", method = RequestMethod.POST)
     @ResponseBody
     public RestResult updatePassword(@RequestParam int id,
@@ -104,6 +134,16 @@ public class UserController {
         return new RestResult.Builder(200).message(msg).build();
     }
 
+    /**
+     * 教师修改七牛云账号
+     *
+     * @param id
+     * @param accessKey
+     * @param secretKey
+     * @param bucket
+     * @param response  post 请求 跨域 开发用
+     * @return success || fail
+     */
     @RequestMapping(value = "/api/qiniu", method = RequestMethod.POST)
     @ResponseBody
     public RestResult updateBucket(@RequestParam Integer id,

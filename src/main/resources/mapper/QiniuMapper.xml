@@ -19,4 +19,28 @@
         where qiniu_id = #{id}
     </select>
 
+    <delete id="delete">
+        delete
+        from qiniu
+        where qiniu_id = #{id};
+    </delete>
+
+    <update id="update">
+        update qiniu
+        set bucket = #{bucket},
+            ak     = #{ak},
+            sk=#{sk}
+        where qiniu_id = #{qiniuId};
+    </update>
+
+    <select id="selectAll">
+        select *
+        from qiniu
+    </select>
+
+    <insert id="save">
+        insert qiniu (sk, ak, bucket)
+        VALUES (#{sk}, #{ak}, #{bucket})
+    </insert>
+
 </mapper>

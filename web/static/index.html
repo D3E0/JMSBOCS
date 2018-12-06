@@ -4,14 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Notify</title>
-    <link rel="stylesheet" href="./elementui/theme-chalk/index.css">
+    <link rel="stylesheet" href="/static/elementui/theme-chalk/index.css">
+    <style>
+        .tip {
+            color: #b3b3b3;
+            font: 12px Extra Extra Small;
+            padding-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
 <div id="app">
     <el-container>
         <el-aside width="200px">
-            <user-side></user-side>
+            <user-side v-bind:uid="uid" v-bind:is-tch="isTch"></user-side>
         </el-aside>
         <el-main>
             <router-view></router-view>
@@ -19,11 +26,11 @@
     </el-container>
 </div>
 
-<script type="text/javascript" src="./js/axios.js"></script>
-<script type="text/javascript" src="./js/vue.js"></script>
-<script type="text/javascript" src="./js/vue-router.js"></script>
-<script type="text/javascript" src="./elementui/index.js"></script>
-<script src="./js/main.js" type="module"></script>
+<script type="text/javascript" src="/static/js/axios.js"></script>
+<script type="text/javascript" src="/static/js/vue.js"></script>
+<script type="text/javascript" src="/static/js/vue-router.js"></script>
+<script type="text/javascript" src="/static/elementui/index.js"></script>
+<script src="/static/js/main.js" type="module"></script>
 
 </body>
 

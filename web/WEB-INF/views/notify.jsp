@@ -1,11 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: ACM-PC
+  Date: 2018/12/5
+  Time: 18:06
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Notify</title>
-    <link rel="stylesheet" href="/static/layui/css/layui.css">
-    <link rel="stylesheet" href="/static/css/notify.css">
+    <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/css/notify.css"/>">
 </head>
 
 <body>
@@ -20,8 +29,8 @@
         <div class="notify"></div>
     </div>
 </div>
-<script src="/static/js/axios.js"></script>
-<script src="/static/layui/layui.js"></script>
+<script src="<c:url value="/static/js/axios.js"/>"></script>
+<script src="<c:url value="/static/layui/layui.js"/>"></script>
 <script type="module">
     layui.use(['element', 'layer', 'form'], function () {
         var element = layui.element, layer = layui.layer;

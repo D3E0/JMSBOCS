@@ -25,6 +25,11 @@ public class NotifyController {
         this.notifyService = notifyService;
     }
 
+    @RequestMapping(value = "/notify", method = RequestMethod.GET)
+    public String getNotifypage() {
+        return "notify";
+    }
+
     @RequestMapping(value = "/api/notify", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getUserNotifyList(@RequestParam int userId) {

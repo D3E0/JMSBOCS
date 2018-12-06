@@ -18,6 +18,12 @@
         body {
             background-color: #fff;
         }
+
+        .tip {
+            color: #b3b3b3;
+            font: 12px Extra Extra Small;
+            padding-left: 10px;
+        }
     </style>
 </head>
 
@@ -25,7 +31,7 @@
 <div id="app">
     <el-container>
         <el-aside width="200px">
-            <user-side></user-side>
+            <user-side v-bind:uid="uid" v-bind:is-tch="isTch"></user-side>
         </el-aside>
         <el-main>
             <router-view></router-view>
