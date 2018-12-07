@@ -1,17 +1,22 @@
 var userSide = {
     computed: {
-        isTch: function() {
-            return this.$root.store.type === "teacher";
+        dfltView: function() {
+            if (this.isTch) {
+                return 'tchProfile';
+            } else {
+                return 'stuProfile'
+            }
         }
     },
+    props: ['uid', 'isTch'],
     template: `
-    <el-menu default-active="profile" class="el-menu-vertical-demo"
+    <el-menu :default-active="dfltView" class="el-menu-vertical-demo"
              :router="true">
-        <el-menu-item index="profile">
+        <el-menu-item :index="dfltView">
             <i class="el-icon-menu"></i>
             <span slot="title">个人资料</span>
         </el-menu-item>
-        <el-menu-item index="update">
+        <el-menu-item index="updatePwd">
             <i class="el-icon-menu"></i>
             <span slot="title">密码修改</span>
         </el-menu-item>
@@ -21,5 +26,5 @@ var userSide = {
         </el-menu-item>
     </el-menu>
     `
-};
+}
 export default userSide

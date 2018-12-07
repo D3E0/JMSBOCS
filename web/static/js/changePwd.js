@@ -24,13 +24,13 @@ var changePwd = {
             },
             pwdRules: {
                 oldPwd: [
-                    { validator: validatePass, trigger: 'blur' }
+                    {validator: validatePass, trigger: 'blur'}
                 ],
                 newPwd: [
-                    { validator: validatePass, trigger: 'blur' }
+                    {validator: validatePass, trigger: 'blur'}
                 ],
                 checkPwd: [
-                    { validator: validatePass2, trigger: 'blur' }
+                    {validator: validatePass2, trigger: 'blur'}
                 ],
             }
         };
@@ -39,9 +39,25 @@ var changePwd = {
         onSubmit(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    const params = new URLSearchParams();
+                    params.append('id', this.$root.uid);
+                    params.append('oldPass', this.pwd.oldPwd);
+                    params.append('newPass', this.pwd.newPwd);
+                    params.append('checkPass', this.pwd.checkPwd);
+                    axios.post('/api/user/pwd', params).then(response => {
+                        if (response.data.message === 'success') {
+                            this.$message({
+                                message: '修改成功',
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message.error("修改失败");
+                        }
+                        this.resetForm('pwdForm');
+                    }).catch(error => {
+                        this.$message.error(error);
+                    });
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });
@@ -68,5 +84,5 @@ var changePwd = {
         </el-form-item>
     </el-form>
     `
-}
+};
 export default changePwd

@@ -56,6 +56,29 @@
           and n.notify_id = un.notify_id
     </select>
 
+    <select id="selectLimit" resultMap="notifyDTO">
+        select user_notify_id as id,
+               user_id        as userId,
+               n.notify_id    as notifyId,
+               notify_content as content,
+               notify_time    as time,
+               notify_type    as type,
+               un.is_read     as isRead
+        from notify n,
+             user_notify un
+        where un.user_id = #{id}
+          and n.notify_id = un.notify_id
+        limit #{start}, #{offset}
+    </select>
+
+    <select id="getCount" resultType="Long">
+        select count(*)
+        from notify n,
+             user_notify un
+        where un.user_id = #{id}
+          and n.notify_id = un.notify_id
+    </select>
+
     <resultMap id="notifyDTO" type="dto.NotifyDTO">
         <id column="id" property="id"/>
         <result column="userId" property="userId"/>

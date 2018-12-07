@@ -14,7 +14,6 @@ public class NotifyDTO {
     private String content;
     private String title;
 
-
     @Override
     public String toString() {
         return "NotifyDTO{" +

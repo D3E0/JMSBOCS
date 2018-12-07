@@ -42,12 +42,12 @@
                 <i class="layui-icon layui-icon-triangle-d"></i>
             </a>
             <dl class="layui-nav-child">
-                <dd><a href="javascript:f('/user')">个人信息</a></dd>
-                <dd><a href="">退出登录</a></dd>
+                <dd><a href="javascript:f('/profile')">个人信息</a></dd>
+                <dd><a href="javascript:f('/logout')">退出登录</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item  layout-right">
-            <a href="javascript:f('/profile')">
+            <a href="javascript:f('/notify')">
                 <i class="layui-icon layui-icon-notice"></i>
             </a>
         </li>
