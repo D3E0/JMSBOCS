@@ -35,11 +35,12 @@
                u.username         as username
         FROM comment c,
              user u
-        where c.user_id = u.user_id and c.comment_id = #{cid}
+        where c.user_id = u.user_id
+          and c.comment_id = #{cid}
         order by pid desc, cid
     </select>
 
-    <resultMap id="commentDetail" type="dto.CommentDTO">
+    <resultMap id="commentDetail" type="dto.RootCommentDTO">
         <id column="cid" property="commentId"/>
         <result column="content" property="commentContent"/>
         <result column="ctime" property="commentTime"/>
@@ -79,6 +80,103 @@
         set root_comment_id = #{pid}
         where comment_id = #{cid}
     </update>
+
+
+    
+    <insert id="save" parameterType="entity.CommentEntity"
+            useGeneratedKeys="true" keyProperty="commentId" keyColumn="comment_id">
+        insert into comment (user_id,
+                             comment_time,
+                             comment_content,
+                             course_id,
+                             root_comment_id,
+                             reply_comment_id)
+        values (#{userId},
+                #{commentTime},
+                #{commentContent},
+                #{courseId},
+                #{rootCommentId},
+                #{replyCommentId})
+    </insert>
+
+
+    <select id="selectRootComments" resultMap="rootComment">
+        SELECT c.comment_id      as commentId,
+               c.comment_content as commentContent,
+               c.comment_time    as commentTime,
+               c.course_id       as courseId,
+               c.user_id         as userId,
+               u.username        as username
+        FROM comment c,
+             user u
+        where c.course_id = #{courseId}
+          and u.user_id = c.user_id
+    </select>
+
+    <resultMap id="rootComment" type="dto.RootCommentDTO">
+        <id column="commentId" property="commentId"/>
+        <result column="commentTime" property="commentTime"/>
+        <result column="commentContent" property="commentContent"/>
+        <result column="courseId" property="courseId"/>
+        <result column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <collection property="replyComments" column="commentId"
+                    ofType="dto.ReplyCommentDTO" select="selectReply"/>
+    </resultMap>
+
+    <select id="selectReply" resultMap="replyComment">
+        SELECT
+            c.comment_id       as commentId,
+            c.comment_content  as commentContent,
+            c.comment_time     as commentTime,
+            c.root_comment_id  as rootCommentId,
+            c.reply_comment_id as replyCommentId,
+            u.user_id          as userId,
+            u.username         as username,
+            ru.username        as replyName,
+            ru.user_id         as replyId
+        FROM comment c,
+             user u,
+             comment r,
+             user ru
+        WHERE c.root_comment_id = #{comment_id}
+          and c.user_id = u.user_id
+          and r.comment_id = c.reply_comment_id
+          and r.user_id = ru.user_id
+    </select>
+
+    <resultMap id="replyComment" type="dto.ReplyCommentDTO">
+        <id column="commentId" property="commentId"/>
+        <result column="commentContent" property="commentContent"/>
+        <result column="commentTime" property="commentTime"/>
+        <result column="rootCommentId" property="rootCommentId"/>
+        <result column="replyCommentId" property="replyCommentId"/>
+        <result column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="replyName" property="replyUsername"/>
+        <result column="replyId" property="replyUserId"/>
+    </resultMap>
+
+    <select id="selectReplyComments" resultMap="replyComment">
+        SELECT
+            c.comment_id       as commentId,
+            c.comment_content  as commentContent,
+            c.comment_time     as commentTime,
+            c.root_comment_id  as rootCommentId,
+            c.reply_comment_id as replyCommentId,
+            u.user_id          as userId,
+            u.username         as username,
+            ru.username        as replyName,
+            ru.user_id         as replyId
+        FROM comment c,
+             user u,
+             comment r,
+             user ru
+        WHERE c.root_comment_id = #{rootCommentId}
+          and c.user_id = u.user_id
+          and r.comment_id = c.reply_comment_id
+          and r.user_id = ru.user_id
+    </select>
 
 
 </mapper>

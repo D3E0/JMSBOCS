@@ -1,18 +1,17 @@
 package controller;
 
-import dto.CommentDTO;
+import dto.RootCommentDTO;
 import entity.CommentEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import service.CommentService;
+import service.CommentServiceImpl;
 import util.RestResult;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/api")
@@ -20,21 +19,21 @@ public class CommentController {
 
     private static final Logger logger = LogManager.getLogger(CommentController.class);
 
-    private final CommentService service;
+    private final CommentServiceImpl service;
 
     @Autowired
-    public CommentController(CommentService service) {
+    public CommentController(CommentServiceImpl service) {
         this.service = service;
     }
 
     @RequestMapping("/comments")
     @ResponseBody
     public RestResult getComments() {
-        List<CommentDTO> list = service.getCommentsDetail();
+        List<RootCommentDTO> list = service.getCommentsDetail();
         return new RestResult.Builder(0).data(list).count((long) list.size()).build();
     }
 
-    @RequestMapping("/comment")
+    @RequestMapping("/comment/1")
     @ResponseBody
     public RestResult getComment() {
         CommentEntity entity = service.getComment(1);

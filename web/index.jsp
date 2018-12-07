@@ -29,7 +29,7 @@
         <div class="layui-field-box">
             <div class="layui-btn-container">
                 <a href="<c:url value="/home"/>" class="layui-btn">主界面</a>
-                <a href="<c:url value="/api/comment"/>" class="layui-btn">API 评论</a>
+                <a href="<c:url value="/api/comment"/>" class="layui-btn">API 评论 新</a>
                 <a href="<c:url value="/api/comments"/>" class="layui-btn">API 评论列表</a>
                 <a href="<c:url value="/test"/>" class="layui-btn">API 测试</a>
             </div>
