@@ -31,7 +31,7 @@
         }
 
         var $ = layui.$;
-        $.post('/uploadfiles', {
+        $.post('/uploadFiles', {
             jobId: 1,
             courseId: 1,
             studentId: 1
@@ -60,7 +60,7 @@
             $(".deletebtn").click(function (e) {
                 var li=$(this);
                 var key=li.data("key");
-                $.post("/delefile",{
+                $.post("/deleteFile",{
                     courseId:1,
                     key:key
                 },function (data) {

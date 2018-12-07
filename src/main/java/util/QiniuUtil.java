@@ -12,7 +12,7 @@ import com.qiniu.util.StringMap;
 import entity.QiniuEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import vo.FileVo;
+import vo.FileVO;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -71,7 +71,7 @@ public class QiniuUtil {
         String publicUrl = String.format("%s/%s", domain, encodedFileName);
         return auth.privateDownloadUrl(publicUrl);
     }
-    public static List<FileVo> getFileList( QiniuEntity qiniuEntity,String prefix) {
+    public static List<FileVO> getFileList(QiniuEntity qiniuEntity, String prefix) {
         Configuration cfg = new Configuration(Zone.zone0());
         Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
         auth.privateDownloadUrl("");
@@ -80,11 +80,11 @@ public class QiniuUtil {
         String delimiter ="";
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiniuEntity.getBucket(), prefix, limit, delimiter);
         FileInfo[] items;
-        List<FileVo> fileVos=new ArrayList<FileVo>();
+        List<FileVO> fileVOs=new ArrayList<FileVO>();
         while (fileListIterator.hasNext()) {
             items = fileListIterator.next();
             for (FileInfo item : items) {
-                FileVo fileVo=new FileVo(item);
+                FileVO fileVo=new FileVO(item);
                 String encodedFileName = null;
                 try {
                     encodedFileName = URLEncoder.encode(fileVo.getFileName(), "utf-8");
@@ -94,9 +94,9 @@ public class QiniuUtil {
                 String publicUrl = String.format("%s/%s", queryDomain(qiniuEntity), encodedFileName);
                 String downloadUrl=auth.privateDownloadUrl(publicUrl);
                 fileVo.setDownloadUrl(downloadUrl);
-                fileVos.add(fileVo);
+                fileVOs.add(fileVo);
             }
         }
-        return fileVos;
+        return fileVOs;
     }
 }

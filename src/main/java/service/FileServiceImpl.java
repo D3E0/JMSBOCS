@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.QiniuUtil;
-import vo.FileVo;
+import vo.FileVO;
 
 import java.util.List;
 
@@ -32,8 +32,15 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FileVo> getFileList(int courseId, int jobId, int studentId) {
+    public List<FileVO> getFileList(int courseId, int jobId, int studentId) {
         String prefix = courseId+"/"+jobId+"/"+studentId+"/";
+        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.getFileList(qiniuEntity,prefix);
+    }
+
+    @Override
+    public List<FileVO> getPublicFileList(int courseId) {
+        String prefix = "public/"+courseId+"/";
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity,prefix);
     }

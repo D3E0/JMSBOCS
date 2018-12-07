@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.FileService;
-import vo.FileVo;
+import vo.FileVO;
 
 import java.util.List;
 
@@ -24,21 +24,31 @@ public class FileController {
     }
     @ResponseBody
     @RequestMapping(value = "qiniu")
-    public String getqiniu(int courseId){
+    public String getQiniu(int courseId){
         return fileService.getUploadToken(courseId);
     }
     @ResponseBody
-    @RequestMapping(value = "uploadfiles")
-    public List<FileVo> getuploadfiles(int courseId, int jobId, int studentId){
+    @RequestMapping(value = "uploadFiles")
+    public List<FileVO> getUploadFiles(int courseId, int jobId, int studentId){
         return fileService.getFileList(courseId,jobId,studentId);
     }
     @ResponseBody
-    @RequestMapping(value = "delefile")
-    public int delefile(int courseId, String key){
+    @RequestMapping(value = "publicFiles")
+    public List<FileVO> getPublicFiles(int courseId){
+        return fileService.getPublicFileList(courseId);
+    }
+    @ResponseBody
+    @RequestMapping(value = "publicFilesCount")
+    public int getPublicFilesCount(int courseId){
+        return fileService.getPublicFileList(courseId).size();
+    }
+    @ResponseBody
+    @RequestMapping(value = "deleteFile")
+    public int deleFile(int courseId, String key){
         return fileService.delefile(courseId,key);
     }
-    @RequestMapping(value = "jobfilelist", method = RequestMethod.GET)
-    public String jobfilelist() {
-        return "jobfilelist";
+    @RequestMapping(value = "jobFileList", method = RequestMethod.GET)
+    public String jobFileList() {
+        return "jobFileList";
     }
 }

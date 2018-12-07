@@ -3,9 +3,9 @@ layui.use(['laypage', 'element', 'layer'], function () {
 
     function laypageReload() {
         var count = 0;
-        $.post("/countjob",
+        $.post("/countJob",
             {
-                studentid: 1,
+                studentId: 2,
                 keyword: $("#search").val()
             }, function (data) {
                 count = data;
@@ -50,9 +50,9 @@ layui.use(['laypage', 'element', 'layer'], function () {
     });
 
     function getjoblist(i, keyword) {
-        $.post("/joblist",
+        $.post("/jobList",
             {
-                studentid: 1,
+                studentId: 2,
                 page: i,
                 keyword: keyword
             },
@@ -90,6 +90,4 @@ layui.use(['laypage', 'element', 'layer'], function () {
             }
         );
     }
-
-    getjoblist(1);
 });

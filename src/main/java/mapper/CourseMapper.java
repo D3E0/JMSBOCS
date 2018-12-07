@@ -14,5 +14,6 @@ import java.util.List;
  */
 @Component
 public interface CourseMapper extends BaseMapper<CourseEntity>{
-    List<CourseItemDto> findCourseListById(@Param("studentId") int studentId, @Param("cur")int cur);
+    int countCourseById(@Param("studentId") int studentId, @Param("keyword")String keyword);
+    List<CourseItemDto> findCourseListById(@Param("studentId") int studentId, @Param("cur")int cur, @Param("keyword")String keyword);
 }

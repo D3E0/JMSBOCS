@@ -1,6 +1,7 @@
 package service;
 
 import dto.CourseItemDto;
+import entity.CourseEntity;
 import mapper.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,27 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseItemDto> findCourseListById(int studenId,int page) {
-        return courseMapper.findCourseListById(studenId,page);
+    public List<CourseItemDto> findCourseListById(int studenId,int page,String keyword) {
+        return courseMapper.findCourseListById(studenId,(page-1)*10,keyword);
+    }
+
+    @Override
+    public int countCourseById(int studentId, String keyword) {
+        return courseMapper.countCourseById(studentId,keyword);
+    }
+
+    @Override
+    public int updateCourse(CourseEntity t) {
+        return courseMapper.update(t);
+    }
+
+    @Override
+    public int deleteCourse(int id) {
+        return courseMapper.delete(id);
+    }
+
+    @Override
+    public int saveCourse(CourseEntity t) {
+        return courseMapper.save(t);
     }
 }
