@@ -26,12 +26,12 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="javascript:f('/courselist')">
+            <a href="javascript:f('/courseList')">
                 <i class="fa fa-book fa-fw"></i>&nbsp;课程
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="javascript:f('/joblist')">
+            <a href="javascript:f('/jobList')">
                 <i class="fa fa-tasks fa-fw"></i>&nbsp;作业
             </a>
         </li>
@@ -70,7 +70,7 @@
         _frame.setAttribute("src", contextPath + url);
     }
 
-    var test;
+    let test;
 
     window.onresize = function () {
         setIframeHeight(this);

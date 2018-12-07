@@ -14,7 +14,7 @@ public interface JobService {
     List<JobItemDTO> findJobListById(int studentId,int page,String keyword);
     JobItemDTO findJobById(int jobId);
     int countJob(int studentId,String keyword);
-    void deleteJob(int jobId);
-    void updateJob(JobEntity jobEntity);
-    void addJob(JobEntity jobEntity);
+    int deleteJob(int jobId);
+    int updateJob(JobEntity jobEntity);
+    int addJob(JobEntity jobEntity);
 }

@@ -35,7 +35,7 @@
             </li>
         </ul>
     </div>
-    <iframe src="/filelist" id="myiframe" width="85%" scrolling="no" frameborder="0" style="float: right"
+    <iframe src="/fileList" id="myiframe" width="85%" scrolling="no" frameborder="0" style="float: right"
             onload="setIframeHeight(this)">
     </iframe>
 </div>
@@ -70,13 +70,14 @@
         else
             iframe = test;
         if (iframe) {
-            iframe.height = 0;
+            iframe.height = 40;
             var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
             if (iframeWin.document.body) {
                 iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
             }
             console.info("sds");
         }
+        window.parent.setIframeHeight();
     }
 </script>
 </body>

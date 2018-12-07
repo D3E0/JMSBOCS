@@ -1,8 +1,14 @@
 package controller;
 
+import dto.CourseItemDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import service.CourseService;
+
+import java.util.List;
 
 /**
  * @author yan
@@ -11,13 +17,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class CourseController {
-    @RequestMapping(value = "courselist", method = RequestMethod.GET)
+    private CourseService courseService;
+    @Autowired
+    public void setCourseService(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    @RequestMapping(value = "courseList", method = RequestMethod.GET)
     public String courseList() {
-        return "courselist";
+        return "courseList";
+    }
+    @ResponseBody
+    @RequestMapping(value = "courseList", method = RequestMethod.POST)
+    public List<CourseItemDto> getCourseList(int studentId,int page,String keyword) {
+        return courseService.findCourseListById(studentId,page,keyword);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "courseCount", method = RequestMethod.POST)
+    public int getCourseCount(int studentId,String keyword) {
+        return courseService.countCourseById(studentId,keyword);
     }
 
     @RequestMapping(value = "course", method = RequestMethod.GET)
     public String course() {
+
         return "course";
     }
 
@@ -26,8 +50,8 @@ public class CourseController {
         return "teacher";
     }
 
-    @RequestMapping(value = "filelist", method = RequestMethod.GET)
-    public String filelist() {
-        return "filelist";
+    @RequestMapping(value = "fileList", method = RequestMethod.GET)
+    public String fileList() {
+        return "fileList";
     }
 }

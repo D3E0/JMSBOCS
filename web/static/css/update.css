@@ -1,0 +1,9 @@
+.layui-btn-primary:hover {
+    border-color: #2d8cf0;
+}
+.layui-btn{
+    border-radius: 4px;
+}
+.layui-form{
+    margin: 20px 2%
+}

@@ -1,7 +1,6 @@
 import com.qiniu.util.Auth;
 import com.sun.deploy.net.URLEncoder;
 import config.RootConfig;
-import dto.CourseItemDto;
 import dto.JobItemDTO;
 import entity.QiniuEntity;
 import mapper.CourseMapper;
@@ -62,7 +61,6 @@ public class MapperTest {
     }
     @Test
     public void testCourse() {
-        List<CourseItemDto> list=courseMapper.findCourseListById(1,1);
-        System.out.println(list.get(0).toString());
+
     }
 }

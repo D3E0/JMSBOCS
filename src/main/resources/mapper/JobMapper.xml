@@ -50,9 +50,9 @@
     <update id="update" parameterType="entity.JobEntity">
         UPDATE job
         set job_title=#{jobTitle},
-            job_content=#{jobTitle},
-            job_begin_time=#{jobTitle},
-            job_end_time=#{jobTitle}
+            job_content=#{jobContent},
+            job_begin_time=#{jobBeginTime},
+            job_end_time=#{jobEndTime}
         where job_id = #{jobId}
     </update>
     <delete id="delete">

@@ -7,15 +7,15 @@ import com.qiniu.storage.model.FileInfo;
  * @date 2018/12/1 13:54
  * @descripition
  */
-public class FileVo {
+public class FileVO {
     private String fileName;
     private String fileSize;
     private String downloadUrl;
     private long uploadTime;
 
-    public FileVo() {
+    public FileVO() {
     }
-    public FileVo(FileInfo fileInfo) {
+    public FileVO(FileInfo fileInfo) {
         fileName=fileInfo.key;
         if (fileInfo.fsize<1024*1024){
             fileSize=fileInfo.fsize/1024+"KB";

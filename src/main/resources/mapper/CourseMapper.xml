@@ -5,12 +5,42 @@
 <mapper namespace="mapper.CourseMapper">
 
     <select id="findCourseListById" resultType="dto.CourseItemDto">
-        select course_id,course_name, academic_year, semester, username as teacherName
-        from course,
-             user
-        where course_id = #{courseId}
-          and user_id = teacher_id
+        select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
+        from course as c ,
+             user as u ,
+             student_course as sc
+        where c.course_id =sc.course_id
+          and sc.student_id = #{studentId}
+          and u.user_id=c.teacher_id
+          and (c.course_name like concat(concat('%', #{keyword}), '%') or
+               u.username like concat(concat('%', #{keyword}), '%'))
+        limit #{cur} ,10;
     </select>
-
+    <select id="countCourseById" resultType="int">
+        select count(c.course_id)
+        from course as c ,
+             user as u ,
+             student_course as sc
+        where c.course_id =sc.course_id
+          and sc.student_id = #{studentId}
+          and u.user_id=c.teacher_id
+          and (c.course_name like concat(concat('%', #{keyword}), '%') or
+               u.username like concat(concat('%', #{keyword}), '%'))
+    </select>
+    <insert id="save" parameterType="entity.CourseEntity">
+        INSERT into course(course_name, course_description, teacher_id, semester,academic_year )
+            value (#{courseName}, #{courseDescription}, #{teacherId}, #{semester}, #{academicYear})
+    </insert>
+    <update id="update" parameterType="entity.CourseEntity">
+        UPDATE course
+        set course_name=#{courseName},
+            course_description=#{course_description},
+            semester=#{semester},
+            academic_year=#{academic_year}
+        where course_id = #{courseId}
+    </update>
+    <delete id="delete">
+        DELETE from course where course_id=#{id};
+    </delete>
 
 </mapper>

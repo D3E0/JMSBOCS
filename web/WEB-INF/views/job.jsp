@@ -62,7 +62,7 @@
                 状态：可提交
             </li>
             <li>
-                <a id="filelist" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
+                <a id="fileList" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
             </li>
         </ul>
     </div>
@@ -75,19 +75,31 @@
             $.post('/deleteJob',{
                 jobId:jobId
             },function (data) {
-                window.location.href='/joblist';
+                window.location.href='/jobList';
             })
         });
-        $('#filelist').click(function () {
-            console.info("click");
+        $("#updatebtn").click(function () {
             window.parent.layui.use(['layer'], function () {//调用父页面的layer
-                var layer=window.parent.layui.layer;
+                let layer=window.parent.layui.layer;
+                let param="?jobId=${job.jobId}&jobContent=${job.jobContent}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}"
+                layer.open({
+                    title: false,
+                    area: ['600px','400px'],
+                    type: 2,
+                    scrollbar : true,
+                    content:  ['/updateJob'+param, 'no']
+                });
+            });
+        });
+        $('#fileList').click(function () {
+            window.parent.layui.use(['layer'], function () {//调用父页面的layer
+                let layer=window.parent.layui.layer;
                 layer.open({
                     title: false,
                     area: ['700px','500px'],
                     type: 2,
                     scrollbar : true,
-                    content:  ['/jobfilelist', 'no']
+                    content:  ['/jobFileList', 'no']
                 });
             });
         });

@@ -42,18 +42,18 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void deleteJob(int jobId) {
-        jobMapper.delete(jobId);
+    public int deleteJob(int jobId) {
+        return jobMapper.delete(jobId);
     }
 
     @Override
-    public void updateJob(JobEntity jobEntity) {
-        jobMapper.update(jobEntity);
+    public int updateJob(JobEntity jobEntity) {
+        return jobMapper.update(jobEntity);
     }
 
     @Override
-    public void addJob(JobEntity jobEntity) {
-        jobMapper.save(jobEntity);
+    public int addJob(JobEntity jobEntity) {
+        return jobMapper.save(jobEntity);
     }
 
 }
