@@ -4,7 +4,7 @@ public class RestResult {
 
     private int code;
     private String message;
-    private int count;
+    private Long count;
     private Object data;
 
     @Override
@@ -27,7 +27,7 @@ public class RestResult {
     public static class Builder {
         private int code;
         private String message;
-        private int count;
+        private Long count;
         private Object data = null;
 
         public Builder(int code) {
@@ -44,7 +44,7 @@ public class RestResult {
             return this;
         }
 
-        public Builder count(int count) {
+        public Builder count(Long count) {
             this.count = count;
             return this;
         }

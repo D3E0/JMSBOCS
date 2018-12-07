@@ -31,7 +31,7 @@ public class CommentController {
     @ResponseBody
     public RestResult getComments() {
         List<CommentDTO> list = service.getCommentsDetail();
-        return new RestResult.Builder(0).data(list).count(list.size()).build();
+        return new RestResult.Builder(0).data(list).count((long) list.size()).build();
     }
 
     @RequestMapping("/comment")
@@ -40,6 +40,7 @@ public class CommentController {
         CommentEntity entity = service.getComment(1);
         return new RestResult.Builder(0).data(entity).build();
     }
+
     @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
     @ResponseBody
     public RestResult addCommentGet(@RequestParam() String commentContent,

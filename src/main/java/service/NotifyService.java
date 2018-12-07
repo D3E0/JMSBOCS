@@ -1,30 +1,16 @@
 package service;
 
+
 import dto.NotifyDTO;
-import mapper.NotifyMapper;
-import mapper.UserNotifyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class NotifyService {
-    private final NotifyMapper mapper;
-    private final UserNotifyMapper userNotifyMapper;
+public interface NotifyService {
+    List<NotifyDTO> selectUserNotifyList(int userId);
 
-    @Autowired
-    public NotifyService(NotifyMapper mapper, UserNotifyMapper userNotifyMapper) {
-        this.mapper = mapper;
-        this.userNotifyMapper = userNotifyMapper;
-    }
+    List<NotifyDTO> selectUserNotifyList(int userId, int page, int limit);
 
-    public List<NotifyDTO> selectUserNotifyList(int userId) {
-        return userNotifyMapper.select(userId);
-    }
+    Long getCount(int userId);
 
-    public int deleteUserNotify(int id) {
-        return userNotifyMapper.delete(id);
-    }
-
+    int deleteUserNotify(int id);
 }
