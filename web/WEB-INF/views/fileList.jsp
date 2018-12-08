@@ -10,21 +10,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
-    <script src="<c:url value="/static/layui/layui.js"/>"></script>
     <link href="<c:url value="/static/css/list.css"/>" rel="stylesheet">
-    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
-    <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
     <script src="<c:url value="/static/js/fileList.js"/>"></script>
 </head>
 <body>
-<div class="panel">
+<div class="panel" style="width: 87%;margin: 10px;display: inline-block;">
     <div class="content">
         <ul id="list" class="list">
         </ul>
     </div>
+    <div id="mypage"></div>
 </div>
-<div id="mypage"></div>
 <script>
         $(document).ready(function(){
             window.parent.setIframeHeight();

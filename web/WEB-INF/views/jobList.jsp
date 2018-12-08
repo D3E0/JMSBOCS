@@ -17,6 +17,7 @@
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body>
+<jsp:include page="head.jsp"/>
 <div class="panel">
     <div class="panel-title">最近作业</div>
     <div class="op">
@@ -29,13 +30,12 @@
             <a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
         </button>
     </div>
-
+    <div class="content">
+        <ul class="list" id="list">
+        </ul>
+    </div>
+    <div id="mypage"></div>
 </div>
-<div class="content">
-    <ul class="list" id="list">
-    </ul>
-</div>
-<div id="mypage"></div>
 <script src="<c:url value="/static/js/joblist.js"/>">
 
 </script>

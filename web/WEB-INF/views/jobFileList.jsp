@@ -16,7 +16,7 @@
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
-<body>
+<body style="text-align:center;background-color: #FFFFFF">
 <div class="panel">
     <div class="content">
         <ul id="list" class="list">
@@ -51,8 +51,7 @@
                     '                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>' + data[i].fileSize + '&nbsp;&nbsp;\n' +
                     '                    </div>\n' +
                     '                </div>\n' +
-                    '                <a href="' + data[i].downloadUrl + '" target="_blank" ><button type="button" class="layui-btn downloadbtn">下载</button></a>\n<button type="button" class="layui-btn deletebtn" data-key="'+data[i].fileName+'">删除</button>' +
-                    '';
+                    '                <a href="' + data[i].downloadUrl + '" target="_blank" ><button type="button" class="layui-btn downloadbtn">下载</button></a>\n<button type="button" class="layui-btn deletebtn" data-key="'+data[i].fileName+'">删除</button>';
                 var li = document.createElement("li");
                 li.innerHTML = item;
                 $("#list").append(li);

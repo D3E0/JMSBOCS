@@ -48,7 +48,7 @@ layui.use(['laypage', 'element', 'layer'], function () {
                     var item ='<img class="icon" src="/static/img/class.png" height="60px">\n' +
                         '            <div class="item">\n' +
                         '                <div class="title">\n' +
-                        '                    <a href="/course?courseId='+obj.courseId+'">'+obj.courseName+'</a>\n' +
+                        '                    <a href="/course?courseId='+obj.courseId+'&courseName='+obj.courseName+'">'+obj.courseName+'</a>\n' +
                         '                </div>\n' +
                         '                <div class="time">\n' +
                         '                    <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>'+obj.academicYear+'&nbsp;&nbsp;\n' +

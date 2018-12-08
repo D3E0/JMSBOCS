@@ -5,9 +5,11 @@ import mapper.QiniuMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import util.QiniuUtil;
 import vo.FileVO;
+import vo.FileVOs;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class FileServiceImpl implements FileService {
         this.qiniuMapper = qiniuMapper;
     }
     @Override
+    @Cacheable(cacheNames = "UploadToken",key ="#courseId")
     public String getUploadToken(int courseId) {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getUploadToken(qiniuEntity);
@@ -39,10 +42,21 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FileVO> getPublicFileList(int courseId) {
+    @Cacheable(cacheNames = "allPublicFile",key ="#courseId")
+    public List<FileVO> getAllPublicFile(int courseId) {
         String prefix = "public/"+courseId+"/";
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity,prefix);
+    }
+    @Override
+    @Cacheable(cacheNames = "publicFileList",key ="#+'c'+courseId+'p'+page")
+    public FileVOs getPublicFiles(int courseId,int page) {
+        FileVOs fileVOs=new FileVOs();
+        List<FileVO> fileVOList=getAllPublicFile(courseId);
+        fileVOs.setFileVOList(fileVOList.subList((page-1)*10,
+                fileVOList.size()>page*10?page*10:fileVOList.size()));
+        fileVOs.setCount(fileVOList.size());
+        return fileVOs;
     }
 
     @Override
@@ -52,7 +66,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public int delefile(int courseId,String key) {
+    public int deleteFile(int courseId,String key) {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.delefile(qiniuEntity,key);
     }

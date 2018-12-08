@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.FileService;
 import vo.FileVO;
+import vo.FileVOs;
 
 import java.util.List;
 
@@ -34,18 +36,13 @@ public class FileController {
     }
     @ResponseBody
     @RequestMapping(value = "publicFiles")
-    public List<FileVO> getPublicFiles(int courseId){
-        return fileService.getPublicFileList(courseId);
-    }
-    @ResponseBody
-    @RequestMapping(value = "publicFilesCount")
-    public int getPublicFilesCount(int courseId){
-        return fileService.getPublicFileList(courseId).size();
+    public FileVOs getPublicFiles(int courseId, @RequestParam(defaultValue = "1")int page){
+        return fileService.getPublicFiles(courseId,page);
     }
     @ResponseBody
     @RequestMapping(value = "deleteFile")
     public int deleFile(int courseId, String key){
-        return fileService.delefile(courseId,key);
+        return fileService.deleteFile(courseId,key);
     }
     @RequestMapping(value = "jobFileList", method = RequestMethod.GET)
     public String jobFileList() {

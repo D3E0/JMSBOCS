@@ -81,6 +81,7 @@ public class QiniuUtil {
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiniuEntity.getBucket(), prefix, limit, delimiter);
         FileInfo[] items;
         List<FileVO> fileVOs=new ArrayList<FileVO>();
+        String domain=queryDomain(qiniuEntity);
         while (fileListIterator.hasNext()) {
             items = fileListIterator.next();
             for (FileInfo item : items) {
@@ -91,7 +92,7 @@ public class QiniuUtil {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                String publicUrl = String.format("%s/%s", queryDomain(qiniuEntity), encodedFileName);
+                String publicUrl = String.format("%s/%s", domain, encodedFileName);
                 String downloadUrl=auth.privateDownloadUrl(publicUrl);
                 fileVo.setDownloadUrl(downloadUrl);
                 fileVOs.add(fileVo);

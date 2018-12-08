@@ -1,6 +1,7 @@
 package service;
 
 import vo.FileVO;
+import vo.FileVOs;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
 public interface FileService {
     String getUploadToken(int courseId);
     List<FileVO> getFileList(int courseId, int jobId, int studentId);
-    List<FileVO> getPublicFileList(int courseId);
+    List<FileVO> getAllPublicFile(int courseId);
+    FileVOs getPublicFiles(int courseId,int page);
     String queryDomain(int courseId);
-    int delefile(int courseId,String key);
+    int deleteFile(int courseId,String key);
 }

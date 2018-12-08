@@ -17,9 +17,10 @@
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body>
+<jsp:include page="head.jsp"/>
 <div class="panel">
     <div class="panel-title">已选课程</div>
-    <div class="op">
+    <div class="op layui-show-lg-block">
         <div class="searchdiv">
             <input type="text" id="search" placeholder="keyword">
             <i class=" fa-search fa fa-fw"></i>
@@ -29,22 +30,18 @@
             <a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
         </button>
     </div>
-</div>
-<div class="content">
-    <ul id="list" class="list">
+    <div class="content">
+        <ul id="list" class="list">
 
-    </ul>
+        </ul>
+    </div>
+    <div id="mypage"></div>
 </div>
-<div id="mypage"></div>
 <script src="<c:url value="/static/js/courselist.js"/>">
 </script>
 <script>
     layui.use('laypage', function () {
         var laypage = layui.laypage, $ = layui.$;
-        //执行一个laypage实例m
-        $(document).ready(function(){
-            window.parent.setIframeHeight();
-        });
     });
 </script>
 </body>

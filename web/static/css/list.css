@@ -1,6 +1,6 @@
 body{
     overflow: scroll;
-    background-color: #FFFFFF;
+    background-color: #eeeeee;
     font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
     color: #495060;
@@ -12,10 +12,12 @@ body{
     line-height: 30px;
     padding: 5px 15px;
     text-align:left;
+    display: inline-block;
 }
 .panel{
-    text-align:center;
+    margin:50px 4% ;
     background-color: #FFFFFF;
+    padding-bottom: 20px;
 }
 .list li{
     text-align:left;
@@ -35,11 +37,11 @@ body{
     background-color: #29b6f6;
 }
 .op{
-    margin-right: 4%;
+    margin-top: 20px;
+    float: right;
+    display: inline-block;
+    margin-right: 5%;
     border-radius: 5px;
-    position: absolute;
-    right: 15px;
-    top:20px;
 }
 #mypage{
     float: right;

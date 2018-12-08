@@ -54,9 +54,6 @@
     </ul>
 </div>
 <div class="contentapp">
-    <iframe src="<c:url value="/profile"/>" id="myiframe" width="100%" scrolling="no" frameborder="0"
-            onload="setIframeHeight(this)">
-    </iframe>
 </div>
 <script>
     layui.use('element', function () {
@@ -68,26 +65,6 @@
 
     function f(url) {
         _frame.setAttribute("src", contextPath + url);
-    }
-
-    let test;
-
-    window.onresize = function () {
-        setIframeHeight(this);
-    };
-
-    function setIframeHeight(iframe) {
-        if (!test)
-            test = iframe;
-        else
-            iframe = test;
-        if (iframe) {
-            iframe.height = 0;
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-            }
-        }
     }
 </script>
 </body>

@@ -11,13 +11,16 @@
 <head>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
+    <link href="<c:url value="/static/css/list.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/css/main.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body>
+<jsp:include page="head.jsp"/>
 <div class="panel">
-    <div class="panel-title">最近公告 <button class="layui-btn refresh">Refresh</button></div>
+    <div class="panel-title">最近公告 </div>
+    <button class="layui-btn refresh">Refresh</button>
     <div class="content">
         <ul class="list">
             <li>

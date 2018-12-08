@@ -11,10 +11,6 @@ body{
     padding: 5px 15px;
     text-align:left;
 }
-.panel{
-    text-align:center;
-    background-color: #FFFFFF;
-}
 .list li{
     text-align:left;
     margin-top: 10px;
@@ -52,10 +48,8 @@ body{
     font-size:10px;
     background-color: #29b6f6;
     border-radius: 4px;
-    position: absolute;
-    margin-right: 5%;
-    right: 15px;
-    top:20px;
+    margin: 20px 5%;
+    float: right;
 }
 #mypage{
     float: right;

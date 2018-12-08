@@ -18,6 +18,7 @@
     <script src="<c:url value="/static/js/fileupload.js"/>"></script>
 </head>
 <body>
+<jsp:include page="head.jsp"/>
 <div class="panel">
     <div class="job-content">
         <div class="panel-title"><c:out value="${job.jobTitle}"/>
@@ -51,7 +52,7 @@
     </div>
     <div class="rightbar">
         <div class="info"><i class="fa fa-info-circle fa-fw" ></i>&nbsp;&nbsp;作业信息</div>
-        <ul class="list">
+        <ul class="list"style="width: 300px">
             <li>
                 开始时间：${job.jobBeginTime}
             </li>

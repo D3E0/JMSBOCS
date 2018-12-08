@@ -17,10 +17,16 @@
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body>
+<jsp:include page="head.jsp"/>
 <div class="panel">
-    <div class="panel-title">java程序设计
-        <button class="layui-btn additem"><a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;上传资源
+    <div class="titlediv">
+        <div class="course-title">
+            ${courseName}
+            <input id="courseId" value="${courseId}" hidden>
+        </div>
+        <button id="getfile" class="layui-btn additem"><a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;上传资源
         </button>
+        <button id="upload"></button>
     </div>
     <div class="leftbar">
         <ul class="list">
@@ -35,50 +41,58 @@
             </li>
         </ul>
     </div>
-    <iframe src="/fileList" id="myiframe" width="85%" scrolling="no" frameborder="0" style="float: right"
-            onload="setIframeHeight(this)">
-    </iframe>
+    <jsp:include page="fileList.jsp"/>
 </div>
 <script>
-    layui.use(['laypage', 'element', 'layer'], function () {
-        var laypage = layui.laypage, $ = layui.$;
+    layui.use(['laypage', 'element', 'layer', 'upload'], function () {
+        let laypage = layui.laypage, $ = layui.$, upload = layui.upload;
         //执行一个laypage实例m
-        laypage.render({
-            elem: 'mypage' //注意，这里的 test1 是 ID，不用加 # 号
-            , count: 50 //数据总数，从服务端得到
+        filename = "test";
+        let courseId = $('#courseId').val();
+        $.post('/qiniu', {
+            courseId: courseId
+        }, function (data) {
+            upload_token = data;
+            upload.render({
+                elem: '#getfile' //绑定元素
+                , url: 'http://upload.qiniup.com' //上传接口
+                , data: {
+                    token: upload_token,
+                    key: function () {
+                        return 'public/' + courseId + '/' + filename;
+                    }
+                }, accept: 'file'
+                , auto: false
+                , bindAction: '#upload'
+                , choose: function (obj) {
+                    let files = obj.pushFile();
+                    obj.preview(function (index, file, result) {
+                        filename = file.name;//得到文件对象
+                        console.info("before filename  " + filename);
+                        $("#upload").click();
+                    });
+                }
+                , done: function (res, index, upload) {
+                    if (res.error === undefined) { //上传成功
+                        window.location.reload();
+                    }
+                    this.error(index, upload);
+                }
+                , error: function (index, upload) {
+                    layer.msg('上传失败');
+                }
+            });
         });
-        window.onload = function () {
-            window.parent.setIframeHeight();
-        };
         $('#teacher').click(function () {
             console.info("click");
-            window.parent.layui.use(['layer'], function () {//调用父页面的layer
-                var layer=window.parent.layui.layer;
-                layer.open({
-                    title: false,
-                    area: ['500px', '500px'],
-                    type: 2,
-                    content:  ['/teacher', 'no']
-                });
+            layer.open({
+                title: false,
+                area: ['500px', '500px'],
+                type: 2,
+                content: ['/teacher?courseId=' + courseId, 'no']
             });
         });
     });
-    var test;
-    function setIframeHeight(iframe) {
-        if (!test)
-            test = iframe;
-        else
-            iframe = test;
-        if (iframe) {
-            iframe.height = 40;
-            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-            if (iframeWin.document.body) {
-                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-            }
-            console.info("sds");
-        }
-        window.parent.setIframeHeight();
-    }
 </script>
 </body>
 </html>
