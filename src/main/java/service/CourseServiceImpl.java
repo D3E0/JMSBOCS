@@ -1,6 +1,6 @@
 package service;
 
-import dto.CourseItemDto;
+import dto.CourseItemDTO;
 import entity.CourseEntity;
 import mapper.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseItemDto> findCourseListById(int studenId,int page,String keyword) {
+    public List<CourseItemDTO> findCourseListById(int studenId, int page, String keyword) {
         return courseMapper.findCourseListById(studenId,(page-1)*10,keyword);
     }
 

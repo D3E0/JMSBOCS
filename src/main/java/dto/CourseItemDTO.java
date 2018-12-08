@@ -5,7 +5,7 @@ package dto;
  * @date 2018/11/24 13:24
  * @descripition
  */
-public class CourseItemDto {
+public class CourseItemDTO {
     private Integer courseId;
 
     private String courseName;
@@ -68,7 +68,7 @@ public class CourseItemDto {
 
     @Override
     public String toString() {
-        return "CourseItemDto{" +
+        return "CourseItemDTO{" +
                 "courseId=" + courseId +
                 ", courseName='" + courseName + '\'' +
                 ", teacherName=" + teacherName +

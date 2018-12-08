@@ -1,6 +1,6 @@
 package controller;
 
-import dto.CourseItemDto;
+import dto.CourseItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ public class CourseController {
     }
     @ResponseBody
     @RequestMapping(value = "courseList", method = RequestMethod.POST)
-    public List<CourseItemDto> getCourseList(int studentId,int page,String keyword) {
+    public List<CourseItemDTO> getCourseList(int studentId, int page, String keyword) {
         return courseService.findCourseListById(studentId,page,keyword);
     }
 

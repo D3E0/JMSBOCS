@@ -1,6 +1,6 @@
 package service;
 
-import dto.CourseItemDto;
+import dto.CourseItemDTO;
 import entity.CourseEntity;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @descripition
  */
 public interface CourseService {
-    List<CourseItemDto> findCourseListById(int studenId,int page,String keyword);
+    List<CourseItemDTO> findCourseListById(int studenId, int page, String keyword);
     int countCourseById(int studentId,String keyword);
     int updateCourse(CourseEntity t);
 

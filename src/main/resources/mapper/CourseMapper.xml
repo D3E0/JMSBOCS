@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.CourseMapper">
 
-    <select id="findCourseListById" resultType="dto.CourseItemDto">
+    <select id="findCourseListById" resultType="dto.CourseItemDTO">
         select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
         from course as c ,
              user as u ,
