@@ -1,0 +1,88 @@
+.vcard {
+    position: relative;
+    display: block;
+}
+
+.vimg {
+    width: 3.125rem;
+    height: 3.125rem;
+    float: left;
+    border-radius: 50%;
+    margin-right: .7525rem;
+    border: 1px solid #f5f5f5;
+    padding: .125rem
+}
+
+.vh {
+    overflow: hidden;
+    padding-bottom: .5rem;
+    border-bottom: 1px dashed #f5f5f5;
+}
+
+.vhead {
+    line-height: 24px;
+    margin-top: 0
+}
+
+.vnick {
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 14px;
+    cursor: pointer;
+    color: #1abc9c;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.vsys {
+    display: inline-block;
+    padding: .2rem .5rem;
+    background: #ededed;
+    color: #b3b1b1;
+    font-size: .75rem;
+    border-radius: .2rem;
+    margin-right: .3rem;
+}
+
+.vmeta {
+    line-height: 16px;
+    position: relative;
+}
+
+.vtime {
+    color: #b3b3b3;
+    font-size: 12px;
+    margin-right: 14px;
+}
+
+.vcontent {
+    word-wrap: break-word;
+    word-break: break-all;
+    text-align: justify;
+    color: #4a4a4a;
+    font-size: .875rem;
+    line-height: 2;
+    position: relative;
+    margin-bottom: .75rem;
+    padding-top: .625rem;
+}
+
+.vquote {
+    color: #666;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 1px dashed hsla(0, 0%, 93%, .5)
+}
+
+.vquote .vimg {
+    width: 2.225rem;
+    height: 2.225rem
+}
+
+.vat {
+    float: right;
+    color: #ef2f11
+}
+
+

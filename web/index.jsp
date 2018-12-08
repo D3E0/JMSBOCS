@@ -28,10 +28,13 @@
         <legend>导航页</legend>
         <div class="layui-field-box">
             <div class="layui-btn-container">
-                <a href="<c:url value="/home"/>" class="layui-btn">主界面</a>
-                <a href="<c:url value="/api/comment"/>" class="layui-btn">API 评论 新</a>
-                <a href="<c:url value="/api/comments"/>" class="layui-btn">API 评论列表</a>
-                <a href="<c:url value="/test"/>" class="layui-btn">API 测试</a>
+                <a href="<c:url value="/main"/>" class="layui-btn">首页</a>
+                <a href="<c:url value="/courseList"/>" class="layui-btn">课程</a>
+                <a href="<c:url value="/jobList"/>" class="layui-btn">作业</a>
+                <a href="<c:url value="/user"/>" class="layui-btn">个人资料</a>
+                <a href="<c:url value="/user#/updatePwd"/>" class="layui-btn">密码修改</a>
+                <a href="<c:url value="/user#/notify"/>" class="layui-btn">消息中心</a>
+                <a href="<c:url value="/user#/qiniu"/>" class="layui-btn">七牛云</a>
             </div>
         </div>
     </fieldset>

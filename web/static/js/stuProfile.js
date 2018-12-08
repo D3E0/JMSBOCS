@@ -14,9 +14,6 @@ var stuProfile = {
     created() {
         this.fetchData()
     },
-    watch: {
-        '$route': 'fetchData'
-    },
     methods: {
         fetchData() {
             this.loading = true;
@@ -67,7 +64,7 @@ var stuProfile = {
     template: `
     <el-form ref="stuForm" :model="stu"
     v-loading="loading" label-width="80px" style="width: 500px">
-<el-form-item label="学号'">
+<el-form-item label="学号">
    <el-input v-model="stu.userId" :disabled="true"></el-input>
 </el-form-item>
 <el-form-item label="姓名">

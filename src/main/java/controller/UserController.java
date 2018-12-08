@@ -27,9 +27,9 @@ public class UserController {
         this.service = service;
     }
 
-    @RequestMapping("/profile")
+    @RequestMapping("/user")
     public String getUserProfilePage() {
-        return "userProfile";
+        return "user";
     }
 
     /**

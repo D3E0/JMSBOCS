@@ -1,5 +1,6 @@
 package service;
 
+import dto.CommentDTO;
 import dto.ReplyCommentDTO;
 import dto.RootCommentDTO;
 import entity.CommentEntity;
@@ -25,61 +26,29 @@ public class CommentServiceImpl implements CommentService {
         this.mapper = mapper;
     }
 
-    public List<RootCommentDTO> getCommentsDetail() {
-        return mapper.getCommentsDetail();
-    }
-
-    public RootCommentDTO getCommentDetail(int cid) {
-        return mapper.getCommentDetail(cid);
-    }
-
-    public CommentEntity getComment(int id) {
-        return mapper.getComment(id);
-    }
-
-    /**
-     * TODO 事务
-     */
-    public int saveComment(CommentEntity entity) {
-        int cnt = mapper.saveComment(entity);
-        if (cnt < 0) {
-            return 0;
-        } else {
-            int id = entity.getCommentId();
-            if (entity.getRootCommentId() == null) {
-                updateCommentRoot(id, id);
-            }
-            return id;
-        }
-    }
-
-    public void updateCommentRoot(int cid, int pid) {
-        mapper.updateCommentRoot(cid, pid);
-    }
-
-    @Override
     public List<ReplyCommentDTO> selectReplyComments(int rootCommentId) {
         return mapper.selectReplyComments(rootCommentId);
     }
 
-    @Override
     public List<RootCommentDTO> selectRootComments(int courseId) {
         return mapper.selectRootComments(courseId);
     }
 
-    @Override
-    public int saveRootComments(String content, Integer userId, Integer courseId) {
-        CommentEntity entity = new CommentEntity(new Date(), content, userId);
+    public int saveRootComments(String content, Integer userId, String userAgent, Integer courseId) {
+        CommentEntity entity = new CommentEntity(new Date(), content, userId, userAgent);
         entity.setCourseId(courseId);
         return mapper.save(entity);
     }
 
-    @Override
-    public int saveReplyComments(String content, Integer userId, Integer rootId, Integer replyId) {
-        CommentEntity entity = new CommentEntity(new Date(), content, userId);
+    public int saveReplyComments(String content, Integer userId, String userAgent, Integer rootId, Integer replyId) {
+        CommentEntity entity = new CommentEntity(new Date(), content, userId, userAgent);
         entity.setReplyCommentId(replyId);
-        entity.setReplyCommentId(rootId);
+        entity.setRootCommentId(rootId);
         return mapper.save(entity);
+    }
+
+    public Long getCount(int courseId) {
+        return mapper.getCount(courseId);
     }
 
 

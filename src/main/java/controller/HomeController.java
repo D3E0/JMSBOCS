@@ -23,18 +23,10 @@ public class HomeController {
     public String home() {
         return "home";
     }
-    @RequestMapping("/head")
-    public String head() {
-        return "head";
-    }
 
     @RequestMapping("/main")
     public String main() {
         return "main";
     }
 
-    @RequestMapping("/test")
-    public String test() {
-        return "userProfile";
-    }
 }

@@ -43,7 +43,7 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager(RedisTemplate redisTemplate){
         RedisCacheManager cacheManager=new RedisCacheManager(redisTemplate);
-        Map<String,Long> time = new HashMap<>();
+        Map<String,Long> time = new HashMap<String,Long>();
         time.put("UploadToken",3000L);
         time.put("publicFileList",3000L);
         time.put("allPublicFile",3000L);

@@ -1,5 +1,6 @@
 package mapper;
 
+import dto.CommentDTO;
 import dto.ReplyCommentDTO;
 import dto.RootCommentDTO;
 import entity.CommentEntity;
@@ -15,9 +16,9 @@ public interface CommentMapper extends BaseService<CommentEntity> {
 
     CommentEntity getComment(int id);
 
-    List<RootCommentDTO> getCommentsDetail();
+    List<CommentDTO> getCommentsDetail();
 
-    RootCommentDTO getCommentDetail(int cid);
+    CommentDTO getCommentDetail(int cid);
 
     void updateCommentRoot(@Param("cid") int cid, @Param("pid") int pid);
 
@@ -38,4 +39,13 @@ public interface CommentMapper extends BaseService<CommentEntity> {
      * @return
      */
     List<ReplyCommentDTO> selectReplyComments(int rootCommentId);
+
+    /**
+     * 返回课程评论总数
+     *
+     * @param courseId
+     * @return
+     */
+    Long getCount(int courseId);
+
 }
