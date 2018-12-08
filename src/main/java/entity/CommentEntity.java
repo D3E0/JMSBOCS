@@ -18,6 +18,16 @@ public class CommentEntity {
 
     private Integer userId;
 
+    private String userAgent;
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
     public Integer getCommentId() {
         return commentId;
     }
@@ -96,13 +106,12 @@ public class CommentEntity {
         this.userId = userId;
     }
 
-    public CommentEntity(Date commentTime, String commentContent, Integer userId) {
+    public CommentEntity(Date commentTime, String commentContent, Integer userId, String userAgent) {
         this.commentTime = commentTime;
+        this.userAgent = userAgent;
         this.commentContent = commentContent;
         this.userId = userId;
     }
-
-
 
 
 }

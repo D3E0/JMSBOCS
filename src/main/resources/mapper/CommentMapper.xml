@@ -40,7 +40,7 @@
         order by pid desc, cid
     </select>
 
-    <resultMap id="commentDetail" type="dto.RootCommentDTO">
+    <resultMap id="commentDetail" type="dto.CommentDTO">
         <id column="cid" property="commentId"/>
         <result column="content" property="commentContent"/>
         <result column="ctime" property="commentTime"/>
@@ -82,7 +82,16 @@
     </update>
 
 
-    
+    <select id="getCount" resultType="Long">
+        select count(*)
+        from comment c,
+             comment r
+        where c.course_id = #{courseId}
+          and (r.comment_id = c.comment_id
+            or r.root_comment_id = c.comment_id)
+    </select>
+
+
     <insert id="save" parameterType="entity.CommentEntity"
             useGeneratedKeys="true" keyProperty="commentId" keyColumn="comment_id">
         insert into comment (user_id,
@@ -90,13 +99,15 @@
                              comment_content,
                              course_id,
                              root_comment_id,
-                             reply_comment_id)
+                             reply_comment_id,
+                             user_agent)
         values (#{userId},
                 #{commentTime},
                 #{commentContent},
                 #{courseId},
                 #{rootCommentId},
-                #{replyCommentId})
+                #{replyCommentId},
+                #{userAgent})
     </insert>
 
 
@@ -105,12 +116,14 @@
                c.comment_content as commentContent,
                c.comment_time    as commentTime,
                c.course_id       as courseId,
+               c.user_agent      as userAgent,
                c.user_id         as userId,
                u.username        as username
         FROM comment c,
              user u
         where c.course_id = #{courseId}
           and u.user_id = c.user_id
+        order by c.comment_id desc
     </select>
 
     <resultMap id="rootComment" type="dto.RootCommentDTO">
@@ -118,6 +131,7 @@
         <result column="commentTime" property="commentTime"/>
         <result column="commentContent" property="commentContent"/>
         <result column="courseId" property="courseId"/>
+        <result column="userAgent" property="userAgent"/>
         <result column="userId" property="userId"/>
         <result column="username" property="username"/>
         <collection property="replyComments" column="commentId"
@@ -129,6 +143,7 @@
             c.comment_id       as commentId,
             c.comment_content  as commentContent,
             c.comment_time     as commentTime,
+            c.user_agent       as userAgent,
             c.root_comment_id  as rootCommentId,
             c.reply_comment_id as replyCommentId,
             u.user_id          as userId,
@@ -143,12 +158,14 @@
           and c.user_id = u.user_id
           and r.comment_id = c.reply_comment_id
           and r.user_id = ru.user_id
+        order by c.comment_id asc
     </select>
 
     <resultMap id="replyComment" type="dto.ReplyCommentDTO">
         <id column="commentId" property="commentId"/>
         <result column="commentContent" property="commentContent"/>
         <result column="commentTime" property="commentTime"/>
+        <result column="userAgent" property="userAgent"/>
         <result column="rootCommentId" property="rootCommentId"/>
         <result column="replyCommentId" property="replyCommentId"/>
         <result column="userId" property="userId"/>
@@ -162,6 +179,7 @@
             c.comment_id       as commentId,
             c.comment_content  as commentContent,
             c.comment_time     as commentTime,
+            c.user_agent       as userAgent,
             c.root_comment_id  as rootCommentId,
             c.reply_comment_id as replyCommentId,
             u.user_id          as userId,
@@ -176,6 +194,7 @@
           and c.user_id = u.user_id
           and r.comment_id = c.reply_comment_id
           and r.user_id = ru.user_id
+        order by c.comment_id asc
     </select>
 
 

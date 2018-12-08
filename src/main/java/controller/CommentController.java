@@ -1,63 +1,91 @@
 package controller;
 
 import dto.RootCommentDTO;
-import entity.CommentEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import service.CommentService;
 import service.CommentServiceImpl;
 import util.RestResult;
 
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
 public class CommentController {
 
     private static final Logger logger = LogManager.getLogger(CommentController.class);
 
-    private final CommentServiceImpl service;
+    private final CommentService service;
 
     @Autowired
     public CommentController(CommentServiceImpl service) {
         this.service = service;
     }
 
-    @RequestMapping("/comments")
-    @ResponseBody
-    public RestResult getComments() {
-        List<RootCommentDTO> list = service.getCommentsDetail();
-        return new RestResult.Builder(0).data(list).count((long) list.size()).build();
+    @RequestMapping("/comment")
+    public String getUserProfilePage() {
+        return "comment";
     }
 
-    @RequestMapping("/comment/1")
+    /**
+     * 课程的讨论
+     *
+     * @param courseId
+     * @return
+     */
+    @RequestMapping(value = "/api/comment", method = RequestMethod.GET)
     @ResponseBody
-    public RestResult getComment() {
-        CommentEntity entity = service.getComment(1);
-        return new RestResult.Builder(0).data(entity).build();
+    public RestResult getComments(@RequestParam Integer courseId) {
+        logger.info("query comment under course ==> " + courseId);
+        List<RootCommentDTO> list = service.selectRootComments(courseId);
+        Long count = service.getCount(courseId);
+        logger.info("count ==> " + count);
+        logger.info(list);
+        return new RestResult.Builder(200).count(count).data(list).build();
     }
 
-    @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
+    /**
+     * 添加评论
+     *
+     * @param commentContent
+     * @param userId
+     * @param courseId
+     * @param rootCommentId
+     * @param replyCommentId
+     * @param response       post 请求 跨域 开发用
+     * @return
+     */
+    @RequestMapping(value = "/api/comment", method = RequestMethod.POST)
     @ResponseBody
     public RestResult addCommentGet(@RequestParam() String commentContent,
                                     @RequestParam() Integer userId,
-                                    @RequestParam() Integer courseId,
+                                    @RequestParam(required = false) Integer courseId,
                                     @RequestParam(required = false) Integer rootCommentId,
-                                    @RequestParam(required = false) Integer replyCommentId) {
-        logger.info(commentContent + "  " + userId + " " + courseId);
-        logger.info(rootCommentId + " " + replyCommentId);
-        CommentEntity entity = new CommentEntity(courseId, commentContent, userId);
-        entity.setReplyCommentId(replyCommentId);
-        entity.setRootCommentId(rootCommentId);
-        entity.setCommentTime(new Date());
-        int id = service.saveComment(entity);
-        if (id == 0) {
-            return new RestResult.Builder(500).build();
+                                    @RequestParam(required = false) Integer replyCommentId,
+                                    HttpServletResponse response,
+                                    HttpServletRequest request) {
+        logger.info(String.format("save comment {%d (%d) (%d, %d) %s}", userId, courseId, replyCommentId, rootCommentId, commentContent));
+        String userAgent = request.getHeader("User-Agent");
+        int res = 0;
+        if (courseId != null) {
+            res = service.saveRootComments(commentContent, userId, userAgent, courseId);
+        } else if (rootCommentId != null && replyCommentId != null) {
+            res = service.saveReplyComments(commentContent, userId, userAgent, rootCommentId, replyCommentId);
+        }
+        logger.info("res ===> " + res);
+        response.setHeader("Access-Control-Allow-Methods", "POST");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        if (res > 0) {
+            return new RestResult.Builder(200).message("success").build();
         } else {
-            return new RestResult.Builder(0).data(service.getCommentDetail(id)).build();
+            return new RestResult.Builder(500).message("fail").build();
         }
     }
 }

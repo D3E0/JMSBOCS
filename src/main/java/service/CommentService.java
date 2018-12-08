@@ -10,8 +10,10 @@ public interface CommentService {
 
     List<RootCommentDTO> selectRootComments(int courseId);
 
-    int saveRootComments(String content, Integer userId, Integer courseId);
+    int saveRootComments(String content, Integer userId, String userAgent, Integer courseId);
 
-    int saveReplyComments(String content, Integer userId, Integer rootId, Integer replyId);
+    int saveReplyComments(String content, Integer userId, String userAgent, Integer rootId, Integer replyId);
+
+    Long getCount(int courseId);
 
 }

@@ -1,16 +1,9 @@
 package dto;
 
-import java.util.Date;
-
 /**
  * 数据传输对象
  */
-public class ReplyCommentDTO {
-    private Integer commentId;
-    private Date commentTime;
-    private String commentContent;
-    private Integer userId;
-    private String username;
+public class ReplyCommentDTO extends CommentDTO {
     private Integer rootCommentId;
     private Integer replyCommentId;
     private Integer replyUserId;
@@ -28,46 +21,6 @@ public class ReplyCommentDTO {
                 ", replyUserId=" + replyUserId +
                 ", replyUsername='" + replyUsername + '\'' +
                 '}';
-    }
-
-    public Integer getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
-
-    public Date getCommentTime() {
-        return commentTime;
-    }
-
-    public void setCommentTime(Date commentTime) {
-        this.commentTime = commentTime;
-    }
-
-    public String getCommentContent() {
-        return commentContent;
-    }
-
-    public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public Integer getRootCommentId() {

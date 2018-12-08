@@ -16,13 +16,9 @@ var tchProfile = {
     created() {
         this.fetchData()
     },
-    watch: {
-        '$route': 'fetchData'
-    },
     methods: {
         fetchData() {
             this.loading = true;
-            console.info(axios);
             axios.get('/api/user', {
                 params: {
                     id: this.$root.uid,

@@ -3,31 +3,29 @@ package dto;
 import java.util.Date;
 
 public class CommentDTO {
-    private Integer commentId;
-    private Integer courseId;
-    private Date commentTime;
-    private String commentContent;
-    private Integer rootCommentId;
-    private Integer userId;
-    private String username;
-    private Integer replyCommentId;
-
+    protected Integer commentId;
+    protected Date commentTime;
+    protected String userAgent;
+    protected String commentContent;
+    protected Integer userId;
+    protected String username;
 
     public Integer getCommentId() {
         return commentId;
+    }
+
+    public String getUserAgent() {
+        return this.userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
 
     public Date getCommentTime() {
         return commentTime;
@@ -45,13 +43,6 @@ public class CommentDTO {
         this.commentContent = commentContent;
     }
 
-    public Integer getRootCommentId() {
-        return rootCommentId;
-    }
-
-    public void setRootCommentId(Integer rootCommentId) {
-        this.rootCommentId = rootCommentId;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -69,11 +60,4 @@ public class CommentDTO {
         this.username = username;
     }
 
-    public Integer getReplyCommentId() {
-        return replyCommentId;
-    }
-
-    public void setReplyCommentId(Integer replyCommentId) {
-        this.replyCommentId = replyCommentId;
-    }
 }
