@@ -50,11 +50,12 @@ layui.use('upload', function () {
                     });
                 }
                 , done: function (res, index, upload) {
-                    if (res.error == undefined) { //上传成功
+                    if (res.error === undefined) { //上传成功
                         var tr = demoListView.find('tr#upload-' + index)
                             , tds = tr.children();
                         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
                         tds.eq(3).html(''); //清空操作
+                        $.post('/uploadFileName',{courseId:1,  jobId:1,  studentId:1, filename:this.files[index].name});
                         return delete this.files[index]; //删除文件队列已经上传成功的文件
                     }
                     this.error(index, upload);
