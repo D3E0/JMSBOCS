@@ -21,10 +21,5 @@
     </div>
     <div id="mypage"></div>
 </div>
-<script>
-        $(document).ready(function(){
-            window.parent.setIframeHeight();
-        });
-</script>
 </body>
 </html>

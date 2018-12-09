@@ -18,6 +18,8 @@
 </head>
 <body style="text-align:center;background-color: #FFFFFF">
 <div class="panel">
+    <input id="jobId" hidden value="${jobId}">
+    <input id="courseId" hidden value="${courseId}">
     <div class="content">
         <ul id="list" class="list">
         </ul>
@@ -29,12 +31,12 @@
         function getLocalTime(nS) {
             return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
         }
-
-        var $ = layui.$;
+        let courseId=$("#courseId").val();
+        let jobId=$("#jobId").val();
         $.post('/uploadFiles', {
-            jobId: 1,
-            courseId: 1,
-            studentId: 1
+            jobId: jobId,
+            courseId: courseId,
+            studentId: 2
         }, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var arr = data[i].fileName.split("/");
@@ -57,10 +59,10 @@
                 $("#list").append(li);
             }
             $(".deletebtn").click(function (e) {
-                var li=$(this);
-                var key=li.data("key");
+                let li=$(this);
+                let key=li.data("key");
                 $.post("/deleteFile",{
-                    courseId:1,
+                    courseId:courseId,
                     key:key
                 },function (data) {
                     console.info(data);

@@ -1,6 +1,7 @@
 package service;
 
 import entity.QiniuEntity;
+import mapper.JobMapper;
 import mapper.QiniuMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +21,14 @@ import java.util.List;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    private static final Logger logger = LogManager.getLogger(QiniuServiceImpl.class);
-
+    private static final Logger logger = LogManager.getLogger(FileServiceImpl.class);
+    private JobMapper jobMapper;
     private QiniuMapper qiniuMapper;
+    @Autowired
+    public void setJobMapper(JobMapper jobMapper) {
+        this.jobMapper = jobMapper;
+    }
+
     @Autowired
     public void setQiniuMapper(QiniuMapper qiniuMapper) {
         this.qiniuMapper = qiniuMapper;
@@ -61,6 +67,13 @@ public class FileServiceImpl implements FileService {
     }
 
     public int deleteFile(int courseId,String key) {
+        String[] strings=key.split("/");
+        int jobId=Integer.parseInt(strings[1]);
+        int userId=Integer.parseInt(strings[2]);
+        String fileName=strings[3];
+        logger.info("jobId="+jobId+"===userId="+userId+"====fileName="+fileName);
+        jobMapper.jobItemDelete(jobId,fileName,userId);
+        logger.info("jobItemDelete");
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.delefile(qiniuEntity,key);
     }

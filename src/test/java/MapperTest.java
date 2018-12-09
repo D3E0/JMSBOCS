@@ -45,7 +45,8 @@ public class MapperTest {
 
     @Test
     public void testJob() throws UnsupportedEncodingException {
-        jobMapper.jobItemSubmit(7,"test",1);
+//        jobMapper.jobItemSubmit(7,"test",1);
+        jobMapper.jobItemDelete(6,"Diagram 1.svg",2);
     }
     @Test
     public void testQiniu(){

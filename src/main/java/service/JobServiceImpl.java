@@ -1,6 +1,7 @@
 package service;
 
 import dto.JobItemDTO;
+import dto.JobSubmitRecordDTO;
 import entity.JobEntity;
 import entity.UserEntity;
 import entity.UserType;
@@ -49,7 +50,9 @@ public class JobServiceImpl implements JobService {
     }
 
     public void jobItemSubmit(int jobId, int userId, String fileName) {
-        jobMapper.jobItemSubmit(jobId,fileName,userId);
+        if (jobMapper.isSameFile(jobId,fileName,userId)==0) {
+            jobMapper.jobItemSubmit(jobId,fileName,userId);
+        }
     }
 
     public int countJob(int userId, String keyword) {
@@ -72,6 +75,14 @@ public class JobServiceImpl implements JobService {
 
     public int addJob(JobEntity jobEntity) {
         return jobMapper.save(jobEntity);
+    }
+
+    public List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit) {
+        return jobMapper.getJobSubmitRecord(jobId, (cur-1)*limit, keyword,limit);
+    }
+
+    public int countJobSubmitRecord(int jobId, String keyword) {
+        return jobMapper.countJobSubmitRecord(jobId,keyword);
     }
 
 }

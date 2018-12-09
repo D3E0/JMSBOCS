@@ -86,7 +86,6 @@ layui.use(['laypage', 'element', 'layer'], function () {
                     li.innerHTML = item;
                     $("#list").append(li);
                 }
-                window.parent.setIframeHeight();
             }
         );
     }

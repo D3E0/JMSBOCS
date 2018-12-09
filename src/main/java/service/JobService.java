@@ -1,6 +1,7 @@
 package service;
 
 import dto.JobItemDTO;
+import dto.JobSubmitRecordDTO;
 import entity.JobEntity;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface JobService {
     int deleteJob(int jobId);
     int updateJob(JobEntity jobEntity);
     int addJob(JobEntity jobEntity);
+    List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit);
+    int countJobSubmitRecord(int jobId,String keyword);
 }

@@ -6,9 +6,9 @@
 
     <select id="findCourseListForStudent" resultType="dto.CourseItemDto">
         select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
-        from course as c,
-             user as u,
-             student_course as sc
+        from course  c,
+             user  u,
+             student_course  sc
         where c.course_id = sc.course_id
           and sc.student_id = #{studentId}
           and u.user_id = c.teacher_id
@@ -18,9 +18,9 @@
     </select>
     <select id="countCourseForStudent" resultType="int">
         select count(c.course_id)
-        from course as c,
-             user as u,
-             student_course as sc
+        from course  c,
+             user  u,
+             student_course  sc
         where c.course_id = sc.course_id
           and sc.student_id = #{studentId}
           and u.user_id = c.teacher_id
@@ -29,8 +29,8 @@
     </select>
     <select id="findCourseListTeacher" resultType="dto.CourseItemDto">
         select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
-        from course as c,
-             user as u
+        from course  c,
+             user  u
         where c.teacher_id = #{teacherId}
           and u.user_id = c.teacher_id
           and (c.course_name like concat(concat('%', #{keyword}), '%') or
@@ -39,8 +39,8 @@
     </select>
     <select id="countCourseForTeacher" resultType="int">
         select count(c.course_id)
-        from course as c,
-             user as u
+        from course  c,
+             user  u
         where c.teacher_id = #{teacherId}
           and u.user_id = c.teacher_id
           and (c.course_name like concat(concat('%', #{keyword}), '%') or

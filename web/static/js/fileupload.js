@@ -35,8 +35,8 @@ layui.use('upload', function () {
                             , '</td>'
                             , '</tr>'].join(''));
                         obj.resetFile(index, file, '1/1/1/' + file.name);
-                        test = '1/1/1/' + file.name;
-                        $.post('/jobItemSubmit', {jobId: $('#jobId'), fileName: file.name, userId: 1});
+                        test = courseId+'/'+$('#jobId').val()+'/2/' + file.name;
+                        layui.$.post('/jobItemSubmit', {jobId: $('#jobId').val(), fileName: file.name, userId: 2},function (data) {});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {
                             obj.upload(index, file);
@@ -49,7 +49,6 @@ layui.use('upload', function () {
                         });
                         demoListView.append(tr);
                         $('#testListAction').click();
-                        window.parent.setIframeHeight();
                     });
                 }
                 , done: function (res, index, upload) {

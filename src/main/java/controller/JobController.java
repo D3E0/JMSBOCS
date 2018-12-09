@@ -1,6 +1,7 @@
 package controller;
 
 import dto.JobItemDTO;
+import dto.JobSubmitRecordDTO;
 import entity.JobEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import service.JobService;
+import vo.JobSubmitRecordVO;
 import vo.JobVO;
 
 import javax.servlet.http.HttpSession;
@@ -90,4 +92,16 @@ public class JobController {
         jobService.jobItemSubmit(jobId, userId, fileName);
     }
 
+    @RequestMapping(value = "jobSubmitRecord", method = RequestMethod.GET)
+    public String jobSubmitRecordView(Model model,int jobId) {
+        model.addAttribute("jobId",jobId);
+        return "jobSubmitRecord";
+    }
+    @ResponseBody
+    @RequestMapping(value = "jobSubmitRecord", method = RequestMethod.POST)
+    public JobSubmitRecordVO jobSubmitRecord(int jobId, @RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "") String keyword,@RequestParam(defaultValue = "20") int limit) {
+        List<JobSubmitRecordDTO> data=jobService.getJobSubmitRecord(jobId,page,keyword,limit);
+        int count=jobService.countJobSubmitRecord(jobId, keyword);
+        return new JobSubmitRecordVO(data,0,"",count);
+    }
 }
