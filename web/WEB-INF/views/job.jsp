@@ -68,9 +68,6 @@
         </ul>
     </div>
     <script>
-        window.onload=function () {
-            window.parent.setIframeHeight();
-        };
         $("#delbtn").click(function () {
             var jobId=$("#jobId").val();
             $.post('/deleteJob',{

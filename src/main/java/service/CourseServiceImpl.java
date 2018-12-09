@@ -2,7 +2,10 @@ package service;
 
 import dto.CourseItemDto;
 import entity.CourseEntity;
+import entity.UserEntity;
+import entity.UserType;
 import mapper.CourseMapper;
+import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +19,49 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
+    private UserMapper userMapper;
+
+    @Autowired
+    public CourseServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Autowired
     public void setCourseMapper(CourseMapper courseMapper) {
         this.courseMapper = courseMapper;
     }
 
-    @Override
-    public List<CourseItemDto> findCourseListById(int studenId,int page,String keyword) {
-        return courseMapper.findCourseListById(studenId,(page-1)*10,keyword);
+    public List<CourseItemDto> findCourseListById(int userId, int page, String keyword) {
+        UserEntity userEntity=userMapper.selectOne(userId);
+        if (userEntity.getType()== UserType.STUDENT) {
+            return courseMapper.findCourseListForStudent(userId, (page - 1) * 10, keyword);
+        }
+        else {
+            return courseMapper.findCourseListForTeacher(userId, (page - 1) * 10, keyword);
+        }
     }
 
-    @Override
-    public int countCourseById(int studentId, String keyword) {
-        return courseMapper.countCourseById(studentId,keyword);
+    public int countCourseById(int userId, String keyword) {
+        UserEntity userEntity=userMapper.selectOne(userId);
+        if (userEntity.getType()== UserType.STUDENT) {
+            return courseMapper.countCourseForStudent(userId, keyword);
+        }
+        else {
+            return courseMapper.countCourseForTeacher(userId, keyword);
+        }
     }
 
-    @Override
+
     public int updateCourse(CourseEntity t) {
         return courseMapper.update(t);
     }
 
-    @Override
+
     public int deleteCourse(int id) {
         return courseMapper.delete(id);
     }
 
-    @Override
+
     public int saveCourse(CourseEntity t) {
         return courseMapper.save(t);
     }

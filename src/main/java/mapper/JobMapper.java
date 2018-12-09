@@ -14,7 +14,14 @@ import java.util.List;
  */
 @Component
 public interface JobMapper extends BaseMapper<JobEntity>{
-    List<JobItemDTO> findJobListByIdAndKeyword(@Param("studentId") int studentId, @Param("cur")int cur,@Param("keyword") String keyword);
+    List<JobItemDTO> findJobListForStudent(@Param("studentId") int studentId, @Param("cur")int cur,@Param("keyword") String keyword);
     JobItemDTO findJobById(int jobId);
-    int countJobByKeyword(@Param("studentId")int studentId,@Param("keyword") String keyword);
+    JobEntity findById(int jobId);
+    int countJobForStudent(@Param("studentId")int studentId,@Param("keyword") String keyword);
+    void deleteJob(@Param("jobId")int jobId);
+    void updateJob(@Param("job")JobEntity job);
+    void addJob(@Param("job")JobEntity job);
+    List<JobItemDTO> findJobListForTeacher(@Param("teacherId") int teacherId, @Param("cur")int cur,@Param("keyword") String keyword);
+    int countJobForTeacher(@Param("teacherId")int teacherId,@Param("keyword") String keyword);
+    void jobItemSubmit(@Param("jobId")int jobId,@Param("filename")String filename,@Param("userId")int userId);
 }

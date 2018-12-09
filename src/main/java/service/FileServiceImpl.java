@@ -27,28 +27,24 @@ public class FileServiceImpl implements FileService {
     public void setQiniuMapper(QiniuMapper qiniuMapper) {
         this.qiniuMapper = qiniuMapper;
     }
-    @Override
     @Cacheable(cacheNames = "UploadToken",key ="#courseId")
     public String getUploadToken(int courseId) {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getUploadToken(qiniuEntity);
     }
 
-    @Override
     public List<FileVO> getFileList(int courseId, int jobId, int studentId) {
         String prefix = courseId+"/"+jobId+"/"+studentId+"/";
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity,prefix);
     }
 
-    @Override
     @Cacheable(cacheNames = "allPublicFile",key ="#courseId")
     public List<FileVO> getAllPublicFile(int courseId) {
         String prefix = "public/"+courseId+"/";
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity,prefix);
     }
-    @Override
     @Cacheable(cacheNames = "publicFileList",key ="#+'c'+courseId+'p'+page")
     public FileVOs getPublicFiles(int courseId,int page) {
         FileVOs fileVOs=new FileVOs();
@@ -59,13 +55,11 @@ public class FileServiceImpl implements FileService {
         return fileVOs;
     }
 
-    @Override
     public String queryDomain(int courseId) {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.queryDomain(qiniuEntity);
     }
 
-    @Override
     public int deleteFile(int courseId,String key) {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.delefile(qiniuEntity,key);

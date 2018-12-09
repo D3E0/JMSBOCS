@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.JobMapper">
 
-    <select id="findJobListByIdAndKeyword" parameterType="map" resultType="dto.JobItemDTO">
+    <select id="findJobListForStudent" parameterType="map" resultType="dto.JobItemDTO">
         select job_title,
                job_id,
                DATE_FORMAT(job_begin_time, '%Y-%m-%d')                                                 as jobBeginTime,
@@ -22,13 +22,39 @@
         order by status DESC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
         limit #{cur} ,10;
     </select>
-    <select id="countJobByKeyword" parameterType="map" resultType="int">
+    <select id="countJobForStudent" parameterType="map" resultType="int">
         select COUNT(job.job_id)
         from job,
              student_course,
              course
         where student_course.course_id = job.course_id
           and student_course.student_id = #{studentId}
+          and job.course_id = course.course_id
+          and (course_name like concat(concat('%', #{keyword}), '%') or
+               job_title like concat(concat('%', #{keyword}), '%'));
+    </select>
+    <select id="findJobListForTeacher" parameterType="map" resultType="dto.JobItemDTO">
+        select job_title,
+               job_id,
+               DATE_FORMAT(job_begin_time, '%Y-%m-%d')                                                 as jobBeginTime,
+               CEILING((UNIX_TIMESTAMP(job_end_time) - UNIX_TIMESTAMP(job_begin_time)) / 60 / 60 / 24) as time,
+               course_name,
+               (job_end_time > now())                                                                  as status
+        from job,
+             course
+        where course.teacher_id=#{teacherId}
+          and job.course_id = course.course_id
+          and (course_name like concat(concat('%', #{keyword}), '%') or
+               job_title like concat(concat('%', #{keyword}), '%'))
+        order by status DESC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
+        limit #{cur} ,10;
+    </select>
+    <select id="countJobForTeacher" parameterType="map" resultType="int">
+        select COUNT(job.job_id)
+        from job,
+             student_course,
+             course
+        where course.teacher_id=#{teacherId}
           and job.course_id = course.course_id
           and (course_name like concat(concat('%', #{keyword}), '%') or
                job_title like concat(concat('%', #{keyword}), '%'));
@@ -58,4 +84,8 @@
     <delete id="delete">
         DELETE from job where job_id=#{id};
     </delete>
+    <insert id="jobItemSubmit">
+        INSERT into job_submit_item(job_id,job_submit_item_filename,user_id)
+        value (#{jobId},#{filename},#{userId})
+    </insert>
 </mapper>

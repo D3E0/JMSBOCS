@@ -84,5 +84,10 @@ public class JobController {
         logger.info(jobVO.toString());
         jobService.updateJob(new JobEntity(jobVO));
     }
+    @ResponseBody
+    @RequestMapping(value = "jobItemSubmit", method = RequestMethod.POST)
+    public void jobItemSubmit(int jobId,String fileName,int userId) {
+        jobService.jobItemSubmit(jobId, userId, fileName);
+    }
 
 }

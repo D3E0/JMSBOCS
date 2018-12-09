@@ -3,7 +3,7 @@ layui.use('upload', function () {
     var $ = layui.jquery
         , upload = layui.upload;
     var courseId = $("#courseId").val();
-    test="test";
+    test = "test";
     $.post('/qiniu', {
             courseId: courseId
         }, function (data) {
@@ -13,9 +13,11 @@ layui.use('upload', function () {
                 elem: '#testList'
                 , url: 'http://upload.qiniup.com'
                 , accept: 'file'
-                , data: {token: upload_token,key:function () {
+                , data: {
+                    token: upload_token, key: function () {
                         return test;
-                    }}
+                    }
+                }
                 , multiple: true
                 , auto: false
                 , bindAction: '#testListAction'
@@ -32,8 +34,9 @@ layui.use('upload', function () {
                             , '<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                             , '</td>'
                             , '</tr>'].join(''));
-                        obj.resetFile(index, file, '1/1/1/'+file.name);
-                        test='1/1/1/'+file.name;
+                        obj.resetFile(index, file, '1/1/1/' + file.name);
+                        test = '1/1/1/' + file.name;
+                        $.post('/jobItemSubmit', {jobId: $('#jobId'), fileName: file.name, userId: 1});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {
                             obj.upload(index, file);
@@ -50,7 +53,7 @@ layui.use('upload', function () {
                     });
                 }
                 , done: function (res, index, upload) {
-                    if (res.error == undefined) { //上传成功
+                    if (res.error === undefined) { //上传成功
                         var tr = demoListView.find('tr#upload-' + index)
                             , tds = tr.children();
                         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');

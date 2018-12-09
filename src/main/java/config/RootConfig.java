@@ -29,7 +29,6 @@ import java.util.Properties;
         })
 public class RootConfig {
     private static final Logger logger = LogManager.getLogger(RootConfig.class);
-
     @Bean
     public DataSource dataSource() throws IOException {
         DriverManagerDataSource ds = new DriverManagerDataSource();
