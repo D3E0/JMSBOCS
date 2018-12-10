@@ -1,6 +1,7 @@
 package service;
 
 import dto.JobItemDTO;
+import dto.JobSubmitRecordDTO;
 import entity.JobEntity;
 
 import java.util.List;
@@ -11,10 +12,13 @@ import java.util.List;
  * @descripition
  */
 public interface JobService {
-    List<JobItemDTO> findJobListById(int studentId,int page,String keyword);
+    List<JobItemDTO> findJobListById(int userId,int page,String keyword);
     JobItemDTO findJobById(int jobId);
-    int countJob(int studentId,String keyword);
+    void jobItemSubmit(int jobId,int userId,String fileName);
+    int countJob(int userId,String keyword);
     int deleteJob(int jobId);
     int updateJob(JobEntity jobEntity);
     int addJob(JobEntity jobEntity);
+    List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit);
+    int countJobSubmitRecord(int jobId,String keyword);
 }

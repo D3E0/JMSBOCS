@@ -1,8 +1,12 @@
 package service;
 
 import dto.JobItemDTO;
+import dto.JobSubmitRecordDTO;
 import entity.JobEntity;
+import entity.UserEntity;
+import entity.UserType;
 import mapper.JobMapper;
+import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +22,67 @@ import java.util.List;
 @Service
 public class JobServiceImpl implements JobService {
     private static final Logger logger = LogManager.getLogger(JobServiceImpl.class);
-
+    private final UserMapper userMapper;
     private JobMapper jobMapper;
+
+    @Autowired
+    public JobServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Autowired
     public void setJobMapper(JobMapper jobMapper) {
         this.jobMapper = jobMapper;
     }
 
-    @Override
-    public List<JobItemDTO> findJobListById(int studentId, int page, String keyword) {
-        return jobMapper.findJobListByIdAndKeyword(studentId, (page - 1) * 10, keyword);
+    public List<JobItemDTO> findJobListById(int userId, int page, String keyword) {
+        UserEntity userEntity=userMapper.selectOne(userId);
+        if (userEntity.getType()== UserType.STUDENT) {
+            return jobMapper.findJobListForStudent(userId,(page-1)*10, keyword);
+        }
+        else {
+            return jobMapper.findJobListForTeacher(userId,(page-1)*10, keyword);
+        }
     }
 
-    @Override
     public JobItemDTO findJobById(int jobId) {
         return jobMapper.findJobById(jobId);
     }
 
-    @Override
-    public int countJob(int studentId, String keyword) {
-        return jobMapper.countJobByKeyword(studentId, keyword);
+    public void jobItemSubmit(int jobId, int userId, String fileName) {
+        if (jobMapper.isSameFile(jobId,fileName,userId)==0) {
+            jobMapper.jobItemSubmit(jobId,fileName,userId);
+        }
     }
 
-    @Override
+    public int countJob(int userId, String keyword) {
+        UserEntity userEntity=userMapper.selectOne(userId);
+        if (userEntity.getType()== UserType.STUDENT) {
+            return jobMapper.countJobForStudent(userId, keyword);
+        }
+        else {
+            return jobMapper.countJobForTeacher(userId, keyword);
+        }
+    }
+
     public int deleteJob(int jobId) {
         return jobMapper.delete(jobId);
     }
 
-    @Override
     public int updateJob(JobEntity jobEntity) {
         return jobMapper.update(jobEntity);
     }
 
-    @Override
     public int addJob(JobEntity jobEntity) {
         return jobMapper.save(jobEntity);
+    }
+
+    public List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit) {
+        return jobMapper.getJobSubmitRecord(jobId, (cur-1)*limit, keyword,limit);
+    }
+
+    public int countJobSubmitRecord(int jobId, String keyword) {
+        return jobMapper.countJobSubmitRecord(jobId,keyword);
     }
 
 }

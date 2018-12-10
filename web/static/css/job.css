@@ -33,13 +33,14 @@ body{
     float: right;
     display: inline-block;
     background-color: #FFFFFF;
+    min-width: 300px;
     width: 18%;
 }
 .job-content{
     float: left;
     display: inline-block;
     background-color: #FFFFFF;
-    width: 80%;
+    width: 72%;
 }
 .list li{
     text-align:center;

@@ -3,7 +3,7 @@ layui.use('upload', function () {
     var $ = layui.jquery
         , upload = layui.upload;
     var courseId = $("#courseId").val();
-    test="test";
+    test = "test";
     $.post('/qiniu', {
             courseId: courseId
         }, function (data) {
@@ -13,9 +13,11 @@ layui.use('upload', function () {
                 elem: '#testList'
                 , url: 'http://upload.qiniup.com'
                 , accept: 'file'
-                , data: {token: upload_token,key:function () {
+                , data: {
+                    token: upload_token, key: function () {
                         return test;
-                    }}
+                    }
+                }
                 , multiple: true
                 , auto: false
                 , bindAction: '#testListAction'
@@ -32,8 +34,9 @@ layui.use('upload', function () {
                             , '<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                             , '</td>'
                             , '</tr>'].join(''));
-                        obj.resetFile(index, file, '1/1/1/'+file.name);
-                        test='1/1/1/'+file.name;
+                        obj.resetFile(index, file, '1/1/1/' + file.name);
+                        test = courseId+'/'+$('#jobId').val()+'/2/' + file.name;
+                        layui.$.post('/jobItemSubmit', {jobId: $('#jobId').val(), fileName: file.name, userId: 2},function (data) {});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {
                             obj.upload(index, file);
@@ -46,7 +49,6 @@ layui.use('upload', function () {
                         });
                         demoListView.append(tr);
                         $('#testListAction').click();
-                        window.parent.setIframeHeight();
                     });
                 }
                 , done: function (res, index, upload) {

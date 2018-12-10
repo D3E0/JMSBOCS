@@ -1,6 +1,6 @@
 package mapper;
 
-import dto.CourseItemDTO;
+import dto.CourseItemDto;
 import entity.CourseEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Component
 public interface CourseMapper extends BaseMapper<CourseEntity>{
-    int countCourseById(@Param("studentId") int studentId, @Param("keyword")String keyword);
-    List<CourseItemDTO> findCourseListById(@Param("studentId") int studentId, @Param("cur")int cur, @Param("keyword")String keyword);
+    int countCourseForStudent(@Param("studentId") int studentId, @Param("keyword")String keyword);
+    List<CourseItemDto> findCourseListForStudent(@Param("studentId") int studentId, @Param("cur")int cur, @Param("keyword")String keyword);
+    int countCourseForTeacher(@Param("teacherId") int teacherId, @Param("keyword")String keyword);
+    List<CourseItemDto> findCourseListForTeacher(@Param("teacherId") int teacherId, @Param("cur")int cur, @Param("keyword")String keyword);
 }

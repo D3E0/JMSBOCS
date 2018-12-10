@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.JobMapper">
 
-    <select id="findJobListByIdAndKeyword" parameterType="map" resultType="dto.JobItemDTO">
+    <select id="findJobListForStudent" parameterType="map" resultType="dto.JobItemDTO">
         select job_title,
                job_id,
                DATE_FORMAT(job_begin_time, '%Y-%m-%d')                                                 as jobBeginTime,
@@ -22,13 +22,39 @@
         order by status DESC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
         limit #{cur} ,10;
     </select>
-    <select id="countJobByKeyword" parameterType="map" resultType="int">
+    <select id="countJobForStudent" parameterType="map" resultType="int">
         select COUNT(job.job_id)
         from job,
              student_course,
              course
         where student_course.course_id = job.course_id
           and student_course.student_id = #{studentId}
+          and job.course_id = course.course_id
+          and (course_name like concat(concat('%', #{keyword}), '%') or
+               job_title like concat(concat('%', #{keyword}), '%'));
+    </select>
+    <select id="findJobListForTeacher" parameterType="map" resultType="dto.JobItemDTO">
+        select job_title,
+               job_id,
+               DATE_FORMAT(job_begin_time, '%Y-%m-%d')                                                 as jobBeginTime,
+               CEILING((UNIX_TIMESTAMP(job_end_time) - UNIX_TIMESTAMP(job_begin_time)) / 60 / 60 / 24) as time,
+               course_name,
+               (job_end_time > now())                                                                  as status
+        from job,
+             course
+        where course.teacher_id = #{teacherId}
+          and job.course_id = course.course_id
+          and (course_name like concat(concat('%', #{keyword}), '%') or
+               job_title like concat(concat('%', #{keyword}), '%'))
+        order by status DESC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
+        limit #{cur} ,10;
+    </select>
+    <select id="countJobForTeacher" parameterType="map" resultType="int">
+        select COUNT(job.job_id)
+        from job,
+             student_course,
+             course
+        where course.teacher_id = #{teacherId}
           and job.course_id = course.course_id
           and (course_name like concat(concat('%', #{keyword}), '%') or
                job_title like concat(concat('%', #{keyword}), '%'));
@@ -56,6 +82,79 @@
         where job_id = #{jobId}
     </update>
     <delete id="delete">
-        DELETE from job where job_id=#{id};
+        DELETE
+        from job
+        where job_id = #{id};
     </delete>
+    <insert id="jobItemSubmit">
+        INSERT into job_submit_item(job_id, job_submit_item_filename, user_id, job_item_time)
+            value (#{jobId}, #{filename}, #{userId}, now())
+    </insert>
+    <select id="isSameFile" resultType="int">
+        select COUNT(job_submit_item.job_submit_item_id)
+        from job_submit_item
+        where user_id = #{userId}
+          and job_id = #{jobId}
+          and job_submit_item_filename = #{filename}
+    </select>
+    <delete id="jobItemDelete">
+        DELETE
+        from job_submit_item
+        where user_id = #{userId}
+          and job_id = #{jobId}
+          and job_submit_item_filename = #{fileName}
+    </delete>
+    <select id="getJobSubmitRecord" resultType="dto.JobSubmitRecordDTO">
+        SELECT A.user_id as userId,A.username as userName,B.fileCount,B.lastSubmitTime
+        FROM (
+                 SELECT u.user_id,
+                        u.username
+                 FROM user u,
+                      student_course sc,
+                      course c,
+                      job j
+                 WHERE u.user_id = sc.student_id
+                   AND c.course_id = sc.course_id
+                   AND c.course_id = j.course_id
+                   AND j.job_id = #{jobId}
+                   AND u.username like concat(concat('%', #{keyword}), '%')
+             ) A
+        LEFT JOIN (
+            SELECT u.user_id,
+                   COUNT(j.job_submit_item_id) AS fileCount,
+                   MAX(j.job_item_time)        AS lastSubmitTime
+            FROM user u,
+                 job_submit_item j
+            WHERE u.user_id = j.user_id
+              AND j.job_id = #{jobId}
+            GROUP BY user_id
+        ) B ON A.user_id = B.user_id
+        limit #{cur},#{limit}
+    </select>
+    <select id="countJobSubmitRecord" resultType="int">
+        SELECT count(A.user_id)
+        FROM (
+                 SELECT u.user_id,
+                        u.username
+                 FROM user u,
+                      student_course sc,
+                      course c,
+                      job j
+                 WHERE u.user_id = sc.student_id
+                   AND c.course_id = sc.course_id
+                   AND c.course_id = j.course_id
+                   AND j.job_id = #{jobId}
+                   AND u.username like concat(concat('%', #{keyword}), '%')
+             ) A
+                 LEFT JOIN (
+            SELECT u.user_id,
+                   COUNT(j.job_submit_item_id) AS fileCount,
+                   MAX(j.job_item_time)        AS lastSubmitTime
+            FROM user u,
+                 job_submit_item j
+            WHERE u.user_id = j.user_id
+              AND j.job_id = #{jobId}
+            GROUP BY user_id
+        ) B ON A.user_id = B.user_id
+    </select>
 </mapper>

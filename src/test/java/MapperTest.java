@@ -2,6 +2,7 @@ import com.qiniu.util.Auth;
 import com.sun.deploy.net.URLEncoder;
 import config.RootConfig;
 import dto.JobItemDTO;
+import entity.JobEntity;
 import entity.QiniuEntity;
 import mapper.CourseMapper;
 import mapper.JobMapper;
@@ -44,15 +45,8 @@ public class MapperTest {
 
     @Test
     public void testJob() throws UnsupportedEncodingException {
-        List<JobItemDTO> list=jobMapper.findJobListByIdAndKeyword(1,0,"");
-        String fileName = "1/1/1/640.jpg";
-        String domainOfBucket = "http://phptyenkh.bkt.clouddn.com";
-        String encodedFileName = URLEncoder.encode(fileName, "utf-8");
-        String publicUrl = String.format("%s/%s", domainOfBucket, encodedFileName);
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(1);
-        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
-        System.out.println(auth.privateDownloadUrl(publicUrl));
-
+//        jobMapper.jobItemSubmit(7,"test",1);
+        jobMapper.jobItemDelete(6,"Diagram 1.svg",2);
     }
     @Test
     public void testQiniu(){
