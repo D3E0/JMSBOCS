@@ -6,11 +6,12 @@ import dto.RootCommentDTO;
 import entity.CommentEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import service.BaseService;
 
 import java.util.List;
 
-@Component
+@Repository
 public interface CommentMapper extends BaseService<CommentEntity> {
     List<CommentEntity> getComments();
 

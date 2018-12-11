@@ -14,8 +14,9 @@
         from user
     </select>
 
-    <insert id="save">
-        insert into user (password,
+    <insert id="save" useGeneratedKeys="true" keyProperty="userId">
+        insert into user (user_id,
+                          password,
                           username,
                           telephone,
                           email,
@@ -25,15 +26,16 @@
                           office,
                           qiniu_id,
                           type)
-        values (#{password},
+        values (#{userId},
+                #{password},
                 #{username},
                 #{telephone},
                 #{email},
                 #{role},
-                #{last_login_time},
+                #{lastLoginTime},
                 #{specialty},
                 #{office},
-                #{qiniu_id},
+                #{qiniuId},
                 #{type});
     </insert>
 
@@ -58,7 +60,7 @@
         where user_id = #{id}
     </delete>
 
-    <select id="selectUserDTO" resultMap="userDTO">
+    <select id="selectUserDTO" resultType="dto.UserDTO">
         select user_id    as userId,
                u.username as username,
                telephone  as telephone,
@@ -74,16 +76,22 @@
           and q.qiniu_id = u.qiniu_id
     </select>
 
-    <resultMap id="userDTO" type="dto.UserDTO">
-        <id column="userId" property="userId"/>
-        <result column="username" property="username"/>
-        <result column="telephone" property="telephone"/>
-        <result column="email" property="email"/>
-        <result column="office" property="office"/>
-        <result column="specialty" property="specialty"/>
-        <result column="type" property="type"/>
-        <result column="qiniuId" property="qiniuId"/>
-        <result column="bucket" property="bucket"/>
-    </resultMap>
-
+    <insert id="saveUserList">
+        insert into user (user_id, password, username, telephone, email, role, last_login_time, specialty, office,
+        qiniu_id, type)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},
+            #{item.password},
+            #{item.username},
+            #{item.telephone},
+            #{item.email},
+            #{item.role},
+            #{item.lastLoginTime},
+            #{item.specialty},
+            #{item.office},
+            #{item.qiniuId},
+            #{item.type})
+        </foreach>
+    </insert>
 </mapper>

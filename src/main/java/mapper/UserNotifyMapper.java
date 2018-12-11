@@ -4,10 +4,11 @@ import dto.NotifyDTO;
 import entity.UserNotifyEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public interface UserNotifyMapper extends BaseMapper<UserNotifyEntity> {
     List<UserNotifyEntity> selectUnread(int id);
 

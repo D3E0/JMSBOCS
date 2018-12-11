@@ -1,6 +1,6 @@
 package vo;
 
-import dto.CourseItemDTO;
+import dto.CourseDTO;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CourseVO {
     private int count;
-    private List<CourseItemDTO> courseList;
+    private List<CourseDTO> courseList;
 
     public int getCount() {
         return count;
@@ -21,11 +21,11 @@ public class CourseVO {
         this.count = count;
     }
 
-    public List<CourseItemDTO> getCourseList() {
+    public List<CourseDTO> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(List<CourseItemDTO> courseList) {
+    public void setCourseList(List<CourseDTO> courseList) {
         this.courseList = courseList;
     }
 

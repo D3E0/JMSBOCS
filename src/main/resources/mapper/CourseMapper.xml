@@ -3,65 +3,70 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.CourseMapper">
+    <select id="selectOne" resultType="entity.CourseEntity">
+        select *
+        from course
+        where course_id = #{id}
+    </select>
 
-    <select id="findCourseListForStudent" resultType="dto.CourseItemDTO">
-        select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
-        from course  c,
-             user  u,
-             student_course  sc
-        where c.course_id = sc.course_id
-          and sc.student_id = #{studentId}
-          and u.user_id = c.teacher_id
-          and (c.course_name like concat(concat('%', #{keyword}), '%') or
-               u.username like concat(concat('%', #{keyword}), '%'))
-        limit #{cur} ,10;
+    <select id="selectAll" resultType="entity.CourseEntity">
+        select *
+        from course
     </select>
-    <select id="countCourseForStudent" resultType="int">
-        select count(c.course_id)
-        from course  c,
-             user  u,
-             student_course  sc
-        where c.course_id = sc.course_id
-          and sc.student_id = #{studentId}
-          and u.user_id = c.teacher_id
-          and (c.course_name like concat(concat('%', #{keyword}), '%') or
-               u.username like concat(concat('%', #{keyword}), '%'))
-    </select>
-    <select id="findCourseListTeacher" resultType="dto.CourseItemDTO">
-        select c.course_id,c.course_name, c.academic_year, c.semester, u.username as teacherName
-        from course  c,
-             user  u
-        where c.teacher_id = #{teacherId}
-          and u.user_id = c.teacher_id
-          and (c.course_name like concat(concat('%', #{keyword}), '%') or
-               u.username like concat(concat('%', #{keyword}), '%'))
-        limit #{cur} ,10;
-    </select>
-    <select id="countCourseForTeacher" resultType="int">
-        select count(c.course_id)
-        from course  c,
-             user  u
-        where c.teacher_id = #{teacherId}
-          and u.user_id = c.teacher_id
-          and (c.course_name like concat(concat('%', #{keyword}), '%') or
-               u.username like concat(concat('%', #{keyword}), '%'))
-    </select>
-    <insert id="save" parameterType="entity.CourseEntity">
+
+    <insert id="save" parameterType="entity.CourseEntity" useGeneratedKeys="true"
+            keyProperty="courseId" keyColumn="course_id">
         INSERT into course(course_name, course_description, teacher_id, semester, academic_year)
             value (#{courseName}, #{courseDescription}, #{teacherId}, #{semester}, #{academicYear})
     </insert>
+
     <update id="update" parameterType="entity.CourseEntity">
         UPDATE course
         set course_name=#{courseName},
-            course_description=#{course_description},
+            course_description=#{courseDescription},
             semester=#{semester},
-            academic_year=#{academic_year}
+            academic_year=#{academicYear}
         where course_id = #{courseId}
     </update>
+
     <delete id="delete">
         DELETE
         from course
         where course_id = #{id};
     </delete>
+
+    <select id="selectCourseDTO" resultType="dto.CourseDTO">
+        select course_id          as courseId,
+               course_description as courseDescription,
+               course_name        as courseName,
+               semester           as semester,
+               academic_year      as academicYear,
+               teacher_id         as teacherId,
+               username           as teacherName
+        from course,
+             user
+        where course_id = #{courseId}
+          and teacher_id = user_id
+    </select>
+
+    <select id="selectCourseDTOListTch" resultType="dto.CourseDTO">
+        select course_id          as courseId,
+               course_description as courseDescription,
+               course_name        as courseName,
+               semester           as semester,
+               academic_year      as academicYear,
+               teacher_id         as teacherId,
+               username           as teacherName
+        from course,
+             user
+        where teacher_id = #{teacherId}
+          and teacher_id = user_id
+    </select>
+
+    <select id="selectCourseCountTch" resultType="Long">
+        select *
+        from course
+        where teacher_id = #{teacherId}
+    </select>
 
 </mapper>

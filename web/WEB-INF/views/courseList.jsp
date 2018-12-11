@@ -32,7 +32,6 @@
     </div>
     <div class="content">
         <ul id="list" class="list">
-
         </ul>
     </div>
     <div id="mypage"></div>

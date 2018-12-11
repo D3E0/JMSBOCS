@@ -1,15 +1,15 @@
 package service;
 
-import dto.CourseItemDTO;
+import dto.CourseDTO;
+import dto.UserSDTO;
 import entity.CourseEntity;
-import entity.UserEntity;
-import entity.UserType;
+import entity.StudentCourseEntity;
 import mapper.CourseMapper;
-import mapper.UserMapper;
+import mapper.StudentCourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yan
@@ -18,51 +18,83 @@ import java.util.List;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
-    private CourseMapper courseMapper;
-    private UserMapper userMapper;
+    private final CourseMapper mapper;
+    private final StudentCourseMapper suMapper;
+    private final UserService userService;
 
     @Autowired
-    public CourseServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public CourseServiceImpl(CourseMapper mapper, StudentCourseMapper suMapper, UserService userService) {
+        this.mapper = mapper;
+        this.suMapper = suMapper;
+        this.userService = userService;
     }
 
-    @Autowired
-    public void setCourseMapper(CourseMapper courseMapper) {
-        this.courseMapper = courseMapper;
+    public int update(CourseEntity courseEntity) {
+        return mapper.update(courseEntity);
     }
 
-    public List<CourseItemDTO> findCourseListById(int userId, int page, String keyword) {
-        UserEntity userEntity=userMapper.selectOne(userId);
-        if (userEntity.getType()== UserType.STUDENT) {
-            return courseMapper.findCourseListForStudent(userId, (page - 1) * 10, keyword);
+    public int delete(int id) {
+        return mapper.delete(id);
+    }
+
+    public int save(CourseEntity courseEntity) {
+        return mapper.save(courseEntity);
+    }
+
+    public CourseEntity selectOne(int id) {
+        return mapper.selectOne(id);
+    }
+
+    public List<CourseEntity> selectAll() {
+        return mapper.selectAll();
+    }
+
+    public CourseDTO selectCourseDTO(int courseId) {
+        return mapper.selectCourseDTO(courseId);
+    }
+
+    public List<CourseDTO> selectCourseDTOListTch(int teacherId) {
+        return mapper.selectCourseDTOListTch(teacherId);
+    }
+
+    public Long selectCourseCountTch(int teacherId) {
+        return mapper.selectCourseCountTch(teacherId);
+    }
+
+    public Set<UserSDTO> selectUserSet(int courseId) {
+        return suMapper.selectUserList(courseId);
+    }
+
+    public Long selectUserCount(int courseId) {
+        return suMapper.selectUserCount(courseId);
+    }
+
+    public List<CourseDTO> selectCourseDTOListStu(int studentId) {
+        return suMapper.selectCourseList(studentId);
+    }
+
+    public Long selectCourseCountStu(int userId) {
+        return suMapper.selectCourseCount(userId);
+    }
+
+    public int saveUserCourseList(List<UserSDTO> list, int courseId) {
+        int res = 0;
+        Set<UserSDTO> existSet = this.selectUserSet(courseId);
+        Set<UserSDTO> rawSet = new HashSet<UserSDTO>(list);
+        rawSet.removeAll(existSet);
+        res = userService.saveStuSet(rawSet);
+        List<StudentCourseEntity> entityList = new ArrayList<StudentCourseEntity>();
+        for (UserSDTO userSDTO : list) {
+            entityList.add(new StudentCourseEntity(userSDTO.getUserId(), courseId));
         }
-        else {
-            return courseMapper.findCourseListForTeacher(userId, (page - 1) * 10, keyword);
-        }
+        res = suMapper.saveList(entityList);
+        return res;
     }
 
-    public int countCourseById(int userId, String keyword) {
-        UserEntity userEntity=userMapper.selectOne(userId);
-        if (userEntity.getType()== UserType.STUDENT) {
-            return courseMapper.countCourseForStudent(userId, keyword);
-        }
-        else {
-            return courseMapper.countCourseForTeacher(userId, keyword);
-        }
-    }
-
-
-    public int updateCourse(CourseEntity t) {
-        return courseMapper.update(t);
-    }
-
-
-    public int deleteCourse(int id) {
-        return courseMapper.delete(id);
-    }
-
-
-    public int saveCourse(CourseEntity t) {
-        return courseMapper.save(t);
+    public int saveUserCourse(UserSDTO user, int courseId) {
+        int res = 0;
+        res = userService.saveStuSet(Collections.singleton(user));
+        res = suMapper.save(new StudentCourseEntity(user.getUserId(), courseId));
+        return res;
     }
 }
