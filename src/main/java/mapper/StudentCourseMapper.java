@@ -30,7 +30,15 @@ public interface StudentCourseMapper {
      * @return
      */
 
-    int saveList(List<StudentCourseEntity> list);
+    int saveListIgnore(List<StudentCourseEntity> list);
+
+    /**
+     * 批量删除学生选课情况
+     *
+     * @param list
+     * @return
+     */
+    int deleteList(List<StudentCourseEntity> list);
 
     /**
      * 查询该门课程的学生列表

@@ -8,6 +8,11 @@ public class UserSDTO {
     public UserSDTO() {
     }
 
+    @Override
+    public String toString() {
+        return "UserSDTO{" + userId + '}';
+    }
+
     public UserSDTO(Integer userId, String username, String specialty) {
         this.userId = userId;
         this.username = username;

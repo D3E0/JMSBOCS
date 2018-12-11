@@ -76,8 +76,8 @@
           and q.qiniu_id = u.qiniu_id
     </select>
 
-    <insert id="saveUserList">
-        insert into user (user_id, password, username, telephone, email, role, last_login_time, specialty, office,
+    <insert id="saveUserListIgnore" useGeneratedKeys="true" keyProperty="userId">
+        insert ignore user (user_id, password, username, telephone, email, role, last_login_time, specialty, office,
         qiniu_id, type)
         values
         <foreach collection="list" item="item" separator=",">

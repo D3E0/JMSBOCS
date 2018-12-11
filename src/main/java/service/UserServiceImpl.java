@@ -19,6 +19,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private final UserMapper mapper;
+    public static final String PWD = "888888";
 
     @Autowired
     public UserServiceImpl(UserMapper mapper) {
@@ -41,9 +42,11 @@ public class UserServiceImpl implements UserService {
     public int saveTchSet(Set<UserSDTO> set) {
         List<UserEntity> list = new ArrayList<UserEntity>();
         for (UserSDTO user : set) {
-            list.add(new UserEntity(user.getUserId(), user.getUsername(), UserType.TEACHER));
+            UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.TEACHER);
+            entity.setPassword(PWD);
+            list.add(entity);
         }
-        return mapper.saveUserList(list);
+        return mapper.saveUserListIgnore(list);
     }
 
     public int saveStuSet(Set<UserSDTO> set) {
@@ -51,9 +54,10 @@ public class UserServiceImpl implements UserService {
         for (UserSDTO user : set) {
             UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.STUDENT);
             entity.setSpecialty(user.getSpecialty());
+            entity.setPassword(PWD);
             list.add(entity);
         }
-        return mapper.saveUserList(list);
+        return mapper.saveUserListIgnore(list);
     }
 
     public int update(UserEntity entity) {

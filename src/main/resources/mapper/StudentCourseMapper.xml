@@ -22,8 +22,20 @@
         VALUES (#{studentId}, #{courseId})
     </insert>
 
-    <insert id="saveList">
-        insert into student_course (student_id, course_id)
+
+    <delete id="deleteList">
+        delete
+        from student_course
+        where
+        <foreach item="item" collection="list" separator="or">
+            (student_id = #{item.studentId}
+            AND course_id = #{item.courseId})
+        </foreach>
+        and 1 = 1
+    </delete>
+
+    <insert id="saveListIgnore">
+        insert ignore student_course (student_id, course_id)
         values
         <foreach item="item" collection="list" separator=",">
             (#{item.studentId}, #{item.courseId})

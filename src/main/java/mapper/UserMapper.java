@@ -17,10 +17,10 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     UserDTO selectUserDTO(int id);
 
     /**
-     * 批量保存用户
+     * 批量保存用户  有则忽略 无则添加
      *
      * @param list
      * @return
      */
-    int saveUserList(List<UserEntity> list);
+    int saveUserListIgnore(List<UserEntity> list);
 }
