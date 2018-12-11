@@ -4,17 +4,22 @@ public enum UserType {
     /**
      *
      */
-    TEACHER,
+    STUDENT(0),
     /**
      *
      */
-    ASSISTANT,
+    TEACHER(1),
     /**
      *
      */
-    STUDENT,
+    ASSISTANT(2),
     /**
      *
      */
-    ADMIN
+    ADMIN(3);
+    private int code;
+
+    UserType(int code) {
+        this.code = code;
+    }
 }

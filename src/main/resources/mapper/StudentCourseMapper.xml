@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StudentCourseMapper">
+    <select id="selectOne">
+        select *
+        from student_course
+        where student_id = #{userId}
+          and course_id = #{courseId}
+    </select>
+
+    <delete id="delete">
+        delete
+        from student_course
+        where student_id = #{userId}
+          and course_id = #{courseId}
+    </delete>
+
+    <insert id="save">
+        insert into student_course (student_id, course_id)
+        VALUES (#{studentId}, #{courseId})
+    </insert>
+
+    <insert id="saveList">
+        insert into student_course (student_id, course_id)
+        values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.studentId}, #{item.courseId})
+        </foreach>
+    </insert>
+
+    <select id="selectUserList" resultType="dto.UserSDTO">
+        select user_id   as userId,
+               username  as username,
+               specialty as specialty
+        from user,
+             student_course
+        where course_id = #{courseId}
+          and user_id = student_id
+    </select>
+
+    <select id="selectCourseList" resultType="dto.CourseDTO">
+        select c.course_id        as courseId,
+               course_description as courseDescription,
+               course_name        as courseName,
+               semester           as semester,
+               academic_year      as academicYear,
+               teacher_id         as teacherId,
+               username           as teacherName
+        from course c,
+             user u,
+             student_course su
+        where su.student_id = #{userId}
+          and c.course_id = su.course_id
+          and teacher_id = user_id
+    </select>
+
+    <select id="selectUserCount" resultType="Long">
+        select count(*)
+        from student_course
+        where course_id = #{courseId}
+    </select>
+
+    <select id="selectCourseCount" resultType="Long">
+        select count(*)
+        from student_course su
+        where su.student_id = #{userId}
+    </select>
+
+</mapper>

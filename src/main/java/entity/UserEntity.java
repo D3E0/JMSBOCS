@@ -112,4 +112,13 @@ public class UserEntity {
     public void setType(UserType type) {
         this.type = type;
     }
+
+    public UserEntity() {
+    }
+
+    public UserEntity(Integer userId, String username, UserType type) {
+        this.userId = userId;
+        this.username = username;
+        this.type = type;
+    }
 }

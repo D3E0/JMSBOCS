@@ -64,7 +64,7 @@ public class CommentController {
      */
     @RequestMapping(value = "/api/comment", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult addCommentGet(@RequestParam() String commentContent,
+    public RestResult saveComment(@RequestParam() String commentContent,
                                     @RequestParam() Integer userId,
                                     @RequestParam(required = false) Integer courseId,
                                     @RequestParam(required = false) Integer rootCommentId,

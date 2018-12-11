@@ -41,8 +41,8 @@
 </div>
 <script>
     const userInfo = {
-        uid: 1,
-        isTch: true
+        uid: 2,
+        isTch: false
     };
 </script>
 
