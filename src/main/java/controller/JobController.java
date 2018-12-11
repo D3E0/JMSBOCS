@@ -2,6 +2,7 @@ package controller;
 
 import dto.JobItemDTO;
 import dto.JobSubmitRecordDTO;
+import dto.JobSubmitRecordNumber;
 import entity.JobEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -94,7 +95,10 @@ public class JobController {
 
     @RequestMapping(value = "jobSubmitRecord", method = RequestMethod.GET)
     public String jobSubmitRecordView(Model model,int jobId) {
+        JobSubmitRecordNumber jobSubmitRecordNumber=jobService.countJobSubmitRecordNum(jobId);
         model.addAttribute("jobId",jobId);
+        model.addAttribute("need",jobSubmitRecordNumber.getNeed());
+        model.addAttribute("already",jobSubmitRecordNumber.getAlready());
         return "jobSubmitRecord";
     }
     @ResponseBody
@@ -103,5 +107,10 @@ public class JobController {
         List<JobSubmitRecordDTO> data=jobService.getJobSubmitRecord(jobId,page,keyword,limit);
         int count=jobService.countJobSubmitRecord(jobId, keyword);
         return new JobSubmitRecordVO(data,0,"",count);
+    }
+    @ResponseBody
+    @RequestMapping(value = "jobSubmitRecordNum", method = RequestMethod.POST)
+    public JobSubmitRecordNumber jobSubmitRecordNum(int jobId) {
+        return jobService.countJobSubmitRecordNum(jobId);
     }
 }

@@ -2,10 +2,12 @@ package service;
 
 import dto.JobItemDTO;
 import dto.JobSubmitRecordDTO;
+import dto.JobSubmitRecordNumber;
 import entity.JobEntity;
 import entity.UserEntity;
 import entity.UserType;
 import mapper.JobMapper;
+import mapper.JobSubmitItemMapper;
 import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +26,11 @@ public class JobServiceImpl implements JobService {
     private static final Logger logger = LogManager.getLogger(JobServiceImpl.class);
     private final UserMapper userMapper;
     private JobMapper jobMapper;
+    private JobSubmitItemMapper jobSubmitItemMapper;
+    @Autowired
+    public void setJobSubmitItemMapper(JobSubmitItemMapper jobSubmitItemMapper) {
+        this.jobSubmitItemMapper = jobSubmitItemMapper;
+    }
 
     @Autowired
     public JobServiceImpl(UserMapper userMapper) {
@@ -50,8 +57,8 @@ public class JobServiceImpl implements JobService {
     }
 
     public void jobItemSubmit(int jobId, int userId, String fileName) {
-        if (jobMapper.isSameFile(jobId,fileName,userId)==0) {
-            jobMapper.jobItemSubmit(jobId,fileName,userId);
+        if (jobSubmitItemMapper.isSameFile(jobId,fileName,userId)==0) {
+            jobSubmitItemMapper.jobItemSubmit(jobId,fileName,userId);
         }
     }
 
@@ -78,11 +85,15 @@ public class JobServiceImpl implements JobService {
     }
 
     public List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit) {
-        return jobMapper.getJobSubmitRecord(jobId, (cur-1)*limit, keyword,limit);
+        return jobSubmitItemMapper.getJobSubmitRecord(jobId, (cur-1)*limit, keyword,limit);
     }
 
     public int countJobSubmitRecord(int jobId, String keyword) {
-        return jobMapper.countJobSubmitRecord(jobId,keyword);
+        return jobSubmitItemMapper.countJobSubmitRecord(jobId,keyword);
+    }
+
+    public JobSubmitRecordNumber countJobSubmitRecordNum(int jobId) {
+        return jobSubmitItemMapper.countJobSubmitRecordNum(jobId);
     }
 
 }

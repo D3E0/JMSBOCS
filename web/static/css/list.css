@@ -129,4 +129,7 @@ body{
     border: 1px solid #57a3f3;
     box-shadow: 1px 1px 1px 1px #57a3f37d;
 }
+.jobInfo{
+    margin: 0 20px;
+}
 

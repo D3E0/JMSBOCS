@@ -1,11 +1,8 @@
-import com.qiniu.util.Auth;
-import com.sun.deploy.net.URLEncoder;
 import config.RootConfig;
-import dto.JobItemDTO;
-import entity.JobEntity;
 import entity.QiniuEntity;
 import mapper.CourseMapper;
 import mapper.JobMapper;
+import mapper.JobSubmitItemMapper;
 import mapper.QiniuMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.QiniuUtil;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 /**
  * @author yan
@@ -28,6 +24,11 @@ public class MapperTest {
     private JobMapper jobMapper;
     private CourseMapper courseMapper;
     private QiniuMapper qiniuMapper;
+    private JobSubmitItemMapper jobSubmitItemMapper;
+    @Autowired
+    public void setJobSubmitItemMapper(JobSubmitItemMapper jobSubmitItemMapper) {
+        this.jobSubmitItemMapper = jobSubmitItemMapper;
+    }
     @Autowired
     public void setQiniuMapper(QiniuMapper qiniuMapper) {
         this.qiniuMapper = qiniuMapper;
@@ -46,7 +47,7 @@ public class MapperTest {
     @Test
     public void testJob() throws UnsupportedEncodingException {
 //        jobMapper.jobItemSubmit(7,"test",1);
-        jobMapper.jobItemDelete(6,"Diagram 1.svg",2);
+        jobSubmitItemMapper.jobItemDelete(6,"Diagram 1.svg",2);
     }
     @Test
     public void testQiniu(){

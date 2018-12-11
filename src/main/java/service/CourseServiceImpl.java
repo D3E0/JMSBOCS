@@ -1,6 +1,6 @@
 package service;
 
-import dto.CourseItemDto;
+import dto.CourseItemDTO;
 import entity.CourseEntity;
 import entity.UserEntity;
 import entity.UserType;
@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
         this.courseMapper = courseMapper;
     }
 
-    public List<CourseItemDto> findCourseListById(int userId, int page, String keyword) {
+    public List<CourseItemDTO> findCourseListById(int userId, int page, String keyword) {
         UserEntity userEntity=userMapper.selectOne(userId);
         if (userEntity.getType()== UserType.STUDENT) {
             return courseMapper.findCourseListForStudent(userId, (page - 1) * 10, keyword);

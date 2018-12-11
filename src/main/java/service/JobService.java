@@ -2,7 +2,9 @@ package service;
 
 import dto.JobItemDTO;
 import dto.JobSubmitRecordDTO;
+import dto.JobSubmitRecordNumber;
 import entity.JobEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +23,5 @@ public interface JobService {
     int addJob(JobEntity jobEntity);
     List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit);
     int countJobSubmitRecord(int jobId,String keyword);
+    JobSubmitRecordNumber countJobSubmitRecordNum(@Param("jobId")int jobId);
 }
