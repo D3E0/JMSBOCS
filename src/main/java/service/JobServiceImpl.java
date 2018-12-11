@@ -95,5 +95,4 @@ public class JobServiceImpl implements JobService {
     public JobSubmitRecordNumber countJobSubmitRecordNum(int jobId) {
         return jobSubmitItemMapper.countJobSubmitRecordNum(jobId);
     }
-
 }

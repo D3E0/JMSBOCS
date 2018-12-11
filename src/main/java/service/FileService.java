@@ -1,5 +1,6 @@
 package service;
 
+import dto.JobFilePrefix;
 import vo.FileVO;
 import vo.FileVOs;
 
@@ -17,4 +18,5 @@ public interface FileService {
     FileVOs getPublicFiles(int courseId,int page);
     String queryDomain(int courseId);
     int deleteFile(int courseId,String key);
+    JobFilePrefix findFilePrefixByJobId(int jobId);
 }

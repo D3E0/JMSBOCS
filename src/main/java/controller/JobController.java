@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import service.FileService;
 import service.JobService;
 import vo.JobSubmitRecordVO;
 import vo.JobVO;
@@ -30,6 +31,12 @@ import java.util.List;
 public class JobController {
     private static final Logger logger = LogManager.getLogger(JobController.class);
     private JobService jobService;
+    private FileService fileService;
+
+    @Autowired
+    public void setFileService(FileService fileService) {
+        this.fileService = fileService;
+    }
 
     @Autowired
     public void setJobService(JobService jobService) {
@@ -40,6 +47,7 @@ public class JobController {
     public void initBinder(WebDataBinder binder) throws Exception {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
     }
+
     @RequestMapping(value = "jobList", method = RequestMethod.GET)
     public String jobList() {
         return "jobList";
@@ -55,6 +63,7 @@ public class JobController {
     public String job(Model model, int jobId, HttpSession session) {
         model.addAttribute("job", jobService.findJobById(jobId));
         model.addAttribute("jobId", jobId);
+        model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePerfix());
         return "job";
     }
 
@@ -76,8 +85,8 @@ public class JobController {
     }
 
     @RequestMapping(value = "updateJob", method = RequestMethod.GET)
-    public String updateJobView(Model model,JobVO jobVO) {
-        model.addAttribute("job",jobVO);
+    public String updateJobView(Model model, JobVO jobVO) {
+        model.addAttribute("job", jobVO);
         return "updateJob";
     }
 
@@ -87,27 +96,30 @@ public class JobController {
         logger.info(jobVO.toString());
         jobService.updateJob(new JobEntity(jobVO));
     }
+
     @ResponseBody
     @RequestMapping(value = "jobItemSubmit", method = RequestMethod.POST)
-    public void jobItemSubmit(int jobId,String fileName,int userId) {
+    public void jobItemSubmit(int jobId, String fileName, int userId) {
         jobService.jobItemSubmit(jobId, userId, fileName);
     }
 
     @RequestMapping(value = "jobSubmitRecord", method = RequestMethod.GET)
-    public String jobSubmitRecordView(Model model,int jobId) {
-        JobSubmitRecordNumber jobSubmitRecordNumber=jobService.countJobSubmitRecordNum(jobId);
-        model.addAttribute("jobId",jobId);
-        model.addAttribute("need",jobSubmitRecordNumber.getNeed());
-        model.addAttribute("already",jobSubmitRecordNumber.getAlready());
+    public String jobSubmitRecordView(Model model, int jobId) {
+        JobSubmitRecordNumber jobSubmitRecordNumber = jobService.countJobSubmitRecordNum(jobId);
+        model.addAttribute("jobId", jobId);
+        model.addAttribute("need", jobSubmitRecordNumber.getNeed());
+        model.addAttribute("already", jobSubmitRecordNumber.getAlready());
         return "jobSubmitRecord";
     }
+
     @ResponseBody
     @RequestMapping(value = "jobSubmitRecord", method = RequestMethod.POST)
-    public JobSubmitRecordVO jobSubmitRecord(int jobId, @RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "") String keyword,@RequestParam(defaultValue = "20") int limit) {
-        List<JobSubmitRecordDTO> data=jobService.getJobSubmitRecord(jobId,page,keyword,limit);
-        int count=jobService.countJobSubmitRecord(jobId, keyword);
-        return new JobSubmitRecordVO(data,0,"",count);
+    public JobSubmitRecordVO jobSubmitRecord(int jobId, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "20") int limit) {
+        List<JobSubmitRecordDTO> data = jobService.getJobSubmitRecord(jobId, page, keyword, limit);
+        int count = jobService.countJobSubmitRecord(jobId, keyword);
+        return new JobSubmitRecordVO(data, 0, "", count);
     }
+
     @ResponseBody
     @RequestMapping(value = "jobSubmitRecordNum", method = RequestMethod.POST)
     public JobSubmitRecordNumber jobSubmitRecordNum(int jobId) {

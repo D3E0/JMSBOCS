@@ -24,6 +24,7 @@
             <button id="delbtn" class="layui-btn delbtn" style="float: right;margin-right: 1%">删除</button>
             <button id="updatebtn" class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
         </div>
+        <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
         <input id="jobId" hidden value="<c:out value="${jobId}"/>">
         <p class="title">作业描述</p>

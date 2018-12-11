@@ -35,7 +35,7 @@ layui.use('upload', function () {
                             , '</td>'
                             , '</tr>'].join(''));
                         obj.resetFile(index, file, '1/1/1/' + file.name);
-                        test = courseId+'/'+$('#jobId').val()+'/2/' + file.name;
+                        test = $('#filePrefix').val()+'/2/' + file.name;
                         layui.$.post('/jobItemSubmit', {jobId: $('#jobId').val(), fileName: file.name, userId: 2},function (data) {});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {

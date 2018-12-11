@@ -86,4 +86,11 @@
         from job
         where job_id = #{id};
     </delete>
+    <select id="findFilePrefixByJobId" resultType="dto.JobFilePrefix">
+        select course.course_id as courseId,job_title as jobTitle,course_name as courseName,academic_year as academicYear,semester
+        from job,
+             course
+        where job.course_id = course.course_id
+          and job_id = #{jobId}
+    </select>
 </mapper>

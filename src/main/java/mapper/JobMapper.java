@@ -1,5 +1,6 @@
 package mapper;
 
+import dto.JobFilePrefix;
 import dto.JobItemDTO;
 import entity.JobEntity;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,5 @@ public interface JobMapper extends BaseMapper<JobEntity>{
     void addJob(@Param("job")JobEntity job);
     List<JobItemDTO> findJobListForTeacher(@Param("teacherId") int teacherId, @Param("cur")int cur,@Param("keyword") String keyword);
     int countJobForTeacher(@Param("teacherId")int teacherId,@Param("keyword") String keyword);
+    JobFilePrefix findFilePrefixByJobId(int jobId);
 }

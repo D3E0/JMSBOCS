@@ -35,11 +35,7 @@ public class FileController {
     public List<FileVO> getUploadFiles(int courseId, int jobId, int studentId){
         return fileService.getFileList(courseId,jobId,studentId);
     }
-    @ResponseBody
-    @RequestMapping(value = "uploadFileName")
-    public void UploadFile(int courseId, int jobId, int studentId,String filename){
 
-    }
     @ResponseBody
     @RequestMapping(value = "publicFiles")
     public FileVOs getPublicFiles(int courseId, @RequestParam(defaultValue = "1")int page){
