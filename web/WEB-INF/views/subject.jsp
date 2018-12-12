@@ -14,17 +14,10 @@
     <title>Notify</title>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/css/notify.css"/>">
-
+    <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
     <style>
         body {
             background-color: #fff;
-        }
-
-        .tip {
-            color: #b3b3b3;
-            font: 12px Extra Extra Small;
-            padding-left: 10px;
         }
     </style>
 </head>
@@ -33,7 +26,7 @@
 <div id="app" style="margin-left: 2%;">
     <el-container>
         <el-aside width="200px">
-            <user-side :uid="uid" :is-tch="isTch"></user-side>
+            <subject-side :uid="uid" :is-tch="isTch"></subject-side>
         </el-aside>
         <el-main>
             <router-view></router-view>
@@ -43,16 +36,19 @@
 <script>
     const userInfo = {
         uid: 2,
-        isTch: false
+        isTch: false,
+        path: '${pageContext.request.contextPath}',
     };
 </script>
 
 <script type="text/javascript" src="<c:url value="/static/js/axios.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/vue.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/vue-router.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/xlsx.full.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/elementui/index.js"/>"></script>
-<script src="<c:url value="/static/js/user-main.js"/>" type="module"></script>
+<script src="<c:url value="/static/js/subject-main.js"/>" type="module"></script>
 
 </body>
 
 </html>
+

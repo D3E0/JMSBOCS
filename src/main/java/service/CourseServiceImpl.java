@@ -1,6 +1,7 @@
 package service;
 
 import dto.CourseDTO;
+import dto.UserDTO;
 import dto.UserSDTO;
 import entity.CourseEntity;
 import entity.StudentCourseEntity;
@@ -122,5 +123,9 @@ public class CourseServiceImpl implements CourseService {
         int res = suMapper.deleteList(toDelete);
         logger.info("remove " + res + " students from course " + courseId);
         return res;
+    }
+
+    public UserDTO selectTeacherInfo(int courseId) {
+        return mapper.selectTeacherInfo(courseId);
     }
 }

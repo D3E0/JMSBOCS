@@ -1,6 +1,7 @@
 package controller;
 
 import dto.CourseDTO;
+import dto.UserDTO;
 import dto.UserSDTO;
 import entity.CourseEntity;
 import entity.UserEntity;
@@ -36,6 +37,28 @@ public class CourseController {
     public CourseController(UserService userService, CourseService service) {
         this.userService = userService;
         this.service = service;
+    }
+
+    /**
+     * 返回课程列表界面
+     *
+     * @return
+     */
+    @RequestMapping("/subject")
+    public String subject() {
+        return "subject";
+    }
+
+    /**
+     * 返回课程详情界面
+     *
+     * @param courseId
+     * @return
+     */
+    @RequestMapping("/course")
+    public String course(@RequestParam Integer courseId) {
+        logger.info(courseId);
+        return "course";
     }
 
     /**
@@ -144,5 +167,14 @@ public class CourseController {
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Origin", "*");
         return new RestResult.Builder(200).data(res).build();
+    }
+
+    @RequestMapping(value = "/api/course/teacher", method = RequestMethod.GET)
+    @ResponseBody
+    public RestResult getTeacher(@RequestParam Integer courseId) {
+        logger.info("get teacher for course ==> " + courseId);
+        UserDTO userDTO = service.selectTeacherInfo(courseId);
+        logger.info(userDTO);
+        return new RestResult.Builder(200).data(userDTO).build();
     }
 }

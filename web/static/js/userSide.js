@@ -30,5 +30,5 @@ var userSide = {
         </el-menu-item>
     </el-menu>
     `
-}
+};
 export default userSide

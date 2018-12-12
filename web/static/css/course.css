@@ -1,0 +1,42 @@
+.panel-title {
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 30px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    text-align: left;
+    display: inline-block;
+    color: #495060;
+}
+
+.title {
+    margin: 0 15px;
+    padding: 5px 0;
+}
+
+.time {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+.item {
+    text-align: left;
+    display: inline-block;
+}
+
+.ctime {
+    margin-right: 10px;
+}
+
+.mr5 {
+    margin-right: 5px
+}
+
+.mr10 {
+    margin-right: 10px
+}
+
+.state {
+    float: right;
+    margin-top: 25px;
+}

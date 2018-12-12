@@ -69,4 +69,16 @@
         where teacher_id = #{teacherId}
     </select>
 
+    <select id="selectTeacherInfo" resultType="dto.UserDTO">
+        select user_id   as userId,
+               username  as username,
+               telephone as telephone,
+               email     as email,
+               office    as office
+        from course,
+             user
+        where course_id = #{id}
+          and teacher_id = user_id
+    </select>
+
 </mapper>

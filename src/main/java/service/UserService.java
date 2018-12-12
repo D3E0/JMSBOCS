@@ -32,4 +32,5 @@ public interface UserService extends BaseService<UserEntity> {
      * @return
      */
     int saveStuSet(Set<UserSDTO> set);
+
 }

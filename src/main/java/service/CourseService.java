@@ -1,6 +1,7 @@
 package service;
 
 import dto.CourseDTO;
+import dto.UserDTO;
 import dto.UserSDTO;
 import entity.CourseEntity;
 
@@ -93,5 +94,12 @@ public interface CourseService extends BaseService<CourseEntity> {
      */
     int deleteUserCourseList(Set<UserSDTO> set, int courseId);
 
+    /**
+     * 查询课程教师详情
+     *
+     * @param courseId
+     * @return
+     */
+    UserDTO selectTeacherInfo(int courseId);
 
 }

@@ -1,10 +1,3 @@
-body {
-    background-color: #eeeeee;
-    color: #495060;
-    overflow: scroll;
-    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
-}
-
 .navbar {
     background: #FFFFFF;
     border-bottom: 1px solid #f6f6f6;
@@ -45,20 +38,6 @@ body {
     line-height: 60px;
     color: #000000;
 }
-
-.fa-fw {
-    margin: 2px;
-}
-
-.contentapp {
-    margin: 40px 6% 0;
-    box-sizing: border-box;
-    background-color: #eeeeee;
-}
-
-/*.contentapp:hover {*/
-    /*box-shadow: 0 1px 9px 4px rgba(0, 0, 0, .1);*/
-/*}*/
 
 .layui-nav .layui-nav-child dd.layui-this a {
     background-color: #2d8cf0;

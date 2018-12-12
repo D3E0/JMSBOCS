@@ -2,6 +2,7 @@ package controller;
 
 import dto.UserDTO;
 import entity.UserEntity;
+import entity.UserType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,14 @@ public class UserController {
      */
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)
     @ResponseBody
-    public RestResult getUser(@RequestParam int id) {
-        UserDTO entity = service.selectUserDTO(id);
+    public RestResult getUser(@RequestParam Integer id) {
+        UserEntity entity = service.selectOne(id);
+        UserDTO dto;
+        if (entity.getType() == UserType.TEACHER) {
+            dto = service.selectUserDTO(id);
+        } else {
+            dto = new UserDTO(entity);
+        }
         logger.info(String.format("query user{%d} %s", id, entity));
         return new RestResult.Builder(200).data(entity).build();
     }
