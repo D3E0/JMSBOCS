@@ -17,6 +17,7 @@ import vo.CourseVO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -50,11 +51,11 @@ public class CourseController {
      */
     @RequestMapping(value = "/api/subject", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult createSubject(@RequestParam() String name,
-                                    @RequestParam() String description,
-                                    @RequestParam() Integer id,
-                                    @RequestParam() String academic,
-                                    @RequestParam() String semester,
+    public RestResult createSubject(@RequestParam String name,
+                                    @RequestParam String description,
+                                    @RequestParam Integer id,
+                                    @RequestParam String academic,
+                                    @RequestParam String semester,
                                     HttpServletResponse response) {
         CourseEntity entity = new CourseEntity(name, id, academic, description, semester);
         int res = service.save(entity);
@@ -70,13 +71,13 @@ public class CourseController {
     /**
      * 根据课程 ID 删除课程
      *
-     * @param id
+     * @param courseId
      * @return
      */
     @RequestMapping(value = "/api/subject", method = RequestMethod.DELETE)
     @ResponseBody
-    public RestResult deleteSubject(@RequestParam Integer id) {
-        int res = service.delete(id);
+    public RestResult deleteSubject(@RequestParam Integer courseId) {
+        int res = service.delete(courseId);
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {
@@ -106,16 +107,22 @@ public class CourseController {
     @RequestMapping(value = "/api/subjectList", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getSubjectList(@RequestParam Integer userId) {
-        logger.info("user query subject list ==> " + userId);
+        logger.info("query subject list for user ==> " + userId);
         UserEntity entity = userService.selectOne(userId);
         List<CourseDTO> list;
+        Long count;
+        Integer id = entity.getUserId();
         if (UserType.TEACHER.equals(entity.getType())) {
-            list = service.selectCourseDTOListTch(entity.getUserId());
+            list = service.selectCourseDTOListTch(id);
+            count = service.selectCourseCountTch(id);
         } else {
-            list = service.selectCourseDTOListStu(entity.getUserId());
+            list = service.selectCourseDTOListStu(id);
+            count = service.selectCourseCountStu(id);
+
         }
         logger.info(list);
-        return new RestResult.Builder(200).data(list).build();
+        logger.info(count);
+        return new RestResult.Builder(200).count(count).data(list).build();
     }
 
     @RequestMapping(value = "/api/subject/user", method = RequestMethod.GET)
@@ -133,14 +140,9 @@ public class CourseController {
     @ResponseBody
     public RestResult saveCourseStudents(@RequestBody CourseVO courseVO, HttpServletResponse response) {
         logger.info("course add student ==> " + courseVO);
-        int res = service.saveUserCourseList(courseVO.getStudentList(), courseVO.getCourseId());
-        logger.info("add " + res + " user to course " + courseVO.getCourseId());
+        Map res = service.saveUserCourseList(courseVO.getStudentList(), courseVO.getCourseId());
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        if (res > 0) {
-            return new RestResult.Builder(200).message("success").build();
-        } else {
-            return new RestResult.Builder(200).message("fail").build();
-        }
+        return new RestResult.Builder(200).data(res).build();
     }
 }

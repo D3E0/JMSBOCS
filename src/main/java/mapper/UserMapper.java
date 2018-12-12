@@ -16,8 +16,10 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     UserDTO selectUserDTO(int id);
 
+//    TODO 拦截器
+
     /**
-     * 批量保存用户  有则忽略 无则添加
+     * 批量保存用户  有则忽略 无则添加  size > 0
      *
      * @param list
      * @return

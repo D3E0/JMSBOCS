@@ -5,6 +5,7 @@ import dto.UserSDTO;
 import entity.CourseEntity;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -72,7 +73,7 @@ public interface CourseService extends BaseService<CourseEntity> {
      * @param courseId
      * @return
      */
-    int saveUserCourseList(Set<UserSDTO> set, int courseId);
+    Map<String, Integer> saveUserCourseList(Set<UserSDTO> set, int courseId);
 
     /**
      * 保存单个学生选课情况 若没有学生，则保存学生信息
@@ -81,7 +82,7 @@ public interface CourseService extends BaseService<CourseEntity> {
      * @param courseId
      * @return
      */
-    int saveUserCourse(UserSDTO user, int courseId);
+    Map<String, Integer> saveUserCourse(UserSDTO user, int courseId);
 
     /**
      * 批量删除学生选课情况

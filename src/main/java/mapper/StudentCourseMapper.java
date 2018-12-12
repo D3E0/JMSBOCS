@@ -23,8 +23,11 @@ public interface StudentCourseMapper {
 
     int save(StudentCourseEntity entity);
 
+
+//    TODO 拦截器
+
     /**
-     * 批量保存学生选课情况
+     * 批量保存学生选课情况  size > 0
      *
      * @param list
      * @return
@@ -33,7 +36,7 @@ public interface StudentCourseMapper {
     int saveListIgnore(List<StudentCourseEntity> list);
 
     /**
-     * 批量删除学生选课情况
+     * 批量删除学生选课情况   size > 0
      *
      * @param list
      * @return

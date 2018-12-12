@@ -46,7 +46,13 @@ public class UserServiceImpl implements UserService {
             entity.setPassword(PWD);
             list.add(entity);
         }
-        return mapper.saveUserListIgnore(list);
+        logger.info(String.format("to add %d tch to DB ==> %s", list.size(), list));
+        if (list.size() == 0) {
+            return 0;
+        }
+        int res = mapper.saveUserListIgnore(list);
+        logger.info("add " + res + " tch to database");
+        return res;
     }
 
     public int saveStuSet(Set<UserSDTO> set) {
@@ -57,7 +63,13 @@ public class UserServiceImpl implements UserService {
             entity.setPassword(PWD);
             list.add(entity);
         }
-        return mapper.saveUserListIgnore(list);
+        logger.info(String.format("to add %d stu to DB ==> %s", list.size(), list));
+        if (list.size() == 0) {
+            return 0;
+        }
+        int res = mapper.saveUserListIgnore(list);
+        logger.info("add " + res + " stu to database");
+        return res;
     }
 
     public int update(UserEntity entity) {
