@@ -18,6 +18,17 @@ public class StudentCourseTest {
     StudentCourseMapper mapper;
 
     @Test
+    public void deleteList() {
+        StudentCourseEntity entity = new StudentCourseEntity(1, 1);
+        StudentCourseEntity entity1 = new StudentCourseEntity(1, 2);
+        List<StudentCourseEntity> list = new ArrayList<StudentCourseEntity>();
+        list.add(entity);
+        list.add(entity1);
+        int res = mapper.deleteList(list);
+        System.out.println(res);
+    }
+
+    @Test
     public void saveList() {
         StudentCourseEntity entity = new StudentCourseEntity(1, 1);
         StudentCourseEntity entity1 = new StudentCourseEntity(1, 2);
@@ -26,13 +37,13 @@ public class StudentCourseTest {
         StudentCourseEntity entity4 = new StudentCourseEntity(3, 1);
         StudentCourseEntity entity5 = new StudentCourseEntity(3, 2);
         List<StudentCourseEntity> list = new ArrayList<StudentCourseEntity>();
-        list.add(entity);
-        list.add(entity1);
-        list.add(entity2);
-        list.add(entity3);
-        list.add(entity4);
-        list.add(entity5);
-        int res = mapper.saveList(list);
+//        list.add(entity);
+//        list.add(entity1);
+//        list.add(entity2);
+//        list.add(entity3);
+//        list.add(entity4);
+//        list.add(entity5);
+        int res = mapper.saveListIgnore(list);
         System.out.println(res);
     }
 }

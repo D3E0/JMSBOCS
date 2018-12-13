@@ -22,7 +22,7 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="<c:url value="/courseList"/>">
+            <a href="<c:url value="/subject"/>">
                 <i class="fa fa-book fa-fw"></i>&nbsp;课程
             </a>
         </li>
@@ -51,7 +51,7 @@
 <script src="<c:url value="/static/layui/layui.js"/>"></script>
 <script>
     layui.use('element', function () {
-        let element = layui.element;
+        var element = layui.element;
     });
 </script>
 </body>

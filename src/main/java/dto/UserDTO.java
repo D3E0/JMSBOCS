@@ -1,5 +1,6 @@
 package dto;
 
+import entity.UserEntity;
 import entity.UserType;
 
 public class UserDTO {
@@ -107,4 +108,25 @@ public class UserDTO {
                 ", type=" + type +
                 '}';
     }
+
+    public UserDTO() {
+    }
+
+    public UserDTO(UserEntity entity) {
+        this.userId = entity.getUserId();
+        this.username = entity.getUsername();
+        this.specialty = entity.getSpecialty();
+        this.email = entity.getTelephone();
+        this.telephone = entity.getTelephone();
+    }
+
+    public UserDTO(Integer userId, String username, String telephone, String email, String office) {
+        this.userId = userId;
+        this.username = username;
+        this.telephone = telephone;
+        this.email = email;
+        this.office = office;
+    }
 }
+
+

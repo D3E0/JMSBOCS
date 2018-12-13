@@ -19,6 +19,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private final UserMapper mapper;
+    public static final String PWD = "888888";
 
     @Autowired
     public UserServiceImpl(UserMapper mapper) {
@@ -41,9 +42,17 @@ public class UserServiceImpl implements UserService {
     public int saveTchSet(Set<UserSDTO> set) {
         List<UserEntity> list = new ArrayList<UserEntity>();
         for (UserSDTO user : set) {
-            list.add(new UserEntity(user.getUserId(), user.getUsername(), UserType.TEACHER));
+            UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.TEACHER);
+            entity.setPassword(PWD);
+            list.add(entity);
         }
-        return mapper.saveUserList(list);
+        logger.info(String.format("to add %d tch to DB ==> %s", list.size(), list));
+        if (list.size() == 0) {
+            return 0;
+        }
+        int res = mapper.saveUserListIgnore(list);
+        logger.info("add " + res + " tch to database");
+        return res;
     }
 
     public int saveStuSet(Set<UserSDTO> set) {
@@ -51,9 +60,16 @@ public class UserServiceImpl implements UserService {
         for (UserSDTO user : set) {
             UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.STUDENT);
             entity.setSpecialty(user.getSpecialty());
+            entity.setPassword(PWD);
             list.add(entity);
         }
-        return mapper.saveUserList(list);
+        logger.info(String.format("to add %d stu to DB ==> %s", list.size(), list));
+        if (list.size() == 0) {
+            return 0;
+        }
+        int res = mapper.saveUserListIgnore(list);
+        logger.info("add " + res + " stu to database");
+        return res;
     }
 
     public int update(UserEntity entity) {

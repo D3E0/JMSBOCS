@@ -24,6 +24,11 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping("/head")
+    public String head() {
+        return "head";
+    }
+
     @RequestMapping("/main")
     public String main() {
         return "main";

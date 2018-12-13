@@ -1,11 +1,14 @@
 package service;
 
 import dto.CourseDTO;
+import dto.UserDTO;
 import dto.UserSDTO;
 import entity.CourseEntity;
 import entity.StudentCourseEntity;
 import mapper.CourseMapper;
 import mapper.StudentCourseMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,8 @@ public class CourseServiceImpl implements CourseService {
     private final CourseMapper mapper;
     private final StudentCourseMapper suMapper;
     private final UserService userService;
+
+    private static final Logger logger = LogManager.getLogger(CourseServiceImpl.class);
 
     @Autowired
     public CourseServiceImpl(CourseMapper mapper, StudentCourseMapper suMapper, UserService userService) {
@@ -77,24 +82,50 @@ public class CourseServiceImpl implements CourseService {
         return suMapper.selectCourseCount(userId);
     }
 
-    public int saveUserCourseList(List<UserSDTO> list, int courseId) {
-        int res = 0;
-        Set<UserSDTO> existSet = this.selectUserSet(courseId);
-        Set<UserSDTO> rawSet = new HashSet<UserSDTO>(list);
-        rawSet.removeAll(existSet);
-        res = userService.saveStuSet(rawSet);
+    public Map<String, Integer> saveUserCourseList(Set<UserSDTO> set, int courseId) {
+        Map<String, Integer> result = new HashMap<String, Integer>(3);
+        int res = userService.saveStuSet(set);
+        result.put("saveUser", res);
+        res = deleteUserCourseList(set, courseId);
+        result.put("deleteStu", res);
         List<StudentCourseEntity> entityList = new ArrayList<StudentCourseEntity>();
-        for (UserSDTO userSDTO : list) {
+        for (UserSDTO userSDTO : set) {
             entityList.add(new StudentCourseEntity(userSDTO.getUserId(), courseId));
         }
-        res = suMapper.saveList(entityList);
+        logger.info(String.format("to add %d stu to course %d ==> %s", entityList.size(), courseId, entityList));
+        res = 0;
+        if (entityList.size() > 0) {
+            res = suMapper.saveListIgnore(entityList);
+        }
+        result.put("addStu", res);
+        logger.info("add " + res + " stu to course " + courseId);
+        return result;
+    }
+
+    public Map<String, Integer> saveUserCourse(UserSDTO user, int courseId) {
+        return saveUserCourseList(Collections.singleton(user), courseId);
+    }
+
+    public int deleteUserCourseList(Set<UserSDTO> set, int courseId) {
+        Set<UserSDTO> existStudents = selectUserSet(courseId);
+        logger.info(String.format("exist %d students under course %d ==> %s",
+                existStudents.size(), courseId, existStudents));
+        existStudents.removeAll(set);
+        logger.info(String.format("to remove %d students from course %d ==> %s",
+                existStudents.size(), courseId, existStudents));
+        if (existStudents.size() == 0) {
+            return 0;
+        }
+        List<StudentCourseEntity> toDelete = new ArrayList<StudentCourseEntity>();
+        for (UserSDTO sdto : existStudents) {
+            toDelete.add(new StudentCourseEntity(sdto.getUserId(), courseId));
+        }
+        int res = suMapper.deleteList(toDelete);
+        logger.info("remove " + res + " students from course " + courseId);
         return res;
     }
 
-    public int saveUserCourse(UserSDTO user, int courseId) {
-        int res = 0;
-        res = userService.saveStuSet(Collections.singleton(user));
-        res = suMapper.save(new StudentCourseEntity(user.getUserId(), courseId));
-        return res;
+    public UserDTO selectTeacherInfo(int courseId) {
+        return mapper.selectTeacherInfo(courseId);
     }
 }

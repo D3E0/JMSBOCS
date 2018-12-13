@@ -1,8 +1,8 @@
 package vo;
 
-import dto.CourseDTO;
+import dto.UserSDTO;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author yan
@@ -10,30 +10,30 @@ import java.util.List;
  * @descripition
  */
 public class CourseVO {
-    private int count;
-    private List<CourseDTO> courseList;
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public List<CourseDTO> getCourseList() {
-        return courseList;
-    }
-
-    public void setCourseList(List<CourseDTO> courseList) {
-        this.courseList = courseList;
-    }
+    private Integer courseId;
+    private Set<UserSDTO> studentList;
 
     @Override
     public String toString() {
         return "CourseVO{" +
-                "count=" + count +
-                ", courseList=" + courseList +
+                "courseId=" + courseId +
+                ", studentList=" + studentList +
                 '}';
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Set<UserSDTO> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(Set<UserSDTO> studentList) {
+        this.studentList = studentList;
     }
 }

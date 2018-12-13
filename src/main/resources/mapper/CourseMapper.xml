@@ -16,8 +16,8 @@
 
     <insert id="save" parameterType="entity.CourseEntity" useGeneratedKeys="true"
             keyProperty="courseId" keyColumn="course_id">
-        INSERT into course(course_name, course_description, teacher_id, semester, academic_year)
-            value (#{courseName}, #{courseDescription}, #{teacherId}, #{semester}, #{academicYear})
+        INSERT into course(course_id, course_name, course_description, teacher_id, semester, academic_year)
+            value (#{courseId}, #{courseName}, #{courseDescription}, #{teacherId}, #{semester}, #{academicYear})
     </insert>
 
     <update id="update" parameterType="entity.CourseEntity">
@@ -64,9 +64,21 @@
     </select>
 
     <select id="selectCourseCountTch" resultType="Long">
-        select *
+        select count(*)
         from course
         where teacher_id = #{teacherId}
+    </select>
+
+    <select id="selectTeacherInfo" resultType="dto.UserDTO">
+        select user_id   as userId,
+               username  as username,
+               telephone as telephone,
+               email     as email,
+               office    as office
+        from course,
+             user
+        where course_id = #{id}
+          and teacher_id = user_id
     </select>
 
 </mapper>

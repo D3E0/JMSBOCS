@@ -39,4 +39,12 @@ public class StudentCourseEntity {
         this.studentId = studentId;
         this.courseId = courseId;
     }
+
+    @Override
+    public String toString() {
+        return "StudentCourseEntity{" +
+                ", studentId=" + studentId +
+                ", courseId=" + courseId +
+                '}';
+    }
 }

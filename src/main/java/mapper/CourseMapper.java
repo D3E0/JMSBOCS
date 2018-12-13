@@ -1,6 +1,7 @@
 package mapper;
 
 import dto.CourseDTO;
+import dto.UserDTO;
 import entity.CourseEntity;
 import org.springframework.stereotype.Repository;
 
@@ -38,4 +39,11 @@ public interface CourseMapper extends BaseMapper<CourseEntity> {
      */
     Long selectCourseCountTch(int teacherId);
 
+    /**
+     * 查询课程教师详情
+     *
+     * @param courseId
+     * @return
+     */
+    UserDTO selectTeacherInfo(int courseId);
 }

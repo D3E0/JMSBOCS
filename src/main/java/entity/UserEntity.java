@@ -121,4 +121,12 @@ public class UserEntity {
         this.username = username;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

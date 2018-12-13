@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.AnnouncementMapper">
+    <select id="selectOne" resultType="entity.AnnouncementEntity">
+        select *
+        from announcement
+        where announcement_id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="entity.AnnouncementEntity">
+        select *
+        from announcement
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="announcementId">
+        insert into announcement (announcement_id, course_id, announcement_time, announcement_title,
+                                  announcement_content)
+        values (#{announcementId},
+                #{courseId},
+                #{announcementTime},
+                #{announcementTitle},
+                #{announcementContent})
+    </insert>
+
+    <update id="update">
+        update announcement
+        set course_id            = #{courseId},
+            announcement_time    = #{announcementTime},
+            announcement_title   = #{announcementTitle},
+            announcement_content = #{announcementContent}
+        where announcement_id = #{announcementId}
+    </update>
+
+    <delete id="delete">
+        delete
+        from announcement
+        where announcement_id = #{id}
+    </delete>
+    <select id="selectCourseAnnouncement" resultType="entity.AnnouncementEntity">
+        select *
+        from announcement
+        where course_id = #{courseId}
+        order by announcement_id DESC
+    </select>
+
+</mapper>
