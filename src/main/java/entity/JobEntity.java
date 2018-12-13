@@ -1,6 +1,7 @@
 package entity;
 
-import vo.JobVO;
+import vo.AddJobVO;
+import vo.UpdateJobVO;
 
 import java.util.Date;
 
@@ -56,12 +57,19 @@ public class JobEntity {
     public JobEntity() {
     }
 
-    public JobEntity(JobVO jobVO) {
-        this.jobId = jobVO.getJobId();
-        this.jobTitle = jobVO.getJobTitle();
-        this.jobContent = jobVO.getJobContent();
-        this.jobBeginTime = jobVO.getJobBeginTime();
-        this.jobEndTime = jobVO.getJobEndTime();
+    public JobEntity(UpdateJobVO updateJobVO) {
+        this.jobId = updateJobVO.getJobId();
+        this.jobTitle = updateJobVO.getJobTitle();
+        this.jobContent = updateJobVO.getJobContent();
+        this.jobBeginTime = updateJobVO.getJobBeginTime();
+        this.jobEndTime = updateJobVO.getJobEndTime();
+    }
+    public JobEntity(AddJobVO addJobVO) {
+        this.courseId = addJobVO.getCourseId();
+        this.jobTitle = addJobVO.getJobTitle();
+        this.jobContent = addJobVO.getJobContent();
+        this.jobBeginTime = addJobVO.getJobBeginTime();
+        this.jobEndTime = addJobVO.getJobEndTime();
     }
 
     /**

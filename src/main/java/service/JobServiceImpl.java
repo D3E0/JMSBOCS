@@ -1,13 +1,10 @@
 package service;
 
 import dto.JobItemDTO;
-import dto.JobSubmitRecordDTO;
-import dto.JobSubmitRecordNumber;
 import entity.JobEntity;
 import entity.UserEntity;
 import entity.UserType;
 import mapper.JobMapper;
-import mapper.JobSubmitItemMapper;
 import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +23,6 @@ public class JobServiceImpl implements JobService {
     private static final Logger logger = LogManager.getLogger(JobServiceImpl.class);
     private final UserMapper userMapper;
     private JobMapper jobMapper;
-    private JobSubmitItemMapper jobSubmitItemMapper;
-    @Autowired
-    public void setJobSubmitItemMapper(JobSubmitItemMapper jobSubmitItemMapper) {
-        this.jobSubmitItemMapper = jobSubmitItemMapper;
-    }
 
     @Autowired
     public JobServiceImpl(UserMapper userMapper) {
@@ -56,12 +48,6 @@ public class JobServiceImpl implements JobService {
         return jobMapper.findJobById(jobId);
     }
 
-    public void jobItemSubmit(int jobId, int userId, String fileName) {
-        if (jobSubmitItemMapper.isSameFile(jobId,fileName,userId)==0) {
-            jobSubmitItemMapper.jobItemSubmit(jobId,fileName,userId);
-        }
-    }
-
     public int countJob(int userId, String keyword) {
         UserEntity userEntity=userMapper.selectOne(userId);
         if (userEntity.getType()== UserType.STUDENT) {
@@ -84,16 +70,9 @@ public class JobServiceImpl implements JobService {
         return jobMapper.save(jobEntity);
     }
 
-    public List<JobSubmitRecordDTO> getJobSubmitRecord(int jobId,int cur,String keyword,int limit) {
-        return jobSubmitItemMapper.getJobSubmitRecord(jobId, (cur-1)*limit, keyword,limit);
-    }
-
-    public int countJobSubmitRecord(int jobId, String keyword) {
-        return jobSubmitItemMapper.countJobSubmitRecord(jobId,keyword);
-    }
-
-    public JobSubmitRecordNumber countJobSubmitRecordNum(int jobId) {
-        return jobSubmitItemMapper.countJobSubmitRecordNum(jobId);
+    @Override
+    public int isSameJobTitle(int courseId, String jobTitle) {
+        return jobMapper.isSameJobTitle(courseId, jobTitle);
     }
 
 }

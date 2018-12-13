@@ -15,6 +15,8 @@ body{
     display: inline-block;
 }
 .panel{
+    box-shadow:1px 1px 1px 1px rgba(0,0,0,.1);
+    border-radius: 4px;
     margin:50px 4% ;
     background-color: #FFFFFF;
     padding-bottom: 20px;
@@ -95,6 +97,13 @@ body{
     background-color:#ed3f14 ;
     top: 1px;
 }
+.organgedot{
+    width: 12px;
+    height: 12px;
+    background-color:#f90 ;
+    top: 1px;
+}
+
 .title a:hover{
     color: #2d8cf0;
     border-bottom: 1px solid #2d8cf0;
@@ -127,9 +136,14 @@ body{
 }
 .searchdiv:hover{
     border: 1px solid #57a3f3;
+}
+.searchdiv:focus{
+    border: 1px solid #57a3f3;
     box-shadow: 1px 1px 1px 1px #57a3f37d;
 }
-.jobInfo{
-    margin: 0 20px;
+.nothing{
+    margin-top: 100px;
+    display: none;
 }
+
 

@@ -1,12 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: yan
-  Date: 2018/12/6
-  Time: 12:37
+  Date: 2018/12/12
+  Time: 10:51
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -18,12 +17,22 @@
 </head>
 <body>
 <form class="layui-form" action="" style="margin: 20px 3%">
-    <input name="jobId" value="${job.jobId}" hidden>
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程列表</label>
+        <div class="layui-input-block">
+            <select id="courseId" name="courseId" lay-filter="required">
+                <c:forEach var="course" items="${courseList}">
+                    <option value="<c:out value="${course.courseId}" />"><c:out value="${course.courseName}-${course.academicYear}-${course.semester}" /></option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">作业标题</label>
         <div class="layui-input-block">
-            <input type="text" name="jobTitle" value="${job.jobTitle}" required lay-verify="required"
+            <input id="jobTitle" type="text" name="jobTitle" required lay-verify="required"
                    placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <span id="tag" class="Tag">可以使用</span>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
@@ -36,7 +45,6 @@
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-block">
             <input id="jobBeginTime" type="text"
-                   value="<fmt:formatDate value="${job.jobBeginTime}" pattern="yyyy-MM-dd HH:mm:ss" />"
                    name="jobBeginTime" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
                    class="layui-input">
         </div>
@@ -45,7 +53,7 @@
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-block">
             <input id="jobEndTime" type="text"
-                   value="<fmt:formatDate value="${job.jobEndTime}" pattern="yyyy-MM-dd HH:mm:ss" />" name="jobEndTime"
+                   name="jobEndTime"
                    required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -56,13 +64,28 @@
         </div>
     </div>
 </form>
-
 <script>
     layui.use(['form', 'laydate'], function () {
-        var form = layui.form, laydate = layui.laydate;
+        let form = layui.form, laydate = layui.laydate;
+        let different=1;
+        $("#jobTitle").blur(function (event) {
+            let jobTitle=$('#jobTitle').val();
+            let courseId=$('#courseId').val();
+            $.post('/isSameJobTitle',{jobTitle:jobTitle,courseId:courseId},function (data) {
+                let tag=$("#tag");
+                if(data>0){
+                    tag.addClass("redColor");
+                    tag.text('重复');
+                }else{
+                    different=0;
+                    tag.addClass("greenColor");
+                }
+            });
+        });
         form.on('submit(formDemo)', function (data) {
             // layer.msg(JSON.stringify(data.field));
-            $.post('/updateJob', data.field, function (data) {
+            if (different===0)
+            $.post('/addJob', data.field, function (data) {
                 window.parent.close();
             });
             return false;

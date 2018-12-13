@@ -1,8 +1,9 @@
 var upload_token;
 layui.use('upload', function () {
-    var $ = layui.jquery
+    let $ = layui.jquery
         , upload = layui.upload;
-    var courseId = $("#courseId").val();
+    let courseId = $("#courseId").val();
+    let jobId=$('#jobId').val();
     test = "test";
     $.post('/qiniu', {
             courseId: courseId
@@ -34,9 +35,8 @@ layui.use('upload', function () {
                             , '<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                             , '</td>'
                             , '</tr>'].join(''));
-                        obj.resetFile(index, file, '1/1/1/' + file.name);
-                        test = courseId+'/'+$('#jobId').val()+'/2/' + file.name;
-                        layui.$.post('/jobItemSubmit', {jobId: $('#jobId').val(), fileName: file.name, userId: 2},function (data) {});
+                        test = $('#filePrefix').val()+'/1160299001/' + file.name;
+                        // layui.$.post('/jobItemSubmit', {jobId: jobId, fileName: file.name, userId: 2},function (data) {});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {
                             obj.upload(index, file);
@@ -57,7 +57,8 @@ layui.use('upload', function () {
                             , tds = tr.children();
                         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
                         tds.eq(3).html(''); //清空操作
-                        $.post('/uploadFileName',{courseId:1,  jobId:1,  studentId:1, filename:this.files[index].name});
+                        console.info(this.files[index].name);
+                        $.post('/jobItemSubmit', {jobId: jobId, fileName:this.files[index].name, userId: 2},function (data) {});
                         return delete this.files[index]; //删除文件队列已经上传成功的文件
                     }
                     this.error(index, upload);

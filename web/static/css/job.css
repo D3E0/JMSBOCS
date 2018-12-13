@@ -30,17 +30,20 @@ body{
     text-align: left;
 }
 .rightbar{
-    float: right;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.1);
+    border-radius: 4px;
+    margin-left: 10px;
     display: inline-block;
     background-color: #FFFFFF;
     min-width: 300px;
-    width: 18%;
+    width: 16.66666667%;
 }
 .job-content{
-    float: left;
+    box-shadow:1px 1px 1px 1px rgba(0,0,0,.1);
+    border-radius: 4px;
     display: inline-block;
     background-color: #FFFFFF;
-    width: 72%;
+    width: 76%;
 }
 .list li{
     text-align:center;
@@ -53,7 +56,6 @@ body{
     border-bottom: 1px solid hsla(0,0%,73%,.5);
 }
 .info{
-    margin-left: 20px;
     padding: 5px 15px;
 }
 .layui-upload{
@@ -65,9 +67,23 @@ body{
 .layui-btn{
     border-radius: 4px;
 }
-.uploadbtn{
+.greenColor{
     background-color: #19be6b;
 }
-.delbtn{
+.redColor{
     background-color: #ed3f14;
+}
+.Tag{
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    margin: 2px 4px 2px 0;
+    padding: 0 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #FFFFFF;
+    vertical-align: middle;
+    opacity: 1;
+    overflow: hidden;
+    cursor: pointer;
 }

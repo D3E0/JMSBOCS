@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
     <link href="<c:url value="/static/css/list.css"/>" rel="stylesheet">
+    <link href="<c:url value="/static/css/record.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
@@ -21,6 +22,7 @@
 <div class="panel">
     <div class="panel-title">作业提交记录</div>
     <div class="op">
+        <button id="downloadAll" class="layui-btn">点击下载所有文件</button>
         <span class="jobInfo">提交情况：${already}/${need}</span>
         <div class="searchdiv">
             <input type="text" id="search" placeholder="keyword">
@@ -34,46 +36,71 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">查看提交文件</a>
+    <a class="layui-btn layui-btn-sm detailbtn" lay-event="detail">查看提交文件</a>
 </script>
 <script>
-    layui.use(['table','layer','element'], function(){
-        let table = layui.table,layer=layui.layer;
-        table.render({
+    let jobId = $("#jobId").val();
+    function urlToPromise(url) {
+        return new Promise(function (resolve, reject) {
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+    layui.use(['table', 'layer', 'element'], function () {
+        let table = layui.table, layer = layui.layer,element = layui.element;
+        $("#downloadAll").click(function () {
+            layer.open({
+                title: '任务下载中',
+                area: ['600px', '200px'],
+                type: 2,
+                scrollbar: true,
+                content: ['/downloadAll?jobId='+jobId, 'no']
+            });
+        });
+        let tableIns = table.render({
             elem: '#demo'
-            ,height: 312
-            ,url: '/jobSubmitRecord' //数据接口
-            ,page: true //开启分页
-            ,method:"post"
-            ,toolbar:''
-            ,where:{jobId:$("#jobId").val(),keyword:function () {
+            , height: 480
+            , url: '/jobSubmitRecord' //数据接口
+            , page: true //开启分页
+            , method: "post"
+            , toolbar: ''
+            , where: {
+                jobId: jobId, keyword: function () {
                     return $("#search").val()
-                }}
-            ,cols: [[ //表头
-                {field: 'userId', title: '学号', width:'17%', align:'center', sort: true}
-                ,{field: 'userName', title: '学生姓名', align:'center', width:'17%'}
-                ,{field: 'status', title: '作业是否提交', width:'17%', align:'center',sort:true}
-                ,{field: 'fileCount', title: '作业提交文件数', align:'center', width: '15%'}
-                ,{field: 'lastSubmitTime', title: '提交作业时间', align:'center', width: '20%', sort: true,templet: function(d){
-                    if (d.lastSubmitTime===undefined)
-                        return '无';
-                    return new Date(d.lastSubmitTime).toLocaleString();
-                }},{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                }
+            }
+            , cols: [[ //表头
+                {field: 'userId', title: '学号', width: '17%', sort: true}
+                , {field: 'userName', title: '学生姓名', width: '17%'}
+                , {field: 'status', title: '作业是否提交', width: '17%', sort: true}
+                , {field: 'fileCount', title: '作业提交文件数', width: '15%'}
+                , {
+                    field: 'lastSubmitTime', title: '提交作业时间', width: '20%', sort: true, templet: function (d) {
+                        if (d.lastSubmitTime === undefined)
+                            return '无';
+                        return new Date(d.lastSubmitTime).toLocaleString();
+                    }
+                }, {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
             ]]
         });
         console.info('table.on');
-        table.on('tool(record)', function(obj){
+        table.on('tool(record)', function (obj) {
             let data = obj.data; //获得当前行数据
             let layEvent = obj.event;
-            if(layEvent === 'detail'){ //查看
-                let param="?jobId="+$('#jobId').val();
+            if (layEvent === 'detail') { //查看
+                let param = "?jobId=" + jobId;
                 console.info("fileList click");
                 layer.open({
                     title: false,
                     area: ['700px', '500px'],
                     type: 2,
                     scrollbar: true,
-                    content: ['/jobFileList'+param, 'no']
+                    content: ['/jobFileList' + param, 'no']
                 });
             }
         });
