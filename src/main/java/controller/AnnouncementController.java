@@ -60,7 +60,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/api/announcement", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult deleteAnnouncement(@RequestParam Integer courseId,
+    public RestResult saveAnnouncement(@RequestParam Integer courseId,
                                          @RequestParam String title,
                                          @RequestParam String content,
                                          HttpServletResponse response) {

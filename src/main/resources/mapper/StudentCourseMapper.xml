@@ -31,7 +31,6 @@
             (student_id = #{item.studentId}
             AND course_id = #{item.courseId})
         </foreach>
-        and 1 = 1
     </delete>
 
     <insert id="saveListIgnore">
@@ -43,9 +42,7 @@
     </insert>
 
     <select id="selectUserList" resultType="dto.UserSDTO">
-        select user_id   as userId,
-               username  as username,
-               specialty as specialty
+        select user_id as userId, username as username, specialty as specialty
         from user,
              student_course
         where course_id = #{courseId}

@@ -14,7 +14,7 @@
         from announcement
     </select>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="save" useGeneratedKeys="true" keyProperty="announcementId">
         insert into announcement (announcement_id, course_id, announcement_time, announcement_title,
                                   announcement_content)
         values (#{announcementId},

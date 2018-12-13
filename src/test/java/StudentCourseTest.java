@@ -37,12 +37,12 @@ public class StudentCourseTest {
         StudentCourseEntity entity4 = new StudentCourseEntity(3, 1);
         StudentCourseEntity entity5 = new StudentCourseEntity(3, 2);
         List<StudentCourseEntity> list = new ArrayList<StudentCourseEntity>();
-        list.add(entity);
-        list.add(entity1);
-        list.add(entity2);
-        list.add(entity3);
-        list.add(entity4);
-        list.add(entity5);
+//        list.add(entity);
+//        list.add(entity1);
+//        list.add(entity2);
+//        list.add(entity3);
+//        list.add(entity4);
+//        list.add(entity5);
         int res = mapper.saveListIgnore(list);
         System.out.println(res);
     }
