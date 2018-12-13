@@ -52,4 +52,14 @@ public class CourseResourceEntity {
     public void setCourseResourceFilename(String courseResourceFilename) {
         this.courseResourceFilename = courseResourceFilename == null ? null : courseResourceFilename.trim();
     }
+
+    public CourseResourceEntity() {
+    }
+
+    public CourseResourceEntity(Integer courseId, String filename, Date date) {
+        this.courseId = courseId;
+        this.courseResourceFilename = filename;
+        this.uploadTime = date;
+    }
+
 }

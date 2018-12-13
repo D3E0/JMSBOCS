@@ -1,16 +1,17 @@
 package service;
 
+import dto.CourseResourceDTO;
 import entity.CourseResourceEntity;
 import mapper.ResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.ServiceMode;
 import java.util.List;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
     private final ResourceMapper mapper;
+    private FileService fileService;
 
     @Autowired
     public ResourceServiceImpl(ResourceMapper mapper) {
@@ -19,6 +20,10 @@ public class ResourceServiceImpl implements ResourceService {
 
     public List<CourseResourceEntity> selectCourseResource(int courseId) {
         return mapper.selectCourseResource(courseId);
+    }
+
+    public CourseResourceDTO getCourseResourceDTO(int id) {
+        return mapper.selectCourseResourceDTO(id);
     }
 
     public int update(CourseResourceEntity courseResourceEntity) {

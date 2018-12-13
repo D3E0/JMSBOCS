@@ -84,4 +84,17 @@ public class FileServiceImpl implements FileService {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.delefile(qiniuEntity,key);
     }
+
+    public FileVO getResource(int courseId, String path) {
+        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
+        List<FileVO> fileVOS=QiniuUtil.getFileList(qiniuEntity,path);
+        if (fileVOS.size()==0) {
+            return null;
+        }
+        return fileVOS.get(0);
+    }
+
+    public int deleteResource(int courseId, String path) {
+        return 0;
+    }
 }

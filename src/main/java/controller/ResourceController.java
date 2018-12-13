@@ -1,6 +1,6 @@
 package controller;
 
-import entity.AnnouncementEntity;
+import dto.CourseResourceDTO;
 import entity.CourseResourceEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import service.FileService;
 import service.ResourceService;
 import util.RestResult;
+import vo.FileVO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -22,20 +24,39 @@ public class ResourceController {
     private static final Logger logger = LogManager.getLogger(ResourceController.class);
 
     private final ResourceService service;
+    private final FileService fileService;
 
     @Autowired
-    public ResourceController(ResourceService service) {
+    public ResourceController(ResourceService service, FileService fileService) {
         this.service = service;
+        this.fileService = fileService;
     }
 
+    /**
+     * 获取课程资源对应链接
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/api/resource", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getResource(@RequestParam Integer id) {
-        CourseResourceEntity entity = service.selectOne(id);
-        logger.info(String.format("query resource{%d} %s", id, entity));
-        return new RestResult.Builder(200).data(entity).build();
+        CourseResourceDTO dto = service.getCourseResourceDTO(id);
+        logger.info(String.format("query resource %d ==> %s", id, dto));
+        if (dto == null) {
+            return new RestResult.Builder(200).message("fail").build();
+        }
+        FileVO fileVO = fileService.getResource(dto.getCourseId(), dto.getFullPath());
+        logger.info(String.format("query resource vo %d ==> %s", id, fileVO));
+        return new RestResult.Builder(200).message("success").data(fileVO).build();
     }
 
+    /**
+     * 获取课程资源列表
+     *
+     * @param courseId
+     * @return
+     */
     @RequestMapping(value = "/api/resourceList", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getResourceList(@RequestParam Integer courseId) {
@@ -45,9 +66,15 @@ public class ResourceController {
         return new RestResult.Builder(200).data(list).build();
     }
 
+    /**
+     * 删除课程资源
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/api/resource", method = RequestMethod.DELETE)
     @ResponseBody
-    public RestResult deleteAnnouncement(@RequestParam Integer id) {
+    public RestResult deleteResource(@RequestParam Integer id) {
         int res = service.delete(id);
         logger.info(String.format("delete resource{%d} ==> %d", id, res));
         if (res > 0) {
@@ -57,14 +84,36 @@ public class ResourceController {
         }
     }
 
+    /**
+     * 获取课程的资源上传 token
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/api/token", method = RequestMethod.GET)
+    @ResponseBody
+    public RestResult getUploadToken(@RequestParam Integer id) {
+        String token = fileService.getUploadToken(id);
+        logger.info(String.format("query course upload token %d ==> %s", id, token));
+        return new RestResult.Builder(200).data(token).build();
+    }
+
+    /**
+     * 保存资源信息到数据库
+     *
+     * @param courseId
+     * @param filename
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/api/resource", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult saveAnnouncement(@RequestParam Integer courseId,
-                                       @RequestParam String title,
-                                       @RequestParam String content,
-                                       HttpServletResponse response) {
-        int res = 0;
-        logger.info("save announcement %d" + res);
+    public RestResult saveResource(@RequestParam Integer courseId,
+                                   @RequestParam String filename,
+                                   HttpServletResponse response) {
+        CourseResourceEntity entity = new CourseResourceEntity(courseId, filename, new Date());
+        int res = service.save(entity);
+        logger.info(String.format("save resource %s ==> %d", entity, res));
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (res > 0) {
