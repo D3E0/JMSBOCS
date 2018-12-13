@@ -51,7 +51,7 @@ public class JobFilePrefix {
     public void setSemester(String semester) {
         this.semester = semester;
     }
-    public String getFilePerfix(){
-        return courseName+" "+academicYear+"-"+semester+"/"+jobTitle;
+    public String getFilePrefix(){
+        return courseName+"-"+academicYear+"-"+semester+"/"+jobTitle;
     }
 }

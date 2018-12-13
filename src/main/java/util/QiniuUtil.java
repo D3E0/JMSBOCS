@@ -93,6 +93,8 @@ public class QiniuUtil {
                     e.printStackTrace();
                 }
                 String publicUrl = String.format("%s/%s", domain, encodedFileName);
+                publicUrl=publicUrl.replaceAll("\\+", "%20");
+                publicUrl=publicUrl.replaceAll("%2b","+");
                 String downloadUrl=auth.privateDownloadUrl(publicUrl);
                 fileVo.setDownloadUrl(downloadUrl);
                 fileVOs.add(fileVo);

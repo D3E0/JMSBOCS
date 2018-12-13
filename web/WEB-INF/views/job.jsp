@@ -18,10 +18,10 @@
 </head>
 <body>
 <jsp:include page="head.jsp"/>
-<div class="panel">
-    <div class="job-content">
+<div class="panel layui-row layui-col-space10">
+    <div class="job-content layui-col-md10">
         <div class="panel-title"><c:out value="${job.jobTitle}"/>
-            <button id="delbtn" class="layui-btn delbtn" style="float: right;margin-right: 1%">删除</button>
+            <button id="delbtn" class="layui-btn redColor" style="float: right;margin-right: 1%">删除</button>
             <button id="updatebtn" class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
         </div>
         <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="rightbar">
+    <div class="rightbar layui-col-md2">
         <div class="info"><i class="fa fa-info-circle fa-fw"></i>&nbsp;&nbsp;作业信息</div>
         <ul class="list" style="width: 300px">
             <li>
@@ -60,7 +60,10 @@
                 结束时间：${job.jobEndTime}
             </li>
             <li>
-                状态：可提交
+                状态：<c:if test="${job.ended}">
+                    <span class="Tag redColor">Ended</span>
+                    </c:if>
+                <c:if test="${job.ended==false}"><span class="Tag greenColor">UnderWay<span></c:if>
             </li>
             <li>
                 <a id="fileList" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
@@ -68,6 +71,11 @@
         </ul>
     </div>
     <script>
+        function close(){
+            layui.use('layer', function () {
+                layui.layer.close(index)
+            });
+        }
         layui.use(['laypage', 'layer'], function () {
             let layer=layui.layer;
             let courseId=$("#courseId").val();
@@ -82,7 +90,7 @@
             });
             $("#updatebtn").click(function () {
                 let param = "?jobId=${job.jobId}&jobContent=${job.jobContent}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}";
-                layer.open({
+                index=layer.open({
                     title: false,
                     area: ['600px', '400px'],
                     type: 2,
@@ -91,7 +99,7 @@
                 });
             });
             $('#fileList').click(function () {
-                let param="?jobId="+jobId+"&courseId="+courseId;
+                let param="?jobId="+jobId;
                 console.info("fileList click");
                 layer.open({
                     title: false,

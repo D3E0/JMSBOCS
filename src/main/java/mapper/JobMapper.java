@@ -25,4 +25,5 @@ public interface JobMapper extends BaseMapper<JobEntity>{
     List<JobItemDTO> findJobListForTeacher(@Param("teacherId") int teacherId, @Param("cur")int cur,@Param("keyword") String keyword);
     int countJobForTeacher(@Param("teacherId")int teacherId,@Param("keyword") String keyword);
     JobFilePrefix findFilePrefixByJobId(int jobId);
+    int isSameJobTitle(@Param("courseId")int courseId,@Param("jobTitle") String jobTitle);
 }

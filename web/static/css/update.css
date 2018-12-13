@@ -7,3 +7,25 @@
 .layui-form{
     margin: 20px 2%
 }
+.greenColor{
+    background-color: #19be6b;
+    display: inline-block !important;
+}
+.redColor{
+    background-color: #ed3f14;
+    display: inline-block !important;
+}
+.Tag{
+    display: none;
+    height: 22px;
+    line-height: 22px;
+    margin: 2px 4px 2px 0;
+    padding: 0 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #FFFFFF;
+    vertical-align: middle;
+    opacity: 1;
+    overflow: hidden;
+    cursor: pointer;
+}

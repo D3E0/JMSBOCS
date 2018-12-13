@@ -1,7 +1,5 @@
 package vo;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,15 +8,13 @@ import java.util.Objects;
  * @date 2018/12/6 12:15
  * @descripition
  */
-public class JobVO {
+public class UpdateJobVO {
     private Integer jobId;
 
     private String jobTitle;
 
     private String jobContent;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date jobBeginTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date jobEndTime;
 
     public Integer getJobId() {
@@ -63,7 +59,7 @@ public class JobVO {
 
     @Override
     public String toString() {
-        return "JobVO{" +
+        return "UpdateJobVO{" +
                 "jobId=" + jobId +
                 ", jobTitle='" + jobTitle + '\'' +
                 ", jobContent='" + jobContent + '\'' +
@@ -75,13 +71,13 @@ public class JobVO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof JobVO)) return false;
-        JobVO jobVO = (JobVO) o;
-        return getJobId().equals(jobVO.getJobId()) &&
-                getJobTitle().equals(jobVO.getJobTitle()) &&
-                getJobContent().equals(jobVO.getJobContent()) &&
-                getJobBeginTime().equals(jobVO.getJobBeginTime()) &&
-                getJobEndTime().equals(jobVO.getJobEndTime());
+        if (!(o instanceof UpdateJobVO)) return false;
+        UpdateJobVO updateJobVO = (UpdateJobVO) o;
+        return getJobId().equals(updateJobVO.getJobId()) &&
+                getJobTitle().equals(updateJobVO.getJobTitle()) &&
+                getJobContent().equals(updateJobVO.getJobContent()) &&
+                getJobBeginTime().equals(updateJobVO.getJobBeginTime()) &&
+                getJobEndTime().equals(updateJobVO.getJobEndTime());
     }
 
     @Override

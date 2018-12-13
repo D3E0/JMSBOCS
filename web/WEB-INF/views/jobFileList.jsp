@@ -17,27 +17,42 @@
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 </head>
 <body style="text-align:center;background-color: #FFFFFF">
-<div class="panel">
+<div>
     <input id="jobId" hidden value="${jobId}">
     <input id="courseId" hidden value="${courseId}">
     <div class="content">
+        <div class="nothing layui-col-md-offset4 layui-col-md4">
+            <div>
+                <img src="<c:url value="/static/img/nothing.png"/>">
+            </div>
+            <div>
+                这里空空如也
+            </div>
+        </div>
         <ul id="list" class="list">
         </ul>
     </div>
 </div>
 <script>
-    layui.use(['laypage','layer'], function () {
-        layer=layui.layer;
+    layui.use(['laypage', 'layer'], function () {
+        var index = 1;
+        var layer = layui.layer;
+        var $ = layui.$;
+
         function getLocalTime(nS) {
             return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
         }
-        let courseId=$("#courseId").val();
-        let jobId=$("#jobId").val();
+
+        let courseId = $("#courseId").val();
+        let jobId = $("#jobId").val();
         $.post('/uploadFiles', {
             jobId: jobId,
             courseId: courseId,
-            studentId: 2
+            studentId: 1160299001
         }, function (data) {
+            if (data.length === 0) {
+                $('.nothing').show();
+            }
             for (var i = 0; i < data.length; i++) {
                 var arr = data[i].fileName.split("/");
                 var filename = arr[arr.length - 1];
@@ -53,23 +68,25 @@
                     '                        <a class="fa fa-clock-o fa-fw" style="color: #2d8cf0"></a>' + data[i].fileSize + '&nbsp;&nbsp;\n' +
                     '                    </div>\n' +
                     '                </div>\n' +
-                    '                <a href="' + data[i].downloadUrl + '" target="_blank" ><button type="button" class="layui-btn downloadbtn">下载</button></a>\n<button type="button" class="layui-btn deletebtn" data-key="'+data[i].fileName+'">删除</button>';
+                    '                <a href="' + data[i].downloadUrl + '" target="_blank" ><button type="button" class="layui-btn downloadbtn">下载</button></a>\n' +
+                    '<button type="button" class="layui-btn deletebtn" data-key="' + data[i].fileName + '">删除</button>';
                 var li = document.createElement("li");
                 li.innerHTML = item;
                 $("#list").append(li);
             }
             $(".deletebtn").click(function (e) {
-                let li=$(this);
-                let key=li.data("key");
-                $.post("/deleteFile",{
-                    courseId:courseId,
-                    key:key
-                },function (data) {
+                let li = $(this);
+                let key = li.data("key");
+                $.post("/deleteFile", {
+                    courseId: courseId,
+                    key: key,
+                    jobId: jobId
+                }, function (data) {
                     console.info(data);
-                    if(data===1){
+                    if (data === 1) {
                         layer.msg("删除成功");
                         li.parent("li").remove();
-                    }else{
+                    } else {
                         layer.msg("删除失败");
                     }
                 })

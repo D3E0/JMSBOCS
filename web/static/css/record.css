@@ -1,0 +1,16 @@
+.layui-laypage input:focus, .layui-laypage select:focus {
+    border-color: #2d8cf0 !important;
+}
+.jobInfo{
+    margin: 0 20px;
+}
+.detailbtn{
+    background-color: #2d8cf0;
+}
+.progress{
+    display: inline-block;
+}
+.progressDiv{
+    display: inline-block;
+    width: 300px;
+}

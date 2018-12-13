@@ -1,11 +1,16 @@
+function close(){
+    layui.use('layer', function () {
+        layui.layer.close(index)
+    });
+}
 layui.use(['laypage', 'element', 'layer'], function () {
-    var laypage = layui.laypage, $ = layui.$;
+    var laypage = layui.laypage, $ = layui.$,layer=layui.layer;
 
     function laypageReload() {
         var count = 0;
         $.post("/countJob",
             {
-                studentId: 2,
+                studentId: 1160299001,
                 keyword: $("#search").val()
             }, function (data) {
                 count = data;
@@ -35,24 +40,17 @@ layui.use(['laypage', 'element', 'layer'], function () {
     });
     $('#addjob').click(function () {
         console.info("click");
-        window.parent.layui.use(['layer'], function () {//调用父页面的layer
-            var layer = window.parent.layui.layer;
-            layer.open({
-                title: false,
-                area: ['500px', '500px'],
-                type: 2,
-                content: ['addjob.html', 'no']
-            });
+        index=layer.open({
+            title: false,
+            area: ['700px', '500px'],
+            type: 2,
+            content: ['/addJob', 'no']
         });
     });
-    $(document).ready(function () {
-        window.parent.setIframeHeight();
-    });
-
     function getjoblist(i, keyword) {
         $.post("/jobList",
             {
-                studentId: 2,
+                studentId: 1160299001,
                 page: i,
                 keyword: keyword
             },
@@ -60,10 +58,23 @@ layui.use(['laypage', 'element', 'layer'], function () {
                 $("#list").empty();
                 for (var i = 0; i < data.length; i++) {
                     var obj = data[i];
+                    let job='javascript:;';
+                    let status='organgedot';
+                    let text='Not Started';
+                    if (obj.isEnded === true) {
+                        status='reddot';
+                        text='Ended';
+                        job='/job?jobId=' + obj.jobId;
+                    }
+                    else if(obj.isStarted === true){
+                        status='greendot';
+                        text='Underway';
+                        job='/job?jobId=' + obj.jobId;
+                    }
                     var item = '<img class="icon" src="/static/img/job.png" height="60px">' +
                         '<div class="item">\n' +
                         '    <div class="title">\n' +
-                        '        <a href="/job?jobId=' + obj.jobId + '">' + obj.jobTitle + '</a>\n' +
+                        '        <a href="' + job+' ">' + obj.jobTitle + '</a>\n' +
                         '    </div>\n' +
                         '    <div class="time">\n' +
                         '        <a class="fa fa-calendar-o fa-fw" style="color: #2d8cf0"></a>' + obj.jobBeginTime + '&nbsp;&nbsp;\n' +
@@ -71,17 +82,10 @@ layui.use(['laypage', 'element', 'layer'], function () {
                         '        &nbsp;' + obj.time + 'days&nbsp;&nbsp;\n' +
                         '        <a class="fa fa-book fa-fw" style="color: #2d8cf0"></a>' + obj.courseName + '&nbsp;&nbsp;\n' +
                         '    </div>\n' +
-                        '</div>'
-                    if (obj.status === true) {
-                        item = item + '<div class="state">\n' +
-                            '<span class="layui-badge-dot greendot"></span>&nbsp;&nbsp;Underway\n' +
-                            '</div></li>';
-                    }
-                    else {
-                        item = item + ' <div class="state">\n' +
-                            '        <span class="layui-badge-dot reddot"></span>&nbsp;&nbsp;Ended\n' +
-                            '    </div>'
-                    }
+                        '</div>'+
+                        '<div class="state">\n' +
+                        '<span class="layui-badge-dot '+status+'"></span>&nbsp;&nbsp;'+text+'\n' +
+                        '</div>';
                     var li = document.createElement("li");
                     li.innerHTML = item;
                     $("#list").append(li);

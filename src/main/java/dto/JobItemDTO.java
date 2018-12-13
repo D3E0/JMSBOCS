@@ -17,9 +17,10 @@ public class JobItemDTO {
     private String jobEndTime;
 
     private String courseName;
+    private boolean isStarted;
     private int courseId;
     private int time;
-    private boolean status;
+    private boolean isEnded;
 
     public int getCourseId() {
         return courseId;
@@ -37,24 +38,6 @@ public class JobItemDTO {
         this.time = time;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "JobItemDTO{" +
-                "jobTitle='" + jobTitle + '\'' +
-                ", jobContent='" + jobContent + '\'' +
-                ", jobBeginTime=" + jobBeginTime +
-                ", jobEndTime=" + jobEndTime +
-                ", courseName='" + courseName + '\'' +
-                '}';
-    }
 
     public Integer getJobId() {
         return jobId;
@@ -102,5 +85,37 @@ public class JobItemDTO {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
+    }
+
+    public boolean isEnded() {
+        return isEnded;
+    }
+
+    public void setEnded(boolean ended) {
+        isEnded = ended;
+    }
+
+    @Override
+    public String toString() {
+        return "JobItemDTO{" +
+                "jobId=" + jobId +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", jobContent='" + jobContent + '\'' +
+                ", jobBeginTime='" + jobBeginTime + '\'' +
+                ", jobEndTime='" + jobEndTime + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", isStarted=" + isStarted +
+                ", courseId=" + courseId +
+                ", time=" + time +
+                ", isEnded=" + isEnded +
+                '}';
     }
 }
