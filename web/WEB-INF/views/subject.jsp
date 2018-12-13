@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Notify</title>
+    <title>基于开放云储存的作业管理系统</title>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
@@ -35,8 +35,8 @@
 </div>
 <script>
     const userInfo = {
-        uid: 2,
-        isTch: false,
+        uid: 1,
+        isTch: true,
         path: '${pageContext.request.contextPath}',
     };
 </script>

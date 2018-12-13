@@ -10,7 +10,7 @@ public class CourseResourceDTO {
     private static final String PREFIX = "resource";
 
     public String getFullPath() {
-        return String.format("%s-%s-%s-%s-%s", PREFIX, courseName, academicYear, semester, filename);
+        return String.format("%s-%s-%s-%s/%s", PREFIX, courseName, academicYear, semester, filename);
     }
 
     public CourseResourceDTO() {

@@ -55,8 +55,8 @@ public class CourseController {
      * @param courseId
      * @return
      */
-    @RequestMapping("/course")
-    public String course(@RequestParam Integer courseId) {
+    @RequestMapping("/course/{courseId}")
+    public String course(@PathVariable Integer courseId) {
         logger.info(courseId);
         return "course";
     }

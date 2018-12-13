@@ -40,3 +40,19 @@
     float: right;
     margin-top: 25px;
 }
+
+.profile {
+    text-align: center;
+}
+
+.profile p {
+    font-size: 16px;
+    color: #495060;
+    margin: 16px 0;
+}
+
+.profile .name {
+    font-weight: 600;
+    color: #495060;
+    font-size: 20px;
+}

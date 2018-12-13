@@ -46,7 +46,7 @@
     </select>
 
     <select id="selectCourseResourceDTO" resultType="dto.CourseResourceDTO">
-        select course_resource_filename as courseResourceFilename,
+        select course_resource_filename as filename,
                course_resource_id       as courseResourceId,
                course.course_id         as courseId,
                semester                 as semester,
@@ -56,6 +56,13 @@
              course
         where course_resource_id = #{id}
           and course_resource.course_id = course.course_id
+    </select>
+
+    <select id="selectExistCourseResource" resultType="entity.CourseResourceEntity">
+        select *
+        from course_resource
+        where course_id = #{courseId}
+          and course_resource_filename = #{filename}
     </select>
 
 </mapper>
