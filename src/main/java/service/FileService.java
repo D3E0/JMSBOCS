@@ -21,8 +21,11 @@ public interface FileService {
     FileVOs getPublicFiles(int courseId, int page);
 
     String queryDomain(int courseId);
-    int deleteFile(int courseId,String key,int jobId);
+
+    int deleteFile(int courseId, String key, int jobId);
+
     JobFilePrefix findFilePrefixByJobId(int jobId);
+
     List<FileVO> getAllFile(int courseId, int jobId);
 
     FileVO getResource(int courseId, String path);

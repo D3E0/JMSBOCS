@@ -20,7 +20,7 @@
                                      course_id,
                                      course_resource_filename,
                                      upload_time)
-        values (#{courseResourceId}, #{courseResourcePath}, #{courseId}, #{filename}, #{uploadTime})
+        values (#{courseResourceId}, #{courseResourcePath}, #{courseId}, #{courseResourceFilename}, #{uploadTime})
     </insert>
 
     <update id="update">
@@ -28,7 +28,7 @@
         set course_id                = #{courseId},
             course_resource_path     = #{courseResourcePath},
             upload_time              = #{uploadTime},
-            course_resource_filename = #{filename}
+            course_resource_filename = #{courseResourceFilename}
         where course_resource_id = #{courseResourceId}
     </update>
 
@@ -46,7 +46,7 @@
     </select>
 
     <select id="selectCourseResourceDTO" resultType="dto.CourseResourceDTO">
-        select course_resource_filename as filename,
+        select course_resource_filename as courseResourceFilename,
                course_resource_id       as courseResourceId,
                course.course_id         as courseId,
                semester                 as semester,

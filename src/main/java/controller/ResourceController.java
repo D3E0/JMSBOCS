@@ -75,13 +75,16 @@ public class ResourceController {
     @RequestMapping(value = "/api/resource", method = RequestMethod.DELETE)
     @ResponseBody
     public RestResult deleteResource(@RequestParam Integer id) {
-        int res = service.delete(id);
-        logger.info(String.format("delete resource{%d} ==> %d", id, res));
-        if (res > 0) {
-            return new RestResult.Builder(200).message("success").build();
-        } else {
-            return new RestResult.Builder(200).message("fail").build();
+        CourseResourceDTO dto = service.getCourseResourceDTO(id);
+        if (dto != null) {
+            int res = service.delete(id);
+            logger.info(String.format("delete resource %s ==> %d", dto, res));
+            if (res > 0) {
+                fileService.deleteResource(dto.getCourseId(), dto.getFullPath());
+                return new RestResult.Builder(200).message("success").build();
+            }
         }
+        return new RestResult.Builder(200).message("fail").build();
     }
 
     /**
