@@ -14,6 +14,13 @@
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
     <link href="<c:url value="/static/css/update.css"/>" rel="stylesheet">
+    <script src="<c:url value="/static/editor.md-master/editormd.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/marked.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/prettify.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/raphael.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/underscore.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/sequence-diagram.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/flowchart.min.js"/>"></script>
 </head>
 <body>
 <form class="layui-form" action="" style="margin: 20px 3%">
@@ -65,6 +72,24 @@
     </div>
 </form>
 <script>
+    let testEditor;
+    testEditor = editormd("test-editormd", {
+        placeholder: '本编辑器支持Markdown编辑，左边编写，右边预览',  //默认显示的文字，这里就不解释了
+        width: "90%",
+        height: 640,
+        syncScrolling: "single",
+        path: "../editor.md-master/lib/",   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
+        saveHTMLToTextarea: true,
+        emoji: false,
+        taskList: true,
+        tocm: true,         // Using [TOCM]
+        tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+        flowChart: true,             // 开启流程图支持，默认关闭
+        sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+        toolbarIcons: function () {  //自定义工具栏，后面有详细介绍
+            return editormd.toolbarModes['simple']; // full, simple, mini
+        },
+    });
     layui.use(['form', 'laydate'], function () {
         let form = layui.form, laydate = layui.laydate;
         let different=1;

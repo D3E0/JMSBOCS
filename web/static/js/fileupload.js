@@ -48,7 +48,11 @@ layui.use('upload', function () {
                             uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
                         });
                         demoListView.append(tr);
-                        $('#testListAction').click();
+                        console.info($(".Tag").text());
+                        if($(".Tag").text()==='Ended')
+                            layer.msg("提交时间已过");
+                        else
+                            $('#testListAction').click();
                     });
                 }
                 , done: function (res, index, upload) {

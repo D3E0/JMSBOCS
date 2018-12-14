@@ -15,6 +15,13 @@
     <link href="<c:url value="/static/css/job.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/editormd.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/marked.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/prettify.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/raphael.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/underscore.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/sequence-diagram.min.js"/>"></script>
+    <script src="<c:url value="/static/editor.md-master/lib/flowchart.min.js"/>"></script>
 </head>
 <body>
 <jsp:include page="head.jsp"/>
@@ -27,10 +34,10 @@
         <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
         <input id="jobId" hidden value="<c:out value="${jobId}"/>">
+        <input id="jobContent" hidden value="<c:out value="${job.jobContent}"/>">
         <p class="title">作业描述</p>
-        <p class="content">
-            ${job.jobContent}
-        </p>
+        <div id="content" class="content">
+        </div>
         <p class="title">作业提交</p>
         <div class="layui-upload">
             <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
@@ -69,7 +76,7 @@
                 <a id="fileList" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
             </li>
             <li>
-                <a  href="/jobSubmitRecord?jobId=${jobId}" style="color: #3091f2">查看已提交作业</a>
+                <a  href="${pageContext.request.contextPath}/jobSubmitRecord?jobId=${jobId}" style="color: #3091f2">查看作业提交记录</a>
             </li>
         </ul>
     </div>
@@ -79,6 +86,13 @@
                 layui.layer.close(index)
             });
         }
+        testEditor = editormd.markdownToHTML("content", {
+            markdown:$('#jobContent').val(),
+            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+            emoji           : true,
+            taskList        : true,
+        });
+
         layui.use(['laypage', 'layer'], function () {
             let layer=layui.layer;
             let courseId=$("#courseId").val();
@@ -92,7 +106,8 @@
                 })
             });
             $("#updatebtn").click(function () {
-                let param = "?jobId=${job.jobId}&jobContent=${job.jobContent}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}";
+                let param = "?jobId=${job.jobId}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}";
+                param=param+'&jobContent='+$('#jobContent').val();
                 index=layer.open({
                     title: false,
                     area: ['600px', '400px'],
@@ -102,7 +117,7 @@
                 });
             });
             $('#fileList').click(function () {
-                let param="?jobId="+jobId;
+                let param="?jobId="+jobId+"&studentId="+1160299001;
                 console.info("fileList click");
                 layer.open({
                     title: false,
