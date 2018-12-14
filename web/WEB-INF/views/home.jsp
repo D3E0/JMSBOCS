@@ -1,71 +1,57 @@
 <%--
   Created by IntelliJ IDEA.
   User: ACM-PC
-  Date: 2018/11/11
-  Time: 13:58
+  Date: 2018/12/1
+  Time: 21:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>基于开放云储存的作业管理系统</title>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
-    <script src="<c:url value="/static/layui/layui.js"/>"></script>
-    <link href="<c:url value="/static/css/home.css"/>" rel="stylesheet">
-    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
-</head>
-<body>
-<div class="navbar">
-    <ul class="layui-nav">
-        <li class="logo">基于开放云储存的作业管理系统</li>
-        <li class="layui-nav-item layui-this">
-            <a href="javascript:f('/main')">
-                <i class="fa fa-home fa-fw"></i>&nbsp;首页
-            </a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="javascript:f('/courseList')">
-                <i class="fa fa-book fa-fw"></i>&nbsp;课程
-            </a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="javascript:f('/jobList')">
-                <i class="fa fa-tasks fa-fw"></i>&nbsp;作业
-            </a>
-        </li>
+    <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
 
-        <li class="layui-nav-item  layout-right">
-            <a href="javascript:">
-                <i class="fa fa-user fa-fw"></i>用户
-                <i class="layui-icon layui-icon-triangle-d"></i>
-            </a>
-            <dl class="layui-nav-child">
-                <dd><a href="javascript:f('/profile')">个人信息</a></dd>
-                <dd><a href="javascript:f('/logout')">退出登录</a></dd>
-            </dl>
-        </li>
-        <li class="layui-nav-item  layout-right">
-            <a href="javascript:f('/notify')">
-                <i class="layui-icon layui-icon-notice"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-<div class="contentapp">
+    <style>
+        body {
+            background-color: #fff;
+        }
+
+        .headTitle {
+            font-size: 21px;
+            font-weight: 500;
+            margin: 20px 10px;
+            line-height: 30px;
+            padding: 5px 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<jsp:include page="head.jsp"/>
+<body>
+<div id="app" style="margin-left: 2%;">
+    <el-container>
+        <el-main>
+            <home></home>
+        </el-main>
+    </el-container>
 </div>
 <script>
-    layui.use('element', function () {
-        let element = layui.element;
-    });
-    let contextPath = '${pageContext.request.contextPath}';
-
-    let _frame = document.getElementById("myiframe");
-
-    function f(url) {
-        _frame.setAttribute("src", contextPath + url);
-    }
+    const userInfo = {
+        uid: 1,
+        path: '${pageContext.request.contextPath}',
+    };
 </script>
+
+<script type="text/javascript" src="<c:url value="/static/js/axios.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/vue.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/elementui/index.js"/>"></script>
+<script src="<c:url value="/static/js/home-main.js"/>" type="module"></script>
+
 </body>
+
 </html>

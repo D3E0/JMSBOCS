@@ -19,7 +19,7 @@
         <li class="logo">基于开放云储存的作业管理系统
         </li>
         <li class="layui-nav-item">
-            <a href="<c:url value="/main"/>">
+            <a href="<c:url value="/home"/>">
                 <i class="fa fa-home fa-fw"></i>&nbsp;首页
             </a>
         </li>
