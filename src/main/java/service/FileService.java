@@ -20,4 +20,5 @@ public interface FileService {
     int deleteFile(int courseId,String key,int jobId);
     JobFilePrefix findFilePrefixByJobId(int jobId);
     List<FileVO> getAllFile(int courseId, int jobId);
+    String getPublicUrl(String remoteSrcUrl, String key);
 }

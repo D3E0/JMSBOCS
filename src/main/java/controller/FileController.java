@@ -60,9 +60,11 @@ public class FileController {
         return fileService.deleteFile(courseId,key,jobId);
     }
     @RequestMapping(value = "jobFileList", method = RequestMethod.GET)
-    public String jobFileList(Model model,int jobId) {
+    public String jobFileList(Model model,int jobId,int studentId) {
+        int courseId=jobService.findJobById(jobId).getCourseId();
         model.addAttribute("jobId",jobId);
-        model.addAttribute("courseId",jobService.findJobById(jobId).getCourseId());
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("jobFileList",fileService.getFileList(courseId,jobId,studentId));
         return "jobFileList";
     }
     @RequestMapping(value = "downloadAll", method = RequestMethod.GET)
@@ -70,5 +72,10 @@ public class FileController {
         model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePrefix());
         model.addAttribute("jobId", jobId);
         return "fileProgress";
+    }
+    @ResponseBody
+    @RequestMapping(value = "getPublicUrl")
+    public String getPublicUrl(String remoteSrcUrl, String key){
+        return "https://view.officeapps.live.com/op/view.aspx?src="+fileService.getPublicUrl(remoteSrcUrl,key);
     }
 }

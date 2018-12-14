@@ -70,4 +70,8 @@ public class JobSubmitController {
     public JobSubmitRecordNumber jobSubmitRecordNum(int jobId) {
         return jobSubmitService.countJobSubmitRecordNum(jobId);
     }
+    @RequestMapping(value = "jobOfficePreview", method = RequestMethod.GET)
+    public String jobOfficePreview(Model model, int jobId) {
+        return "preview";
+    }
 }

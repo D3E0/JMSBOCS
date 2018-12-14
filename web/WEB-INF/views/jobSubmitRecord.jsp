@@ -93,7 +93,7 @@
             let data = obj.data; //获得当前行数据
             let layEvent = obj.event;
             if (layEvent === 'detail') { //查看
-                let param = "?jobId=" + jobId;
+                let param = "?jobId=" + jobId+'&studentId='+data.userId;
                 console.info("fileList click");
                 layer.open({
                     title: false,

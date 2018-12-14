@@ -92,4 +92,9 @@ public class FileServiceImpl implements FileService {
         QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity,prefix);
     }
+
+    @Override
+    public String getPublicUrl(String remoteSrcUrl, String key) {
+        return QiniuUtil.getPublicUrl( remoteSrcUrl,key);
+    }
 }

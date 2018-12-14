@@ -68,6 +68,9 @@
             <li>
                 <a id="fileList" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
             </li>
+            <li>
+                <a  href="/jobSubmitRecord?jobId=${jobId}" style="color: #3091f2">查看已提交作业</a>
+            </li>
         </ul>
     </div>
     <script>
