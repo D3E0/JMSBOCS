@@ -28,7 +28,7 @@
         <legend>导航页</legend>
         <div class="layui-field-box">
             <div class="layui-btn-container">
-                <a href="<c:url value="/main"/>" class="layui-btn">首页</a>
+                <a href="<c:url value="/home"/>" class="layui-btn">首页</a>
                 <a href="<c:url value="/login"/>" class="layui-btn">登陆</a>
                 <a href="<c:url value="/subject"/>" class="layui-btn">课程</a>
                 <a href="<c:url value="/jobList"/>" class="layui-btn">作业</a>

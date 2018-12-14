@@ -1,5 +1,6 @@
 package service;
 
+import dto.CourseAnnouncementDTO;
 import entity.AnnouncementEntity;
 import mapper.AnnouncementMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     public List<AnnouncementEntity> selectCourseAnnouncement(int courseId) {
         return mapper.selectCourseAnnouncement(courseId);
+    }
+
+    public List<CourseAnnouncementDTO> selectTchAnnouncement(int userId) {
+        return mapper.selectTchAnnouncement(userId);
+    }
+
+    public List<CourseAnnouncementDTO> selectStuAnnouncement(int userId) {
+        return mapper.selectStuAnnouncement(userId);
     }
 }
