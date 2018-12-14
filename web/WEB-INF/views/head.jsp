@@ -8,8 +8,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <link rel="icon" type="image/x-icon" href="<c:url value="/static/favicon.ico"/>"/>
     <link href="<c:url value="/static/css/home.css"/>" rel="stylesheet">
-    <title></title>
+    <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
+    <title>基于开放云储存的作业管理系统</title>
 </head>
 <body>
 <div class="navbar">

@@ -4,11 +4,6 @@ import SubjectManage from "./subjectManage.js";
 import SubjectSide from "./subjectSide.js";
 
 console.info(userInfo);
-//设置默认指向的路径
-let dfltPath = {
-    path: '/',
-    redirect: '/list',
-};
 
 const router = new VueRouter({
     routes: [{

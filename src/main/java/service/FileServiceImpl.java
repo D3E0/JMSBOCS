@@ -27,6 +27,7 @@ public class FileServiceImpl implements FileService {
     private JobMapper jobMapper;
     private JobSubmitItemMapper jobSubmitItemMapper;
     private QiniuMapper qiniuMapper;
+
     @Autowired
     public void setJobSubmitItemMapper(JobSubmitItemMapper jobSubmitItemMapper) {
         this.jobSubmitItemMapper = jobSubmitItemMapper;
@@ -41,56 +42,72 @@ public class FileServiceImpl implements FileService {
     public void setQiniuMapper(QiniuMapper qiniuMapper) {
         this.qiniuMapper = qiniuMapper;
     }
-    @Cacheable(cacheNames = "UploadToken",key ="#courseId")
+
+    @Cacheable(cacheNames = "UploadToken", key = "#courseId")
     public String getUploadToken(int courseId) {
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getUploadToken(qiniuEntity);
     }
 
     public List<FileVO> getFileList(int courseId, int jobId, int studentId) {
-        String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix()+"/"+studentId+"/";
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.getFileList(qiniuEntity,prefix);
+        String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix() + "/" + studentId + "/";
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.getFileList(qiniuEntity, prefix);
     }
 
-    @Cacheable(cacheNames = "allPublicFile",key ="#courseId")
+    @Cacheable(cacheNames = "allPublicFile", key = "#courseId")
     public List<FileVO> getAllPublicFile(int courseId) {
-        String prefix = "public/"+courseId+"/";
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.getFileList(qiniuEntity,prefix);
+        String prefix = "public/" + courseId + "/";
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.getFileList(qiniuEntity, prefix);
     }
-    @Cacheable(cacheNames = "publicFileList",key ="#+'c'+courseId+'p'+page")
-    public FileVOs getPublicFiles(int courseId,int page) {
-        FileVOs fileVOs=new FileVOs();
-        List<FileVO> fileVOList=getAllPublicFile(courseId);
-        fileVOs.setFileVOList(fileVOList.subList((page-1)*10,
-                fileVOList.size()>page*10?page*10:fileVOList.size()));
+
+    @Cacheable(cacheNames = "publicFileList", key = "#+'c'+courseId+'p'+page")
+    public FileVOs getPublicFiles(int courseId, int page) {
+        FileVOs fileVOs = new FileVOs();
+        List<FileVO> fileVOList = getAllPublicFile(courseId);
+        fileVOs.setFileVOList(fileVOList.subList((page - 1) * 10,
+                fileVOList.size() > page * 10 ? page * 10 : fileVOList.size()));
         fileVOs.setCount(fileVOList.size());
         return fileVOs;
     }
 
     public String queryDomain(int courseId) {
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.queryDomain(qiniuEntity);
     }
-    public int deleteFile(int courseId,String key,int jobId) {
-        String[] strings=key.split("/");
-        int userId=Integer.parseInt(strings[2]);
-        String fileName=strings[3];
-        jobSubmitItemMapper.jobItemDelete(jobId,fileName,userId);
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.delefile(qiniuEntity,key);
+
+    public int deleteFile(int courseId, String key, int jobId) {
+        String[] strings = key.split("/");
+        int userId = Integer.parseInt(strings[2]);
+        String fileName = strings[3];
+        jobSubmitItemMapper.jobItemDelete(jobId, fileName, userId);
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.delefile(qiniuEntity, key);
     }
 
     public JobFilePrefix findFilePrefixByJobId(int jobId) {
         return jobMapper.findFilePrefixByJobId(jobId);
     }
 
-    @Override
     public List<FileVO> getAllFile(int courseId, int jobId) {
-        String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix()+"/";
-        QiniuEntity qiniuEntity=qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.getFileList(qiniuEntity,prefix);
+        String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix() + "/";
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.getFileList(qiniuEntity, prefix);
+    }
+
+    public FileVO getResource(int courseId, String path) {
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        List<FileVO> fileVOS = QiniuUtil.getFileList(qiniuEntity, path);
+        if (fileVOS.size() == 0) {
+            return null;
+        }
+        return fileVOS.get(0);
+    }
+
+    public int deleteResource(int courseId, String path) {
+        QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
+        return QiniuUtil.delefile(qiniuEntity, path);
     }
 
     @Override

@@ -13,12 +13,24 @@ import java.util.List;
  */
 public interface FileService {
     String getUploadToken(int courseId);
+
     List<FileVO> getFileList(int courseId, int jobId, int studentId);
+
     List<FileVO> getAllPublicFile(int courseId);
-    FileVOs getPublicFiles(int courseId,int page);
+
+    FileVOs getPublicFiles(int courseId, int page);
+
     String queryDomain(int courseId);
-    int deleteFile(int courseId,String key,int jobId);
+
+    int deleteFile(int courseId, String key, int jobId);
+
     JobFilePrefix findFilePrefixByJobId(int jobId);
+
     List<FileVO> getAllFile(int courseId, int jobId);
+
+    FileVO getResource(int courseId, String path);
+
+    int deleteResource(int courseId, String path);
+
     String getPublicUrl(String remoteSrcUrl, String key);
 }

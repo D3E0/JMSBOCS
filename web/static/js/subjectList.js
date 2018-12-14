@@ -26,7 +26,7 @@ var SubjectList = {
     },
     methods: {
         f(x, y) {
-            let path = `${this.$root.path}/course?courseId=${y.courseId}`;
+            let path = `${this.$root.path}/course/${y.courseId}`;
             console.info(path);
             window.open(path, '_blank');
         }, onEdit(x) {
