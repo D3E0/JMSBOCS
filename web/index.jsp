@@ -29,7 +29,8 @@
         <div class="layui-field-box">
             <div class="layui-btn-container">
                 <a href="<c:url value="/main"/>" class="layui-btn">首页</a>
-                <a href="<c:url value="/courseList"/>" class="layui-btn">课程</a>
+                <a href="<c:url value="/login"/>" class="layui-btn">登陆</a>
+                <a href="<c:url value="/subject"/>" class="layui-btn">课程</a>
                 <a href="<c:url value="/jobList"/>" class="layui-btn">作业</a>
                 <a href="<c:url value="/user"/>" class="layui-btn">个人资料</a>
                 <a href="<c:url value="/user#/updatePwd"/>" class="layui-btn">密码修改</a>

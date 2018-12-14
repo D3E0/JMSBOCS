@@ -28,10 +28,46 @@ public class UserController {
         this.service = service;
     }
 
+    /**
+     * 返回用户个人资料界面
+     *
+     * @return
+     */
     @RequestMapping("/user")
     public String getUserProfilePage() {
         return "user";
     }
+
+    /**
+     * 返回登陆界面
+     *
+     * @return
+     */
+    @RequestMapping("/login")
+    public String doLogin() {
+        return "login";
+    }
+
+    /**
+     * 处理用户登陆
+     *
+     * @param id
+     * @param pass
+     * @return
+     */
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    @ResponseBody
+    public RestResult processLogin(@RequestParam Integer id,
+                                   @RequestParam String pass) {
+        UserEntity entity = service.processLogin(id, pass);
+        logger.info(String.format("user %d %s login ==> %s", id, pass, entity));
+        if (entity == null) {
+            return new RestResult.Builder(200).message("fail").build();
+        } else {
+            return new RestResult.Builder(200).message("success").build();
+        }
+    }
+
 
     /**
      * 通过 userId 获取用户信息 个人资料
