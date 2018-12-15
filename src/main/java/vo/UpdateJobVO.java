@@ -1,8 +1,5 @@
 package vo;
 
-import java.util.Date;
-import java.util.Objects;
-
 /**
  * @author yan
  * @date 2018/12/6 12:15
@@ -78,8 +75,4 @@ public class UpdateJobVO {
                 getJobEndTime().equals(updateJobVO.getJobEndTime());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getJobId(), getJobTitle(), getJobContent(), getJobBeginTime(), getJobEndTime());
-    }
 }
