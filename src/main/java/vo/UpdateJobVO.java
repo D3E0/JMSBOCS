@@ -10,12 +10,10 @@ import java.util.Objects;
  */
 public class UpdateJobVO {
     private Integer jobId;
-
     private String jobTitle;
-
     private String jobContent;
-    private Date jobBeginTime;
-    private Date jobEndTime;
+    private String jobBeginTime;
+    private String jobEndTime;
 
     public Integer getJobId() {
         return jobId;
@@ -41,19 +39,19 @@ public class UpdateJobVO {
         this.jobContent = jobContent;
     }
 
-    public Date getJobBeginTime() {
+    public String getJobBeginTime() {
         return jobBeginTime;
     }
 
-    public void setJobBeginTime(Date jobBeginTime) {
+    public void setJobBeginTime(String jobBeginTime) {
         this.jobBeginTime = jobBeginTime;
     }
 
-    public Date getJobEndTime() {
+    public String getJobEndTime() {
         return jobEndTime;
     }
 
-    public void setJobEndTime(Date jobEndTime) {
+    public void setJobEndTime(String jobEndTime) {
         this.jobEndTime = jobEndTime;
     }
 

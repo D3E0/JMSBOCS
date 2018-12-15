@@ -17,6 +17,7 @@ import vo.AddJobVO;
 import vo.UpdateJobVO;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -63,13 +64,18 @@ public class JobController {
         return jobService.findJobListById(studentId, page, keyword);
     }
 
-    @RequestMapping("job")
+    @RequestMapping(value = "job",method = RequestMethod.GET)
     public String job(Model model, int jobId, HttpSession session) {
         logger.info(jobService.findJobById(jobId).toString());
         model.addAttribute("job", jobService.findJobById(jobId));
         model.addAttribute("jobId", jobId);
         model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePrefix());
         return "job";
+    }
+    @ResponseBody
+    @RequestMapping(value = "getJobContent",method = RequestMethod.POST)
+    public String job(int jobId) {
+        return jobService.findJobById(jobId).getJobContent();
     }
 
     @ResponseBody
@@ -86,6 +92,7 @@ public class JobController {
     @ResponseBody
     @RequestMapping(value = "addJob", method = RequestMethod.POST)
     public void addJob(Model model, AddJobVO addJobVO) {
+        logger.info(addJobVO.toString());
         jobService.addJob(new JobEntity(addJobVO));
     }
     @ResponseBody
@@ -103,14 +110,20 @@ public class JobController {
     @RequestMapping(value = "updateJob", method = RequestMethod.GET)
     public String updateJobView(Model model, UpdateJobVO updateJobVO) {
         model.addAttribute("job", updateJobVO);
+        model.addAttribute("courseId", jobService.findJobById(updateJobVO.getJobId()).getCourseId());
         return "updateJob";
     }
 
     @ResponseBody
     @RequestMapping(value = "updateJob", method = RequestMethod.POST)
-    public void updateJob(UpdateJobVO updateJobVO) {
+    public int updateJob(UpdateJobVO updateJobVO) {
         logger.info(updateJobVO.toString());
-        jobService.updateJob(new JobEntity(updateJobVO));
+        try {
+            jobService.updateJob(new JobEntity(updateJobVO));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 1;
     }
-
 }

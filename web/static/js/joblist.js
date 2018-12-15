@@ -38,15 +38,6 @@ layui.use(['laypage', 'element', 'layer'], function () {
             }
         }, 300);
     });
-    $('#addjob').click(function () {
-        console.info("click");
-        index=layer.open({
-            title: false,
-            area: ['700px', '500px'],
-            type: 2,
-            content: ['/addJob', 'no']
-        });
-    });
     function getjoblist(i, keyword) {
         $.post("/jobList",
             {

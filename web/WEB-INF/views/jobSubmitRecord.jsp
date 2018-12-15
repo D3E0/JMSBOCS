@@ -75,12 +75,16 @@
                 }
             }
             , cols: [[ //表头
-                {field: 'userId', title: '学号', width: '17%', sort: true}
+                {field: 'userId', title: '学号', width: '19%', sort: true}
                 , {field: 'userName', title: '学生姓名', width: '17%'}
-                , {field: 'status', title: '作业是否提交', width: '17%', sort: true}
+                , {field: 'status', title: '作业是否提交', width: '16%', sort: true,templet: function (d) {
+                        if (d.status === true)
+                            return '是';
+                        return '否';
+                    }}
                 , {field: 'fileCount', title: '作业提交文件数', width: '15%'}
                 , {
-                    field: 'lastSubmitTime', title: '提交作业时间', width: '20%', sort: true, templet: function (d) {
+                    field: 'lastSubmitTime', title: '提交作业时间', width: '21%', sort: true, templet: function (d) {
                         if (d.lastSubmitTime === undefined)
                             return '无';
                         return new Date(d.lastSubmitTime).toLocaleString();

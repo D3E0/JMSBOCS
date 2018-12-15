@@ -12,7 +12,6 @@
     <title>Title</title>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
-    <link href="<c:url value="/static/css/job.css"/>" rel="stylesheet">
     <link href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
     <script src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
     <script src="<c:url value="/static/editor.md-master/editormd.min.js"/>"></script>
@@ -22,6 +21,8 @@
     <script src="<c:url value="/static/editor.md-master/lib/underscore.min.js"/>"></script>
     <script src="<c:url value="/static/editor.md-master/lib/sequence-diagram.min.js"/>"></script>
     <script src="<c:url value="/static/editor.md-master/lib/flowchart.min.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/static/editor.md-master/css/editormd.css"/>"/>
+    <link href="<c:url value="/static/css/job.css"/>" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="head.jsp"/>
@@ -34,7 +35,6 @@
         <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
         <input id="jobId" hidden value="<c:out value="${jobId}"/>">
-        <input id="jobContent" hidden value="<c:out value="${job.jobContent}"/>">
         <p class="title">作业描述</p>
         <div id="content" class="content">
         </div>
@@ -81,22 +81,18 @@
         </ul>
     </div>
     <script>
-        function close(){
-            layui.use('layer', function () {
-                layui.layer.close(index)
+        let courseId=$("#courseId").val();
+        let jobId=$("#jobId").val();
+        $.post('/getJobContent',{jobId},function (data) {
+            testEditor = editormd.markdownToHTML("content", {
+                markdown:data,
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
             });
-        }
-        testEditor = editormd.markdownToHTML("content", {
-            markdown:$('#jobContent').val(),
-            htmlDecode      : "style,script,iframe",  // you can filter tags decode
-            emoji           : true,
-            taskList        : true,
         });
-
         layui.use(['laypage', 'layer'], function () {
             let layer=layui.layer;
-            let courseId=$("#courseId").val();
-            let jobId=$("#jobId").val();
             $("#delbtn").click(function () {
                 var jobId = $("#jobId").val();
                 $.post('/deleteJob', {
@@ -107,14 +103,7 @@
             });
             $("#updatebtn").click(function () {
                 let param = "?jobId=${job.jobId}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}";
-                param=param+'&jobContent='+$('#jobContent').val();
-                index=layer.open({
-                    title: false,
-                    area: ['600px', '400px'],
-                    type: 2,
-                    scrollbar: true,
-                    content: ['/updateJob' + param, 'no']
-                });
+                window.location.href="/updateJob"+param;
             });
             $('#fileList').click(function () {
                 let param="?jobId="+jobId+"&studentId="+1160299001;

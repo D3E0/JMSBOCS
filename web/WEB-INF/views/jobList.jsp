@@ -26,9 +26,11 @@
             <i class=" fa-search fa fa-fw"></i>
         </div>
         &nbsp;&nbsp;
-        <button class="layui-btn additem" id="addjob">
-            <a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
-        </button>
+        <a href="<c:url value="/addJob"/>">
+            <button class="layui-btn additem">
+                <a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
+            </button>
+        </a>
     </div>
     <div class="content">
         <ul class="list" id="list">

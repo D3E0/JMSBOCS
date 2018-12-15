@@ -43,7 +43,7 @@ body{
     border-radius: 4px;
     display: inline-block;
     background-color: #FFFFFF;
-    width: 76%;
+    width: 75%;
 }
 .list li{
     text-align:center;
@@ -86,4 +86,7 @@ body{
     opacity: 1;
     overflow: hidden;
     cursor: pointer;
+}
+.editormd-html-preview{
+    width: auto;
 }

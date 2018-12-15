@@ -3,6 +3,8 @@ package entity;
 import vo.AddJobVO;
 import vo.UpdateJobVO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class JobEntity {
@@ -57,12 +59,13 @@ public class JobEntity {
     public JobEntity() {
     }
 
-    public JobEntity(UpdateJobVO updateJobVO) {
+    public JobEntity(UpdateJobVO updateJobVO) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.jobId = updateJobVO.getJobId();
         this.jobTitle = updateJobVO.getJobTitle();
         this.jobContent = updateJobVO.getJobContent();
-        this.jobBeginTime = updateJobVO.getJobBeginTime();
-        this.jobEndTime = updateJobVO.getJobEndTime();
+        this.jobBeginTime = sdf.parse(updateJobVO.getJobBeginTime());
+        this.jobEndTime = sdf.parse(updateJobVO.getJobEndTime());
     }
     public JobEntity(AddJobVO addJobVO) {
         this.courseId = addJobVO.getCourseId();

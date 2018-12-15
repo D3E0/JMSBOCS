@@ -1,3 +1,26 @@
+body{
+    overflow: scroll;
+    background-color: #eeeeee;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #495060;
+}
+.panel-title{
+    font-size: 21px;
+    font-weight: 500;
+    margin: 20px 10px;
+    line-height: 30px;
+    padding: 5px 15px;
+    text-align:left;
+    display: inline-block;
+}
+.panel{
+    box-shadow:1px 1px 1px 1px rgba(0,0,0,.1);
+    border-radius: 4px;
+    margin:50px 4% ;
+    background-color: #FFFFFF;
+    padding-bottom: 20px;
+}
 .layui-btn-primary:hover {
     border-color: #2d8cf0;
 }

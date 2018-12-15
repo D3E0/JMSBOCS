@@ -53,4 +53,15 @@ public class AddJobVO {
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
+
+    @Override
+    public String toString() {
+        return "AddJobVO{" +
+                "jobTitle='" + jobTitle + '\'' +
+                ", jobContent='" + jobContent + '\'' +
+                ", jobBeginTime=" + jobBeginTime +
+                ", jobEndTime=" + jobEndTime +
+                ", courseId=" + courseId +
+                '}';
+    }
 }
