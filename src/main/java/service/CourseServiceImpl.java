@@ -34,54 +34,67 @@ public class CourseServiceImpl implements CourseService {
         this.userService = userService;
     }
 
+    @Override
     public int update(CourseEntity courseEntity) {
         return mapper.update(courseEntity);
     }
 
+    @Override
     public int delete(int id) {
         return mapper.delete(id);
     }
 
+    @Override
     public int save(CourseEntity courseEntity) {
         return mapper.save(courseEntity);
     }
 
+    @Override
     public CourseEntity selectOne(int id) {
         return mapper.selectOne(id);
     }
 
+    @Override
     public List<CourseEntity> selectAll() {
         return mapper.selectAll();
     }
 
+    @Override
     public CourseDTO selectCourseDTO(int courseId) {
         return mapper.selectCourseDTO(courseId);
     }
 
+    @Override
     public List<CourseDTO> selectCourseDTOListTch(int teacherId) {
         return mapper.selectCourseDTOListTch(teacherId);
     }
 
+    @Override
     public Long selectCourseCountTch(int teacherId) {
         return mapper.selectCourseCountTch(teacherId);
     }
 
+    @Override
     public Set<UserSDTO> selectUserSet(int courseId) {
         return suMapper.selectUserList(courseId);
     }
 
+    @Override
     public Long selectUserCount(int courseId) {
         return suMapper.selectUserCount(courseId);
     }
 
+    @Override
     public List<CourseDTO> selectCourseDTOListStu(int studentId) {
         return suMapper.selectCourseList(studentId);
     }
 
+    @Override
     public Long selectCourseCountStu(int userId) {
         return suMapper.selectCourseCount(userId);
     }
 
+    @Override
     public Map<String, Integer> saveUserCourseList(Set<UserSDTO> set, int courseId) {
         Map<String, Integer> result = new HashMap<String, Integer>(3);
         int res = userService.saveStuSet(set);
@@ -102,10 +115,12 @@ public class CourseServiceImpl implements CourseService {
         return result;
     }
 
+    @Override
     public Map<String, Integer> saveUserCourse(UserSDTO user, int courseId) {
         return saveUserCourseList(Collections.singleton(user), courseId);
     }
 
+    @Override
     public int deleteUserCourseList(Set<UserSDTO> set, int courseId) {
         Set<UserSDTO> existStudents = selectUserSet(courseId);
         logger.info(String.format("exist %d students under course %d ==> %s",
@@ -125,6 +140,7 @@ public class CourseServiceImpl implements CourseService {
         return res;
     }
 
+    @Override
     public UserDTO selectTeacherInfo(int courseId) {
         return mapper.selectTeacherInfo(courseId);
     }

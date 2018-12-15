@@ -1,12 +1,12 @@
 import home from "./home.js"
 
-console.info(userInfo);
+console.info(user);
 
 new Vue({
     el: '#app',
     data() {
         return {
-            userInfo,
+            userInfo: user
         }
     },
     components: {

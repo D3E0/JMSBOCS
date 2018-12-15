@@ -11,7 +11,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Notify</title>
+    <link rel="icon" type="image/x-icon" href="<c:url value="/static/favicon.ico"/>"/>
+    <title>基于开放云储存的作业管理系统</title>
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
 
     <style>

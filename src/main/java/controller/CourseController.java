@@ -16,7 +16,6 @@ import service.UserService;
 import util.RestResult;
 import vo.CourseVO;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,28 +39,6 @@ public class CourseController {
     }
 
     /**
-     * 返回课程列表界面
-     *
-     * @return
-     */
-    @RequestMapping("/subject")
-    public String subject() {
-        return "subject";
-    }
-
-    /**
-     * 返回课程详情界面
-     *
-     * @param courseId
-     * @return
-     */
-    @RequestMapping("/course/{courseId}")
-    public String course(@PathVariable Integer courseId) {
-        logger.info(courseId);
-        return "course";
-    }
-
-    /**
      * 教师开设新的课程
      *
      * @param name
@@ -69,7 +46,6 @@ public class CourseController {
      * @param id
      * @param academic
      * @param semester
-     * @param response
      * @return
      */
     @RequestMapping(value = "/api/subject", method = RequestMethod.POST)
@@ -78,12 +54,9 @@ public class CourseController {
                                     @RequestParam String description,
                                     @RequestParam Integer id,
                                     @RequestParam String academic,
-                                    @RequestParam String semester,
-                                    HttpServletResponse response) {
+                                    @RequestParam String semester) {
         CourseEntity entity = new CourseEntity(name, id, academic, description, semester);
         int res = service.save(entity);
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {
@@ -161,11 +134,9 @@ public class CourseController {
 
     @RequestMapping(value = "/api/subject/user", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult saveCourseStudents(@RequestBody CourseVO courseVO, HttpServletResponse response) {
+    public RestResult saveCourseStudents(@RequestBody CourseVO courseVO) {
         logger.info("course add student ==> " + courseVO);
         Map res = service.saveUserCourseList(courseVO.getStudentList(), courseVO.getCourseId());
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return new RestResult.Builder(200).data(res).build();
     }
 

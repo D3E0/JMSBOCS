@@ -3,6 +3,7 @@ package service;
 import dto.UserDTO;
 import dto.UserSDTO;
 import entity.UserEntity;
+import dto.UserInfo;
 
 import java.util.Set;
 
@@ -32,5 +33,13 @@ public interface UserService extends BaseService<UserEntity> {
      * @return
      */
     int saveStuSet(Set<UserSDTO> set);
+
+    /**
+     * 查询用户概要信息
+     *
+     * @param id
+     * @return
+     */
+    UserInfo selectUserInfo(int id);
 
 }

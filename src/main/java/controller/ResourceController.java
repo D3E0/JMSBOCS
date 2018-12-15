@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author ACM-PC
+ */
 @Controller
 public class ResourceController {
     private static final Logger logger = LogManager.getLogger(ResourceController.class);
@@ -106,19 +109,15 @@ public class ResourceController {
      *
      * @param courseId
      * @param filename
-     * @param response
      * @return
      */
     @RequestMapping(value = "/api/resource", method = RequestMethod.POST)
     @ResponseBody
     public RestResult saveResource(@RequestParam Integer courseId,
-                                   @RequestParam String filename,
-                                   HttpServletResponse response) {
+                                   @RequestParam String filename) {
         CourseResourceEntity entity = new CourseResourceEntity(courseId, filename, new Date());
         int res = service.save(entity);
         logger.info(String.format("save resource %s ==> %d", entity, res));
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {

@@ -3,7 +3,6 @@
   User: ACM-PC
   Date: 2018/12/1
   Time: 21:22
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -44,7 +43,7 @@
     const userInfo = {
         uid: 2,
         isTch: false
-    };
+    }
 </script>
 
 <script type="text/javascript" src="<c:url value="/static/js/axios.js"/>"></script>
