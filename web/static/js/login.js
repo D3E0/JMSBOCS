@@ -15,13 +15,13 @@ let login = {
             params.append('id', this.form.id);
             params.append('pass', this.form.pass);
             this.loading = true;
-            axios.post('/api/login', params).then(response => {
+            axios.post('/login', params).then(response => {
                 if (response.data.message === 'success') {
                     this.$message({
                         message: '登陆成功',
                         type: 'success'
                     });
-                    window.location.href = this.$root.path + '/main'
+                    window.location.href = this.$root.path + '/home'
                 } else {
                     this.$message.error("登陆失败");
                 }

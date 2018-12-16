@@ -16,7 +16,6 @@ import service.AnnouncementService;
 import service.UserService;
 import util.RestResult;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +73,6 @@ public class AnnouncementController {
     @ResponseBody
     public RestResult deleteAnnouncement(@RequestParam Integer id) {
         int res = service.delete(id);
-//        int res = 1;
         logger.info(String.format("delete announcement{%d} ==> %d", id, res));
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
@@ -87,8 +85,7 @@ public class AnnouncementController {
     @ResponseBody
     public RestResult saveAnnouncement(@RequestParam Integer courseId,
                                        @RequestParam String title,
-                                       @RequestParam String content,
-                                       HttpServletResponse response) {
+                                       @RequestParam String content) {
         AnnouncementEntity entity = new AnnouncementEntity();
         entity.setAnnouncementContent(content);
         entity.setAnnouncementTitle(title);
@@ -97,8 +94,6 @@ public class AnnouncementController {
         int res = service.save(entity);
         logger.info(String.format("to save announcement ==> %s", entity));
         logger.info("save announcement %d" + res);
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {

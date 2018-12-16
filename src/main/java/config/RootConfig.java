@@ -23,12 +23,13 @@ import java.util.Properties;
 
 @Configuration
 @MapperScan(basePackages = "mapper")
-@ComponentScan(basePackages = {"mapper", "service", "manager", "controller"},
+@ComponentScan(basePackages = {"mapper", "service", "manager"},
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
         })
 public class RootConfig {
     private static final Logger logger = LogManager.getLogger(RootConfig.class);
+
     @Bean
     public DataSource dataSource() throws IOException {
         DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -54,8 +55,7 @@ public class RootConfig {
 
     @Bean
     public NotifyManager notifyManager(NotifyMapper notifyMapper, DeafultHandler deafultHandler) {
-        NotifyManager notifyManager = new NotifyManager(notifyMapper, deafultHandler);
-        return notifyManager;
+        return new NotifyManager(notifyMapper, deafultHandler);
     }
 }
 

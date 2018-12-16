@@ -40,7 +40,7 @@
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="<c:url value="/user"/>">个人信息</a></dd>
-                <dd><a href="<c:url value="/user"/>">退出登录</a></dd>
+                <dd><a href="<c:url value="/logout"/>">退出登录</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item  layout-right">

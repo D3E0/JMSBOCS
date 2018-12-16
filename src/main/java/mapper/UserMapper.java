@@ -2,6 +2,7 @@ package mapper;
 
 import dto.UserDTO;
 import entity.UserEntity;
+import dto.UserInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,12 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @return
      */
     int saveUserListIgnore(List<UserEntity> list);
+
+    /**
+     * 查询用户概要信息
+     *
+     * @param id
+     * @return
+     */
+    UserInfo selectUserInfo(int id);
 }

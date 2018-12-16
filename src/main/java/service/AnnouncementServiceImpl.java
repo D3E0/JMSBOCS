@@ -17,34 +17,42 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         this.mapper = mapper;
     }
 
+    @Override
     public int update(AnnouncementEntity announcementEntity) {
         return mapper.update(announcementEntity);
     }
 
+    @Override
     public int delete(int id) {
         return mapper.delete(id);
     }
 
+    @Override
     public int save(AnnouncementEntity announcementEntity) {
         return mapper.save(announcementEntity);
     }
 
+    @Override
     public AnnouncementEntity selectOne(int id) {
         return mapper.selectOne(id);
     }
 
+    @Override
     public List<AnnouncementEntity> selectAll() {
         return mapper.selectAll();
     }
 
+    @Override
     public List<AnnouncementEntity> selectCourseAnnouncement(int courseId) {
         return mapper.selectCourseAnnouncement(courseId);
     }
 
+    @Override
     public List<CourseAnnouncementDTO> selectTchAnnouncement(int userId) {
         return mapper.selectTchAnnouncement(userId);
     }
 
+    @Override
     public List<CourseAnnouncementDTO> selectStuAnnouncement(int userId) {
         return mapper.selectStuAnnouncement(userId);
     }

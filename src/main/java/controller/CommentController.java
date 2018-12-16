@@ -29,11 +29,6 @@ public class CommentController {
         this.service = service;
     }
 
-    @RequestMapping("/comment")
-    public String getUserProfilePage() {
-        return "comment";
-    }
-
     /**
      * 课程的讨论
      *
@@ -59,7 +54,6 @@ public class CommentController {
      * @param courseId
      * @param rootCommentId
      * @param replyCommentId
-     * @param response       post 请求 跨域 开发用
      * @return
      */
     @RequestMapping(value = "/api/comment", method = RequestMethod.POST)
@@ -69,7 +63,6 @@ public class CommentController {
                                     @RequestParam(required = false) Integer courseId,
                                     @RequestParam(required = false) Integer rootCommentId,
                                     @RequestParam(required = false) Integer replyCommentId,
-                                    HttpServletResponse response,
                                     HttpServletRequest request) {
         logger.info(String.format("save comment {%d (%d) (%d, %d) %s}", userId, courseId, replyCommentId, rootCommentId, commentContent));
         String userAgent = request.getHeader("User-Agent");
@@ -80,8 +73,6 @@ public class CommentController {
             res = service.saveReplyComments(commentContent, userId, userAgent, rootCommentId, replyCommentId);
         }
         logger.info("res ===> " + res);
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {

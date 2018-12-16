@@ -94,4 +94,12 @@
             #{item.type})
         </foreach>
     </insert>
+
+    <select id="selectUserInfo" resultType="dto.UserInfo">
+        select user_id  as id,
+               username as name,
+               type     as type
+        from user
+        where user_id = #{id}
+    </select>
 </mapper>

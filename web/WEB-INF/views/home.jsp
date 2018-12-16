@@ -12,10 +12,14 @@
 <head>
     <meta charset="UTF-8">
     <title>基于开放云储存的作业管理系统</title>
+    <link rel="icon" type="image/x-icon" href="<c:url value="/static/favicon.ico"/>"/>
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
-
+    <script>
+        const user = JSON.parse('${user}');
+        const path = '${pageContext.request.contextPath}';
+    </script>
     <style>
         body {
             background-color: #fff;
@@ -40,12 +44,6 @@
         </el-main>
     </el-container>
 </div>
-<script>
-    const userInfo = {
-        uid: 1,
-        path: '${pageContext.request.contextPath}',
-    };
-</script>
 
 <script type="text/javascript" src="<c:url value="/static/js/axios.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/vue.js"/>"></script>

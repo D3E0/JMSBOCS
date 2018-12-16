@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserServiceImpl;
 import util.RestResult;
 
-import javax.servlet.http.HttpServletResponse;
-
+/**
+ * @author ACM-PC
+ */
 @Controller
 public class UserController {
 
@@ -27,47 +28,6 @@ public class UserController {
     public UserController(UserServiceImpl service) {
         this.service = service;
     }
-
-    /**
-     * 返回用户个人资料界面
-     *
-     * @return
-     */
-    @RequestMapping("/user")
-    public String getUserProfilePage() {
-        return "user";
-    }
-
-    /**
-     * 返回登陆界面
-     *
-     * @return
-     */
-    @RequestMapping("/login")
-    public String doLogin() {
-        return "login";
-    }
-
-    /**
-     * 处理用户登陆
-     *
-     * @param id
-     * @param pass
-     * @return
-     */
-    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    @ResponseBody
-    public RestResult processLogin(@RequestParam Integer id,
-                                   @RequestParam String pass) {
-        UserEntity entity = service.processLogin(id, pass);
-        logger.info(String.format("user %d %s login ==> %s", id, pass, entity));
-        if (entity == null) {
-            return new RestResult.Builder(200).message("fail").build();
-        } else {
-            return new RestResult.Builder(200).message("success").build();
-        }
-    }
-
 
     /**
      * 通过 userId 获取用户信息 个人资料
@@ -92,26 +52,22 @@ public class UserController {
     /**
      * 学生修改个人资料
      *
-     * @param id       id
-     * @param phone    联系方式
-     * @param email    邮箱
-     * @param response post 请求 跨域 开发用
+     * @param id    id
+     * @param phone 联系方式
+     * @param email 邮箱
      * @return success || fail
      */
     @RequestMapping(value = "/api/user/stu", method = RequestMethod.POST)
     @ResponseBody
     public RestResult updateStu(@RequestParam int id,
                                 @RequestParam String phone,
-                                @RequestParam String email,
-                                HttpServletResponse response) {
+                                @RequestParam String email) {
         logger.info(String.format("update stu{%d} %s %s", id, phone, email));
         UserEntity entity = service.selectOne(id);
         entity.setEmail(email);
         entity.setTelephone(phone);
         int res = service.update(entity);
         logger.info(String.format("update stu{%d}  --> %d", id, res));
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST");
         return new RestResult.Builder(200).message(res == 1 ? "success" : "fail").build();
     }
 
@@ -122,7 +78,6 @@ public class UserController {
      * @param phone
      * @param email
      * @param office
-     * @param response post 请求 跨域 开发用
      * @return success || fail
      */
     @RequestMapping(value = "/api/user/tch", method = RequestMethod.POST)
@@ -130,8 +85,7 @@ public class UserController {
     public RestResult updateTch(@RequestParam int id,
                                 @RequestParam String phone,
                                 @RequestParam String email,
-                                @RequestParam String office,
-                                HttpServletResponse response) {
+                                @RequestParam String office) {
         logger.info(String.format("update tch{%d} %s %s %s", id, phone, email, office));
         UserEntity entity = service.selectOne(id);
         entity.setEmail(email);
@@ -139,8 +93,6 @@ public class UserController {
         entity.setOffice(office);
         int res = service.update(entity);
         logger.info(String.format("update tch{%d}  --> %d", id, res));
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return new RestResult.Builder(200).message(res == 1 ? "success" : "fail").build();
     }
 
@@ -151,7 +103,6 @@ public class UserController {
      * @param oldPass
      * @param newPass
      * @param checkPass
-     * @param response  post 请求 跨域 开发用
      * @return success || fail
      */
     @RequestMapping(value = "/api/user/pwd", method = RequestMethod.POST)
@@ -159,8 +110,7 @@ public class UserController {
     public RestResult updatePassword(@RequestParam int id,
                                      @RequestParam String oldPass,
                                      @RequestParam String newPass,
-                                     @RequestParam String checkPass,
-                                     HttpServletResponse response) {
+                                     @RequestParam String checkPass) {
         logger.info(String.format("update password {%d} %s %s", id, oldPass, newPass));
         UserEntity entity = service.selectOne(id);
         String msg = "fail";
@@ -172,8 +122,6 @@ public class UserController {
             }
         }
         logger.info(String.format("update password {%d} --> %s", id, msg));
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return new RestResult.Builder(200).message(msg).build();
     }
 
@@ -184,7 +132,6 @@ public class UserController {
      * @param accessKey
      * @param secretKey
      * @param bucket
-     * @param response  post 请求 跨域 开发用
      * @return success || fail
      */
     @RequestMapping(value = "/api/qiniu", method = RequestMethod.POST)
@@ -192,11 +139,8 @@ public class UserController {
     public RestResult updateBucket(@RequestParam Integer id,
                                    @RequestParam String accessKey,
                                    @RequestParam String secretKey,
-                                   @RequestParam String bucket,
-                                   HttpServletResponse response) {
+                                   @RequestParam String bucket) {
         logger.info(String.format("update bucket %d %s %s %s", id, accessKey, secretKey, bucket));
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return new RestResult.Builder(200).message("success").build();
     }
 }
