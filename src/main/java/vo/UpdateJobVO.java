@@ -1,11 +1,13 @@
 package vo;
 
+import java.io.Serializable;
+
 /**
  * @author yan
  * @date 2018/12/6 12:15
  * @descripition
  */
-public class UpdateJobVO {
+public class UpdateJobVO implements Serializable {
     private Integer jobId;
     private String jobTitle;
     private String jobContent;

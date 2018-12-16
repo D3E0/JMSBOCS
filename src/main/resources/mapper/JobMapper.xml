@@ -54,7 +54,6 @@
     <select id="countJobForTeacher" parameterType="map" resultType="int">
         select COUNT(job.job_id)
         from job,
-             student_course,
              course
         where course.teacher_id = #{teacherId}
           and job.course_id = course.course_id
@@ -105,5 +104,10 @@
         from job
         WHERE course_id=#{courseId}
         and job_title=#{jobTitle};
+    </select>
+    <select id="selectOne" resultType="entity.JobEntity">
+        select *
+        from job
+        where job_id = #{jobId}
     </select>
 </mapper>

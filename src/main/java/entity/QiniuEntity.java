@@ -1,6 +1,8 @@
 package entity;
 
-public class QiniuEntity {
+import java.io.Serializable;
+
+public class QiniuEntity implements Serializable {
 
     private Integer qiniuId;
 

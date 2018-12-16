@@ -67,8 +67,9 @@ public class FileController {
         model.addAttribute("jobFileList",fileService.getFileList(courseId,jobId,studentId));
         return "jobFileList";
     }
+
     @RequestMapping(value = "downloadAll", method = RequestMethod.GET)
-    public String addJob(Model model,int jobId) {
+    public String downloadAll(Model model,int jobId) {
         model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePrefix());
         model.addAttribute("jobId", jobId);
         return "fileProgress";

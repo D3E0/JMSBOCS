@@ -1,5 +1,6 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * @date 2018/12/8 15:18
  * @descripition
  */
-public class FileVOs {
+public class FileVOs implements Serializable {
     private int count;
     private List<FileVO> fileVOList;
 

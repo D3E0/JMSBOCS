@@ -1,13 +1,15 @@
 package dto;
 
+import java.io.Serializable;
+
 /**
  * @author yan
  * @date 2018/12/10 13:01
  * @descripition
  */
-public class JobSubmitRecordNumber {
-    int need;
-    int already;
+public class JobSubmitRecordNumber implements Serializable {
+    private int need;
+    private int already;
 
     public int getNeed() {
         return need;

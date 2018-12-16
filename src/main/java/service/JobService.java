@@ -2,6 +2,7 @@ package service;
 
 import dto.JobItemDTO;
 import entity.JobEntity;
+import entity.QiniuEntity;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface JobService {
     int updateJob(JobEntity jobEntity);
     int addJob(JobEntity jobEntity);
     int isSameJobTitle(int courseId, String jobTitle);
+    void changeJobFileName(QiniuEntity qiniuEntity, JobEntity jobEntity);
 }

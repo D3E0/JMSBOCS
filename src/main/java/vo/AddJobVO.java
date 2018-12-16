@@ -1,5 +1,6 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @date 2018/12/12 13:01
  * @descripition
  */
-public class AddJobVO {
+public class AddJobVO implements Serializable {
     private String jobTitle;
     private String jobContent;
     private Date jobBeginTime;

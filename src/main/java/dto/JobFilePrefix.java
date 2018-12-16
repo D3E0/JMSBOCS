@@ -1,16 +1,19 @@
 package dto;
 
+import java.io.Serializable;
+
 /**
  * @author yan
  * @date 2018/12/11 16:01
  * @descripition
  */
-public class JobFilePrefix {
-    int courseId;
-    String jobTitle;
-    String courseName;
-    String academicYear;
-    String semester;
+public class JobFilePrefix implements Serializable {
+    private static final long serialVersionUID = -8349490414810421264L;
+    private int courseId;
+    private String jobTitle;
+    private String courseName;
+    private String academicYear;
+    private String semester;
 
     public int getCourseId() {
         return courseId;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.FileService;
 import service.JobService;
 import service.JobSubmitService;
+import util.UserSecurity;
 import vo.JobSubmitRecordVO;
 
 import java.util.List;
@@ -44,7 +45,8 @@ public class JobSubmitController {
 
     @ResponseBody
     @RequestMapping(value = "jobItemSubmit", method = RequestMethod.POST)
-    public void jobItemSubmit(int jobId, String fileName, int userId) {
+    public void jobItemSubmit(int jobId, String fileName) {
+        int userId= UserSecurity.getId();
         jobSubmitService.jobItemSubmit(jobId, userId, fileName);
     }
 

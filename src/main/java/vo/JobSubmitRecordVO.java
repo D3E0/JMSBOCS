@@ -2,9 +2,10 @@ package vo;
 
 import dto.JobSubmitRecordDTO;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class JobSubmitRecordVO {
+public class JobSubmitRecordVO implements Serializable {
     private int code;
     private String msg;
     private int count;

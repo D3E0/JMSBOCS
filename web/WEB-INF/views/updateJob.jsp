@@ -21,7 +21,7 @@
 <jsp:include page="head.jsp"/>
 <div class="panel">
     <input id="courseId" hidden value="${courseId}">
-    <div class="panel-title">添加作业
+    <div class="panel-title">修改作业
     </div>
     <form class="layui-form" action="" style="margin: 20px 3%">
         <input id="jobId" name="jobId" hidden value="${job.jobId}">
@@ -69,22 +69,22 @@
     let jobId=$("#jobId").val();
     $.post('/getJobContent',{jobId},function (data) {
         $('#mdtextarea').val(data);
-    });
-    testEditor = editormd("test-editormd", {
-        placeholder: '本编辑器支持Markdown编辑，左边编写，右边预览',  //默认显示的文字，这里就不解释了
-        width: "90%",
-        height: 400,
-        syncScrolling: "single",
-        path: '<c:url value="/static/editor.md-master/lib/"/>',   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
-        emoji: true,
-        taskList: true,
-        tocm: true,         // Using [TOCM]
-        tex: true,                   // 开启科学公式TeX语言支持，默认关闭
-        flowChart: true,             // 开启流程图支持，默认关闭
-        sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
-        toolbarIcons: function () {  //自定义工具栏，后面有详细介绍
-            return editormd.toolbarModes['full']; // full, simple, mini
-        },
+        testEditor = editormd("test-editormd", {
+            placeholder: '本编辑器支持Markdown编辑，左边编写，右边预览',  //默认显示的文字，这里就不解释了
+            width: "90%",
+            height: 400,
+            syncScrolling: "single",
+            path: '<c:url value="/static/editor.md-master/lib/"/>',   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
+            emoji: true,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            toolbarIcons: function () {  //自定义工具栏，后面有详细介绍
+                return editormd.toolbarModes['full']; // full, simple, mini
+            },
+        });
     });
     layui.use(['form', 'laydate','layer'], function () {
         let form = layui.form, laydate = layui.laydate,layer=layui.layer;

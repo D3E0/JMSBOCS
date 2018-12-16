@@ -48,7 +48,7 @@ public class QiniuUtil {
         return "http://" + domain;
     }
 
-    public static int delefile(QiniuEntity qiniuEntity, String key) {
+    public static int deleteFile(QiniuEntity qiniuEntity, String key) {
         int ans = 1;
         Configuration cfg = new Configuration(Zone.zone0());
         Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
@@ -133,5 +133,30 @@ public class QiniuUtil {
             e.printStackTrace();
         }
         return finalUrl;
+    }
+    public static int fileRename(QiniuEntity qiniuEntity,String fromKey,String toKey){
+        int ans=1;
+        Configuration cfg = new Configuration(Zone.zone0());
+        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        try {
+            bucketManager.move(qiniuEntity.getBucket(), fromKey, qiniuEntity.getBucket(), toKey);
+        } catch (QiniuException ex) {
+            //如果遇到异常，说明移动失败
+            System.err.println(ex.code());
+            System.err.println(ex.response.toString());
+            ans=0;
+        }
+        return ans;
+    }
+    public static int deleteFileList(QiniuEntity qiniuEntity, String prefix){
+        List<FileVO> fileVOS=getFileList(qiniuEntity,prefix);
+        int ans=1;
+        for (FileVO fileVO:fileVOS) {
+            if(deleteFile(qiniuEntity,fileVO.getFileName())==0){
+                ans=0;
+            }
+        }
+        return ans;
     }
 }

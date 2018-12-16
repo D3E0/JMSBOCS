@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import service.CourseService;
 import service.FileService;
 import service.JobService;
+import util.UserSecurity;
 import vo.AddJobVO;
 import vo.UpdateJobVO;
 
@@ -60,8 +61,9 @@ public class JobController {
 
     @ResponseBody
     @RequestMapping(value = "jobList", method = RequestMethod.POST)
-    public List<JobItemDTO> jobList(@RequestParam int studentId, @RequestParam int page, @RequestParam(defaultValue = "") String keyword) {
-        return jobService.findJobListById(studentId, page, keyword);
+    public List<JobItemDTO> jobList( @RequestParam int page, @RequestParam(defaultValue = "") String keyword) {
+        int userId= UserSecurity.getId();
+        return jobService.findJobListById(userId, page, keyword);
     }
 
     @RequestMapping(value = "job",method = RequestMethod.GET)
@@ -80,13 +82,15 @@ public class JobController {
 
     @ResponseBody
     @RequestMapping("countJob")
-    public int countJob(int studentId, @RequestParam(defaultValue = "") String keyword) {
-        return jobService.countJob(studentId, keyword);
+    public int countJob(@RequestParam(defaultValue = "") String keyword) {
+        int userId= UserSecurity.getId();
+        return jobService.countJob(userId, keyword);
     }
 
     @RequestMapping(value = "addJob", method = RequestMethod.GET)
     public String addJob(Model model) {
-        model.addAttribute("courseList",courseService.selectCourseDTOListTch(1));
+        int userId= UserSecurity.getId();
+        model.addAttribute("courseList",courseService.selectCourseDTOListTch(userId));
         return "addJob";
     }
     @ResponseBody

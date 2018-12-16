@@ -8,7 +8,9 @@ import mapper.QiniuMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import util.QiniuUtil;
 import vo.FileVO;
@@ -43,13 +45,14 @@ public class FileServiceImpl implements FileService {
         this.qiniuMapper = qiniuMapper;
     }
 
-    @Cacheable(cacheNames = "UploadToken", key = "#courseId")
+    @Cacheable(cacheNames = "uploadToken", key = "#courseId")
     public String getUploadToken(int courseId) {
         System.out.println("do------------");
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getUploadToken(qiniuEntity);
     }
 
+    @Cacheable(cacheNames = "fileList", key = "'j'+#jobId+'u'+#studentId")
     public List<FileVO> getFileList(int courseId, int jobId, int studentId) {
         String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix() + "/" + studentId + "/";
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
@@ -63,7 +66,7 @@ public class FileServiceImpl implements FileService {
         return QiniuUtil.getFileList(qiniuEntity, prefix);
     }
 
-    @Cacheable(cacheNames = "publicFileList", key = "#+'c'+courseId+'p'+page")
+    @Cacheable(cacheNames = "publicFileList", key = "'c'+#courseId+'p'+#page")
     public FileVOs getPublicFiles(int courseId, int page) {
         FileVOs fileVOs = new FileVOs();
         List<FileVO> fileVOList = getAllPublicFile(courseId);
@@ -73,30 +76,39 @@ public class FileServiceImpl implements FileService {
         return fileVOs;
     }
 
+    @Cacheable(cacheNames = "domain", key = "#courseId")
     public String queryDomain(int courseId) {
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.queryDomain(qiniuEntity);
     }
 
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "fileList", key = "'j'+#jobId+'u'+#key.split('/')[2]")
+            , @CacheEvict(cacheNames = "allFile", key = "#jobId")
+    })
     public int deleteFile(int courseId, String key, int jobId) {
         String[] strings = key.split("/");
+        String test = key.split("/")[2];
         int userId = Integer.parseInt(strings[2]);
         String fileName = strings[3];
         jobSubmitItemMapper.jobItemDelete(jobId, fileName, userId);
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.delefile(qiniuEntity, key);
+        return QiniuUtil.deleteFile(qiniuEntity, key);
     }
 
+    @Cacheable(cacheNames = "filePrefix", key = "#jobId")
     public JobFilePrefix findFilePrefixByJobId(int jobId) {
         return jobMapper.findFilePrefixByJobId(jobId);
     }
 
+    @Cacheable(cacheNames = "allFile", key = "#jobId")
     public List<FileVO> getAllFile(int courseId, int jobId) {
         String prefix = jobMapper.findFilePrefixByJobId(jobId).getFilePrefix() + "/";
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getFileList(qiniuEntity, prefix);
     }
 
+    @Cacheable(cacheNames = "resource", key = "'c'+#courseId+'path:'+#path")
     public FileVO getResource(int courseId, String path) {
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         List<FileVO> fileVOS = QiniuUtil.getFileList(qiniuEntity, path);
@@ -106,13 +118,14 @@ public class FileServiceImpl implements FileService {
         return fileVOS.get(0);
     }
 
+    @CacheEvict(cacheNames = "resource", key = "'c'+#courseId+'path:'+#path")
     public int deleteResource(int courseId, String path) {
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
-        return QiniuUtil.delefile(qiniuEntity, path);
+        return QiniuUtil.deleteFile(qiniuEntity, path);
     }
 
     @Override
     public String getPublicUrl(String remoteSrcUrl, String key) {
-        return QiniuUtil.getPublicUrl( remoteSrcUrl,key);
+        return QiniuUtil.getPublicUrl(remoteSrcUrl, key);
     }
 }

@@ -3,9 +3,10 @@ package dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class JobSubmitRecordDTO {
+public class JobSubmitRecordDTO implements Serializable {
     private long userId;
     private String userName;
     private boolean status;

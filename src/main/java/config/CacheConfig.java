@@ -45,19 +45,21 @@ public class CacheConfig {
     public CacheManager cacheManager(RedisConnectionFactory factory){
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
         // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
-        config = config.entryTtl(Duration.ofMinutes(1))
+        config = config.entryTtl(Duration.ofMinutes(55))
                 // 设置缓存的默认过期时间，也是使用Duration设置
                 .disableCachingNullValues();
         // 不缓存空值
         // 设置一个初始化的缓存空间set集合
         Set<String> cacheNames =  new HashSet<>();
-        cacheNames.add("UploadToken");
-        cacheNames.add("my-redis-cache2");
-        // 对每个缓存空间应用不同的配置
+        cacheNames.add("uploadToken");
+        cacheNames.add("filePrefix");
+        cacheNames.add("fileList");
+        cacheNames.add("allFile");
+        cacheNames.add("resource");
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-        configMap.put("UploadToken", config.entryTtl(Duration.ofMinutes(55)));
-        configMap.put("my-redis-cache2", config.entryTtl(Duration.ofSeconds(120)));
-
+        for (String s:cacheNames) {
+            configMap.put(s,config);
+        }
         return RedisCacheManager.builder(factory)
                 // 使用自定义的缓存配置初始化一个cacheManager
                 .initialCacheNames(cacheNames)

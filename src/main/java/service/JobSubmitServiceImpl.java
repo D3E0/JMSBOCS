@@ -4,6 +4,8 @@ import dto.JobSubmitRecordDTO;
 import dto.JobSubmitRecordNumber;
 import mapper.JobSubmitItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +33,10 @@ public class JobSubmitServiceImpl implements JobSubmitService{
     public JobSubmitRecordNumber countJobSubmitRecordNum(int jobId) {
         return jobSubmitItemMapper.countJobSubmitRecordNum(jobId);
     }
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "fileList", key = "#+'j'+jobId+'u'+userId")
+            , @CacheEvict(cacheNames = "allFile", key = "#jobId")
+    })
     public void jobItemSubmit(int jobId, int userId, String fileName) {
         if (jobSubmitItemMapper.isSameFile(jobId,fileName,userId)==0) {
             jobSubmitItemMapper.jobItemSubmit(jobId,fileName,userId);

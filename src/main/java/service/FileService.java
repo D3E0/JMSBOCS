@@ -1,6 +1,7 @@
 package service;
 
 import dto.JobFilePrefix;
+import entity.QiniuEntity;
 import vo.FileVO;
 import vo.FileVOs;
 

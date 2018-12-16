@@ -2,12 +2,14 @@ package vo;
 
 import com.qiniu.storage.model.FileInfo;
 
+import java.io.Serializable;
+
 /**
  * @author yan
  * @date 2018/12/1 13:54
  * @descripition
  */
-public class FileVO {
+public class FileVO implements Serializable {
     private String fileName;
     private String fileSize;
     private String downloadUrl;

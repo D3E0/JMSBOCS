@@ -10,6 +10,7 @@ import mapper.StudentCourseMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -121,6 +122,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "filePrefix",allEntries = true)
     public int deleteUserCourseList(Set<UserSDTO> set, int courseId) {
         Set<UserSDTO> existStudents = selectUserSet(courseId);
         logger.info(String.format("exist %d students under course %d ==> %s",

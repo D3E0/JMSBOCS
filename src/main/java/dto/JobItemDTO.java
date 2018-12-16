@@ -1,11 +1,13 @@
 package dto;
 
+import java.io.Serializable;
+
 /**
  * @author yan
  * @date 2018/11/24 12:45
  * @descripition
  */
-public class JobItemDTO {
+public class JobItemDTO implements Serializable {
     private Integer jobId;
 
     private String jobTitle;
