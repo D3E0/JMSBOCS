@@ -1,7 +1,8 @@
 package dto;
 
 /**
- * 数据传输对象
+ * 数据传输对象   二级评论
+ * @author ACM-PC
  */
 public class ReplyCommentDTO extends CommentDTO {
     private Integer rootCommentId;

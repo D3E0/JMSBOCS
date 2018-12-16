@@ -4,7 +4,9 @@ import courseResource from "./courseResource.js";
 import comment from "./comment.js";
 import courseSide from "./courseSide.js";
 
-console.info(userInfo);
+console.info(user);
+console.info(path);
+console.info(courseId);
 
 const router = new VueRouter({
     routes: [{
@@ -28,7 +30,15 @@ const router = new VueRouter({
 new Vue({
     el: '#app',
     router,
-    data: userInfo,
+    data() {
+        return {
+            uid: user.uid,
+            isTch: user.isTch,
+            name: user.name,
+            path: path,
+            courseId: courseId,
+    }
+    },
     components: {
         courseSide,
     }

@@ -20,6 +20,7 @@
             useGeneratedKeys="true" keyProperty="notifyId" keyColumn="notify_id">
         insert into notify (notify_id,
                             notify_content,
+                            notify_title,
                             notify_time,
                             notify_sender,
                             notify_receiver,
@@ -27,6 +28,7 @@
                             is_finished)
         values (#{notifyId},
                 #{notifyContent},
+                #{notifyTitle},
                 #{notifyTime},
                 #{notifySender},
                 #{notifyReceiver},
@@ -39,6 +41,7 @@
         set notify_receiver = #{notifyReceiver},
             notify_sender   = #{notifySender},
             notify_content  = #{notifyContent},
+            notify_title  = #{notifyTitle},
             notify_type     = #{notifyType},
             is_finished     = #{isFinished},
             notify_time     = #{notifyTime}

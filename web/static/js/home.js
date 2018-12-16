@@ -34,7 +34,7 @@ let home = {
                 this.loading = false;
             });
         }, onDetail(index, obj) {
-            window.location.href = `${this.$root.userInfo.path}/course/${obj.courseId}#/announcement`;
+            window.location.href = `${this.$root.path}/course/${obj.courseId}#/announcement`;
         }
     },
     template: `

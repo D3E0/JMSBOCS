@@ -1,4 +1,4 @@
-var userSide = {
+let userSide = {
     computed: {
         dfltView: function () {
             if (this.isTch) {

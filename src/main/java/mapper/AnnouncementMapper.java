@@ -35,4 +35,10 @@ public interface AnnouncementMapper extends BaseMapper<AnnouncementEntity> {
      * @return
      */
     List<CourseAnnouncementDTO> selectStuAnnouncement(int userId);
+
+    /**
+     * @param id
+     * @return
+     */
+    CourseAnnouncementDTO selectCourseAnnouncementDTO(int id);
 }

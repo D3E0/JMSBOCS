@@ -4,84 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.CommentMapper">
 
-    <select id="getComments" resultType="entity.CommentEntity">
-        select *
-        from comment
-    </select>
-
-    <select id="getCommentsDetail" resultMap="commentDetail">
-        SELECT c.comment_id       as cid,
-               c.comment_content  as content,
-               c.comment_time     as ctime,
-               c.reply_comment_id as rid,
-               c.root_comment_id  as pid,
-               c.course_id        as course,
-               c.user_id          as uid,
-               u.username         as username
-        FROM comment c,
-             user u
-        where c.user_id = u.user_id
-        order by pid desc, cid
-    </select>
-
-    <select id="getCommentDetail" resultMap="commentDetail">
-        SELECT c.comment_id       as cid,
-               c.comment_content  as content,
-               c.comment_time     as ctime,
-               c.reply_comment_id as rid,
-               c.root_comment_id  as pid,
-               c.course_id        as course,
-               c.user_id          as uid,
-               u.username         as username
-        FROM comment c,
-             user u
-        where c.user_id = u.user_id
-          and c.comment_id = #{cid}
-        order by pid desc, cid
-    </select>
-
-    <resultMap id="commentDetail" type="dto.CommentDTO">
-        <id column="cid" property="commentId"/>
-        <result column="content" property="commentContent"/>
-        <result column="ctime" property="commentTime"/>
-        <result column="rid" property="replyCommentId"/>
-        <result column="pid" property="rootCommentId"/>
-        <result column="course" property="courseId"/>
-        <result column="uid" property="userId"/>
-        <result column="username" property="username"/>
-    </resultMap>
-
-    <select id="getComment" resultType="entity.CommentEntity">
-        SELECT *
-        FROM comment
-        where comment_id = #{id}
-    </select>
-
-    <insert id="saveComment" parameterType="entity.CommentEntity"
-            useGeneratedKeys="true" keyProperty="commentId" keyColumn="comment_id">
-        insert into comment (comment_id,
-                             course_id,
-                             comment_time,
-                             comment_content,
-                             root_comment_id,
-                             reply_comment_id,
-                             user_id)
-        values (#{commentId},
-                #{courseId},
-                #{commentTime},
-                #{commentContent},
-                #{rootCommentId},
-                #{replyCommentId},
-                #{userId})
-    </insert>
-
-    <update id="updateCommentRoot">
-        update comment
-        set root_comment_id = #{pid}
-        where comment_id = #{cid}
-    </update>
-
-
     <select id="getCount" resultType="Long">
         select count(*)
         from comment c,
@@ -138,7 +60,7 @@
                     ofType="dto.ReplyCommentDTO" select="selectReply"/>
     </resultMap>
 
-    <select id="selectReply" resultMap="replyComment">
+    <select id="selectReply" resultType="dto.ReplyCommentDTO">
         SELECT
             c.comment_id       as commentId,
             c.comment_content  as commentContent,
@@ -148,8 +70,8 @@
             c.reply_comment_id as replyCommentId,
             u.user_id          as userId,
             u.username         as username,
-            ru.username        as replyName,
-            ru.user_id         as replyId
+            ru.username        as replyUsername,
+            ru.user_id         as replyUserId
         FROM comment c,
              user u,
              comment r,
@@ -161,20 +83,7 @@
         order by c.comment_id asc
     </select>
 
-    <resultMap id="replyComment" type="dto.ReplyCommentDTO">
-        <id column="commentId" property="commentId"/>
-        <result column="commentContent" property="commentContent"/>
-        <result column="commentTime" property="commentTime"/>
-        <result column="userAgent" property="userAgent"/>
-        <result column="rootCommentId" property="rootCommentId"/>
-        <result column="replyCommentId" property="replyCommentId"/>
-        <result column="userId" property="userId"/>
-        <result column="username" property="username"/>
-        <result column="replyName" property="replyUsername"/>
-        <result column="replyId" property="replyUserId"/>
-    </resultMap>
-
-    <select id="selectReplyComments" resultMap="replyComment">
+    <select id="selectReplyComments" resultType="dto.ReplyCommentDTO">
         SELECT
             c.comment_id       as commentId,
             c.comment_content  as commentContent,
@@ -184,8 +93,8 @@
             c.reply_comment_id as replyCommentId,
             u.user_id          as userId,
             u.username         as username,
-            ru.username        as replyName,
-            ru.user_id         as replyId
+            ru.username        as replyUsername,
+            ru.user_id         as replyUserId
         FROM comment c,
              user u,
              comment r,
@@ -197,5 +106,40 @@
         order by c.comment_id asc
     </select>
 
+    <select id="selectReplyComment" resultType="dto.ReplyCommentDTO">
+        SELECT
+            c.comment_id       as commentId,
+            c.comment_content  as commentContent,
+            c.comment_time     as commentTime,
+            c.user_agent       as userAgent,
+            c.root_comment_id  as rootCommentId,
+            c.reply_comment_id as replyCommentId,
+            u.user_id          as userId,
+            u.username         as username,
+            ru.username        as replyUsername,
+            ru.user_id         as replyUserId
+        FROM comment c,
+             user u,
+             comment r,
+             user ru
+        WHERE c.comment_id = #{id}
+          and c.user_id = u.user_id
+          and r.comment_id = c.reply_comment_id
+          and r.user_id = ru.user_id
+    </select>
 
 </mapper>
+
+
+        <!--<resultMap id="replyComment" type="dto.ReplyCommentDTO">-->
+        <!--<id column="commentId" property="commentId"/>-->
+        <!--<result column="commentContent" property="commentContent"/>-->
+        <!--<result column="commentTime" property="commentTime"/>-->
+        <!--<result column="userAgent" property="userAgent"/>-->
+        <!--<result column="rootCommentId" property="rootCommentId"/>-->
+        <!--<result column="replyCommentId" property="replyCommentId"/>-->
+        <!--<result column="userId" property="userId"/>-->
+        <!--<result column="username" property="username"/>-->
+        <!--<result column="replyUsername" property="replyUsername"/>-->
+        <!--<result column="replyUserId" property="replyUserId"/>-->
+        <!--</resultMap>-->

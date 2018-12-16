@@ -4,6 +4,9 @@ import entity.NotifyType;
 
 import java.util.Date;
 
+/**
+ * @author ACM-PC
+ */
 public class NotifyDTO {
     private Integer id;
     private Integer notifyId;
@@ -11,8 +14,8 @@ public class NotifyDTO {
     private NotifyType type;
     private Date time;
     private Boolean isRead;
-    private String content;
     private String title;
+    private String content;
 
     @Override
     public String toString() {
@@ -20,10 +23,6 @@ public class NotifyDTO {
                 "id=" + id +
                 ", notifyId=" + notifyId +
                 ", userId=" + userId +
-                ", type=" + type +
-                ", time=" + time +
-                ", isRead=" + isRead +
-                ", content='" + content + '\'' +
                 ", title='" + title + '\'' +
                 '}';
     }
@@ -58,30 +57,6 @@ public class NotifyDTO {
 
     public void setType(NotifyType type) {
         this.type = type;
-        updateTitle(type);
-    }
-
-    private void updateTitle(NotifyType type) {
-        String tmp = "";
-        switch (type) {
-            case COMMENTREPLY:
-                tmp = "评论回复提醒";
-                break;
-            case COMMENTUPVOTE:
-                tmp = "评论点赞提醒";
-                break;
-            case COURSEADD:
-                tmp = "课程注册提醒";
-                break;
-            case JOBPUBLISH:
-                tmp = "作业发布提醒";
-                break;
-            case JOBSUBMMIT:
-                tmp = "作业提交提醒";
-                break;
-            default:
-        }
-        setTitle(tmp);
     }
 
     public Date getTime() {

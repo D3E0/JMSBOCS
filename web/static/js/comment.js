@@ -29,11 +29,12 @@ let comment = {
                     courseId: this.$root.courseId,
                 }
             }).then(response => {
-                this.loading = false;
                 this.list = response.data.data;
                 this.count = response.data.count;
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         }, onReset() {
             this.content = '';
@@ -50,6 +51,7 @@ let comment = {
             } else {
                 params.append('courseId', this.$root.courseId);
             }
+            this.loading = true;
             axios.post('/api/comment', params).then(response => {
                 if (response.data.message === 'success') {
                     this.$message({
@@ -63,6 +65,7 @@ let comment = {
             }).catch(error => {
                 this.$message.error(error);
             }).finally(() => {
+                this.loading = false;
                 this.onReset();
             });
         }, listenReply(obj) {

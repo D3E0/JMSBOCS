@@ -12,6 +12,9 @@
     <typeHandlers>
         <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"
                      javaType="entity.UserType"/>
+        <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"
+                     javaType="entity.NotifyType"/>
+
     </typeHandlers>
 
     <environments default="development">

@@ -1,6 +1,8 @@
 package config;
 
-import manager.DeafultHandler;
+import entity.NotifyType;
+import manager.CourseHandler;
+import manager.DefaultHandler;
 import manager.NotifyManager;
 import mapper.NotifyMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -54,8 +56,11 @@ public class RootConfig {
     }
 
     @Bean
-    public NotifyManager notifyManager(NotifyMapper notifyMapper, DeafultHandler deafultHandler) {
-        return new NotifyManager(notifyMapper, deafultHandler);
+    public NotifyManager notifyManager(NotifyMapper notifyMapper, DefaultHandler defaultHandler, CourseHandler courseHandler) {
+        NotifyManager manager = new NotifyManager(notifyMapper);
+        manager.registerHandler(defaultHandler, NotifyType.PEERTOPEER);
+        manager.registerHandler(courseHandler, NotifyType.COURSEWIDE);
+        return manager;
     }
 }
 

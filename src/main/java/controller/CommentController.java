@@ -42,7 +42,6 @@ public class CommentController {
         List<RootCommentDTO> list = service.selectRootComments(courseId);
         Long count = service.getCount(courseId);
         logger.info("count ==> " + count);
-        logger.info(list);
         return new RestResult.Builder(200).count(count).data(list).build();
     }
 

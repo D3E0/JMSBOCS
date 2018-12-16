@@ -22,10 +22,11 @@ var stuProfile = {
                     id: this.$root.uid,
                 }
             }).then(response => {
-                this.loading = false;
                 this.stu = response.data.data;
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         onSubmit() {
@@ -42,8 +43,8 @@ var stuProfile = {
             params.append('id', this.stu.userId);
             params.append('phone', this.stu.telephone);
             params.append('email', this.stu.email);
+            this.loading = true;
             axios.post('/api/user/stu', params).then(response => {
-                this.loading = false;
                 if (response.data.message === 'success') {
                     this.$message({
                         message: '修改成功',
@@ -55,6 +56,8 @@ var stuProfile = {
                 }
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         resetForm() {

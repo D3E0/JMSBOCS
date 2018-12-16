@@ -93,7 +93,7 @@ public class AnnouncementController {
         entity.setAnnouncementTime(new Date());
         int res = service.save(entity);
         logger.info(String.format("to save announcement ==> %s", entity));
-        logger.info("save announcement %d" + res);
+        logger.info("save announcement %d ==> " + res);
         if (res > 0) {
             return new RestResult.Builder(200).message("success").build();
         } else {

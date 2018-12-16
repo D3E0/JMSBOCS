@@ -27,7 +27,7 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 
     public static final String JMSBOCS_COOKIE = "jmsbocsauth";
     public final static String[] PATH = {
-            "/home", "/user", "/subject", "/course", "/api/*",
+            "/home", "/user", "/subject", "/course/*", "/api/*",
             "/job","/jobSubmitRecord","/jobList","/addJob","/deleteJob","/updateJob","/jobSubmitRecordNum","/jobItemSubmit","/countJob","getJobContent",
             "/qiniu","/uploadFiles","/getAllFiles","/deleteFile","/jobFileList","/downloadAll"
 

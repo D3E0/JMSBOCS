@@ -1,6 +1,7 @@
 package controller;
 
 import com.alibaba.fastjson.JSONObject;
+import dto.CourseDTO;
 import dto.UserInfo;
 import entity.UserEntity;
 import entity.UserType;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import service.CourseService;
 import service.UserServiceImpl;
 import util.RestResult;
 import util.UserSecurity;
@@ -32,12 +34,14 @@ public class HomeController {
 
     private final UserServiceImpl service;
     private final AuthRepository repository;
+    private final CourseService courseService;
 
 
     @Autowired
-    public HomeController(UserServiceImpl service, AuthRepository repository) {
+    public HomeController(UserServiceImpl service, AuthRepository repository, CourseService courseService) {
         this.service = service;
         this.repository = repository;
+        this.courseService = courseService;
     }
 
     /**
@@ -92,8 +96,13 @@ public class HomeController {
      */
     @RequestMapping("/course/{courseId}")
     public String course(@PathVariable Integer courseId, Model model) {
+        logger.info(courseId);
+        CourseDTO courseDTO = courseService.selectCourseDTO(courseId);
+        if (courseDTO == null) {
+            return "error";
+        }
         addUserInfo(model);
-        model.addAttribute(courseId);
+        model.addAttribute("courseId", courseId);
         return "course";
     }
 

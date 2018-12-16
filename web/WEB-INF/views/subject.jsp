@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
+    <script>
+        const user = JSON.parse('${user}');
+        const path = '${pageContext.request.contextPath}';
+    </script>
     <style>
         body {
             background-color: #fff;
@@ -33,13 +37,6 @@
         </el-main>
     </el-container>
 </div>
-<script>
-    const userInfo = {
-        uid: 1,
-        isTch: true,
-        path: '${pageContext.request.contextPath}',
-    };
-</script>
 
 <script type="text/javascript" src="<c:url value="/static/js/axios.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/vue.js"/>"></script>

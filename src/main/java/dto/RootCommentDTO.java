@@ -3,7 +3,7 @@ package dto;
 import java.util.List;
 
 /**
- * 数据传输对象
+ * 数据传输对象 二级评论
  */
 public class RootCommentDTO extends CommentDTO {
     private Integer courseId;
