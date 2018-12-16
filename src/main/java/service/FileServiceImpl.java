@@ -45,6 +45,7 @@ public class FileServiceImpl implements FileService {
 
     @Cacheable(cacheNames = "UploadToken", key = "#courseId")
     public String getUploadToken(int courseId) {
+        System.out.println("do------------");
         QiniuEntity qiniuEntity = qiniuMapper.getQiniuByCourseId(courseId);
         return QiniuUtil.getUploadToken(qiniuEntity);
     }

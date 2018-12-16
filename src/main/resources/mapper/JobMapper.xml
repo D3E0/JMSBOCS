@@ -20,7 +20,7 @@
           and job.course_id = course.course_id
           and (course_name like concat(concat('%', #{keyword}), '%') or
                job_title like concat(concat('%', #{keyword}), '%'))
-        order by isStarted ASC,isEnded ASC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
+        order by isEnded asc,isStarted desc, job_end_time asc, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
         limit #{cur} ,10;
     </select>
     <select id="countJobForStudent" parameterType="map" resultType="int">
@@ -48,7 +48,7 @@
           and job.course_id = course.course_id
           and (course_name like concat(concat('%', #{keyword}), '%') or
                job_title like concat(concat('%', #{keyword}), '%'))
-        order by isStarted ASC,isEnded ASC, job_end_time DESC, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
+        order by isEnded asc,isStarted desc, job_end_time asc, job_title + 0 ASC, course_name + 0 ASC,job_id ASC
         limit #{cur} ,10;
     </select>
     <select id="countJobForTeacher" parameterType="map" resultType="int">

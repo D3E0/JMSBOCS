@@ -91,7 +91,7 @@
                 taskList        : true,
             });
         });
-        layui.use(['laypage', 'layer'], function () {
+        layui.use(['layer'], function () {
             let layer=layui.layer;
             $("#delbtn").click(function () {
                 var jobId = $("#jobId").val();
@@ -109,11 +109,12 @@
                 let param="?jobId="+jobId+"&studentId="+1160299001;
                 console.info("fileList click");
                 layer.open({
+                    offset: '100px',
                     title: false,
                     area: ['700px', '500px'],
                     type: 2,
                     scrollbar: true,
-                    content: ['/jobFileList'+param, 'no']
+                    content: ['/jobFileList'+param]
                 });
             });
         });

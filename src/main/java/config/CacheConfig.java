@@ -5,15 +5,20 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.time.Duration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Configuration
 @EnableCaching
@@ -22,32 +27,42 @@ import java.util.Map;
 public class CacheConfig {
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
-        JedisConnectionFactory cf=new JedisConnectionFactory();
-        cf.afterPropertiesSet();
-        //默认配置如下localhost 和6379端口
-        cf.setHostName("127.0.0.1");
-        cf.setPort(6379);
-        return cf;
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("127.0.0.1", 6379);
+        return new JedisConnectionFactory(config);
     }
+
     @Bean
-    public RedisTemplate<String, Object>redisTemplate(RedisConnectionFactory connectionFactory){
-        RedisTemplate<String, Object> redis=new RedisTemplate<String, Object>();
-        redis.setConnectionFactory(connectionFactory);
-        redis.afterPropertiesSet();
-        return redis;
+    public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory){
+        RedisTemplate redisTemplate=new RedisTemplate();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        return redisTemplate;
     }
     @Bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory){
         return new StringRedisTemplate(connectionFactory);
     }
     @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate){
-        RedisCacheManager cacheManager=new RedisCacheManager(redisTemplate);
-        Map<String,Long> time = new HashMap<String,Long>();
-        time.put("UploadToken",3000L);
-        time.put("publicFileList",3000L);
-        time.put("allPublicFile",3000L);
-        cacheManager.setExpires(time);
-        return cacheManager;
+    public CacheManager cacheManager(RedisConnectionFactory factory){
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+        // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
+        config = config.entryTtl(Duration.ofMinutes(1))
+                // 设置缓存的默认过期时间，也是使用Duration设置
+                .disableCachingNullValues();
+        // 不缓存空值
+        // 设置一个初始化的缓存空间set集合
+        Set<String> cacheNames =  new HashSet<>();
+        cacheNames.add("UploadToken");
+        cacheNames.add("my-redis-cache2");
+        // 对每个缓存空间应用不同的配置
+        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
+        configMap.put("UploadToken", config.entryTtl(Duration.ofMinutes(55)));
+        configMap.put("my-redis-cache2", config.entryTtl(Duration.ofSeconds(120)));
+
+        return RedisCacheManager.builder(factory)
+                // 使用自定义的缓存配置初始化一个cacheManager
+                .initialCacheNames(cacheNames)
+                // 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
+                .withInitialCacheConfigurations(configMap)
+                .build();
     }
 }
