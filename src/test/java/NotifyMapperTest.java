@@ -25,7 +25,7 @@ public class NotifyMapperTest {
         entity.setNotifyContent("课程作业提交提醒");
         entity.setNotifyTime(new Date());
         entity.setNotifySender(1);
-        entity.setNotifyType(NotifyType.COMMENTREPLY);
+//        entity.setNotifyType(NotifyType.COMMENTREPLY);
         entity.setNotifyReceiver(2);
         entity.setFinished(true);
         int res = mapper.save(entity);
@@ -35,7 +35,7 @@ public class NotifyMapperTest {
     @Test
     public void select() {
         NotifyEntity entity = mapper.selectOne(2);
-        System.out.println(entity.getNotifyType().equals(NotifyType.COMMENTREPLY));
+//        System.out.println(entity.getNotifyType().equals(NotifyType.COMMENTREPLY));
         System.out.println(entity);
 
         List<NotifyEntity> entities = mapper.getUnfinished();

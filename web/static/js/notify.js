@@ -6,7 +6,7 @@ let notify = {
             multipleSelection: [],
             page: 1,
             count: 0,
-            limit: 2
+            limit: 10
         }
     },
     created() {
@@ -22,11 +22,12 @@ let notify = {
                     limit: this.limit
                 }
             }).then(response => {
-                this.loading = false;
                 this.list = response.data.data;
                 this.count = response.data.count;
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         openMsgBox() {
@@ -53,6 +54,7 @@ let notify = {
             this.openMsgBox();
         },
         doDelete() {
+            this.loading = true;
             let x = this.multipleSelection.map(x => x.id);
             console.info(x);
             axios.delete('/api/notify', {
@@ -70,6 +72,8 @@ let notify = {
             }).catch(ex => {
                 console.info(ex);
                 this.$message.error('删除失败');
+            }).finally(() => {
+                this.loading = false;
             })
         },
         onChange(cur) {

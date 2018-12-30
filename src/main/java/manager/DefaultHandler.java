@@ -8,19 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DeafultHandler implements NotifyHandler {
+public class DefaultHandler implements NotifyHandler {
 
     private final UserNotifyMapper mapper;
 
     @Autowired
-    public DeafultHandler(UserNotifyMapper mapper) {
+    public DefaultHandler(UserNotifyMapper mapper) {
         this.mapper = mapper;
     }
 
+    @Override
     public boolean doHandler(NotifyEntity entity) {
         boolean res = false;
         NotifyType type = entity.getNotifyType();
-        if (type == NotifyType.COMMENTREPLY || type == NotifyType.COMMENTUPVOTE || type == NotifyType.COURSEADD) {
+        if (type.equals(NotifyType.PEERTOPEER)) {
             UserNotifyEntity x = new UserNotifyEntity(entity.getNotifyId(), entity.getNotifyReceiver());
             res = mapper.save(x) > 0;
         }

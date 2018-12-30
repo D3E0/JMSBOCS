@@ -23,6 +23,7 @@ var SubjectManage = {
     },
     data() {
         return {
+            dialogImgVisible: false,
             loading: true,
             dialogTableVisible: false,
             multipleSelection: [],
@@ -178,12 +179,20 @@ var SubjectManage = {
                            :on-exceed="handleExceed"
                            :disabled="subject.id === ''"
                            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-                    <el-button size="small" type="primary" :disabled="subject.id === ''">
+                    <el-button size="small" type="primary" slot="trigger" 
+                    :disabled="subject.id === ''">
                         批量导入学生
+                    </el-button>
+                      <el-button type="primary" icon="el-icon-question" size="small"
+                               style="padding: 9px 5px; margin-left: -7px;border-left-color: hsla(0,0%,100%,.5);"
+                               :disabled="subject.id === ''" @click="dialogImgVisible=true">
                     </el-button>
                 </el-upload>
             </el-col>
         </el-row>
+          <el-dialog title="学生名单参考格式" :visible.sync="dialogImgVisible">
+            <img src="/static/img/help.png" alt="学生名单参考格式">
+        </el-dialog>
         <div style="margin-left: 60px">
             <el-button size="small" @click="onMultiDelete"
                        :disabled="multipleSelection.length === 0">

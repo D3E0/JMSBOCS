@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class CourseAnnouncementDTO {
 
-
     private Integer announcementId;
 
     private Integer courseId;

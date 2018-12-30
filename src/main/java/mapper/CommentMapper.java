@@ -1,11 +1,8 @@
 package mapper;
 
-import dto.CommentDTO;
 import dto.ReplyCommentDTO;
 import dto.RootCommentDTO;
 import entity.CommentEntity;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import service.BaseService;
 
@@ -13,17 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CommentMapper extends BaseService<CommentEntity> {
-    List<CommentEntity> getComments();
-
-    CommentEntity getComment(int id);
-
-    List<CommentDTO> getCommentsDetail();
-
-    CommentDTO getCommentDetail(int cid);
-
-    void updateCommentRoot(@Param("cid") int cid, @Param("pid") int pid);
-
-    int saveComment(CommentEntity entity);
 
     /**
      * 根据课程查询讨论列表
@@ -48,5 +34,13 @@ public interface CommentMapper extends BaseService<CommentEntity> {
      * @return
      */
     Long getCount(int courseId);
+
+    /**
+     * 查询二级评论
+     *
+     * @param id
+     * @return
+     */
+    ReplyCommentDTO selectReplyComment(int id);
 
 }

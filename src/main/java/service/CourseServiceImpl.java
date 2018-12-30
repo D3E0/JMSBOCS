@@ -97,12 +97,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Map<String, Integer> saveUserCourseList(Set<UserSDTO> set, int courseId) {
-        Map<String, Integer> result = new HashMap<String, Integer>(3);
+        Map<String, Integer> result = new HashMap<>(3);
         int res = userService.saveStuSet(set);
         result.put("saveUser", res);
         res = deleteUserCourseList(set, courseId);
         result.put("deleteStu", res);
-        List<StudentCourseEntity> entityList = new ArrayList<StudentCourseEntity>();
+        List<StudentCourseEntity> entityList = new ArrayList<>();
         for (UserSDTO userSDTO : set) {
             entityList.add(new StudentCourseEntity(userSDTO.getUserId(), courseId));
         }
@@ -122,7 +122,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "filePrefix",allEntries = true)
+    @CacheEvict(cacheNames = "filePrefix", allEntries = true)
     public int deleteUserCourseList(Set<UserSDTO> set, int courseId) {
         Set<UserSDTO> existStudents = selectUserSet(courseId);
         logger.info(String.format("exist %d students under course %d ==> %s",

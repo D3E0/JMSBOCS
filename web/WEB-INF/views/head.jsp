@@ -35,7 +35,8 @@
         </li>
         <li class="layui-nav-item  layout-right">
             <a href="javascript:">
-                <i class="fa fa-user fa-fw"></i>用户
+                <i class="fa fa-user fa-fw"></i>
+                <c:out value="${user.name}" default="用户"/>
                 <i class="layui-icon layui-icon-triangle-d"></i>
             </a>
             <dl class="layui-nav-child">

@@ -5,13 +5,15 @@ import qiniu from "./qiniu.js";
 import changePwd from "./changePwd.js";
 import notify from "./notify.js";
 
-console.info(userInfo);
+console.info(user);
+console.info(path);
+
 //设置默认指向的路径
 let dfltPath = {
     path: '/',
     redirect: '/stuProfile',
 };
-if (userInfo.isTch) {
+if (user.isTch) {
     dfltPath.redirect = '/tchProfile'
 }
 const router = new VueRouter({
@@ -36,7 +38,14 @@ const router = new VueRouter({
 new Vue({
     el: '#app',
     router,
-    data: userInfo,
+    data() {
+        return {
+            uid: user.uid,
+            isTch: user.isTch,
+            name: user.name,
+            path: path
+        }
+    },
     components: {
         userSide,
     }

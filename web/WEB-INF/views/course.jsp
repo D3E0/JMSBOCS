@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="<c:url value="/static/elementui/theme-chalk/index.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/css/course.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/css/valine.css"/>">
+    <script>
+        const user = JSON.parse('${user}');
+        const path = '${pageContext.request.contextPath}';
+        const courseId = '${courseId}';
+    </script>
     <style>
         body {
             background-color: #fff;

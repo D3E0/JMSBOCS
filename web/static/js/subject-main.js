@@ -3,7 +3,8 @@ import SubjectList from "./subjectList.js";
 import SubjectManage from "./subjectManage.js";
 import SubjectSide from "./subjectSide.js";
 
-console.info(userInfo);
+console.info(user);
+console.info(path);
 
 const router = new VueRouter({
     routes: [{
@@ -24,7 +25,14 @@ const router = new VueRouter({
 new Vue({
     el: '#app',
     router,
-    data: userInfo,
+    data() {
+        return {
+            uid: user.uid,
+            isTch: user.isTch,
+            name: user.name,
+            path: path
+        }
+    },
     components: {
         SubjectSide,
     }

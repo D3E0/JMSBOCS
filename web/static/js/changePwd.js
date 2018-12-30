@@ -17,6 +17,7 @@ var changePwd = {
             }
         };
         return {
+            loading: false,
             pwd: {
                 oldPwd: "",
                 newPwd: "",
@@ -44,6 +45,7 @@ var changePwd = {
                     params.append('oldPass', this.pwd.oldPwd);
                     params.append('newPass', this.pwd.newPwd);
                     params.append('checkPass', this.pwd.checkPwd);
+                    this.loading = true;
                     axios.post('/api/user/pwd', params).then(response => {
                         if (response.data.message === 'success') {
                             this.$message({
@@ -56,6 +58,8 @@ var changePwd = {
                         this.resetForm('pwdForm');
                     }).catch(error => {
                         this.$message.error(error);
+                    }).finally(() => {
+                        this.loading = false;
                     });
                 } else {
                     return false;
@@ -68,7 +72,7 @@ var changePwd = {
     },
     template: `
     <el-form ref="pwdForm" :model="pwd" status-icon :rules="pwdRules"
-             label-width="90px" style="width: 500px">
+             label-width="90px" style="width: 500px" v-loading="loading">
         <el-form-item label="原密码" prop="oldPwd">
             <el-input v-model="pwd.oldPwd" type="password"></el-input>
         </el-form-item>

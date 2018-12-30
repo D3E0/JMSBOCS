@@ -8,6 +8,8 @@ public class NotifyEntity {
 
     private String notifyContent;
 
+    private String notifyTitle;
+
     private Date notifyTime;
 
     private Boolean isFinished = false;
@@ -17,6 +19,14 @@ public class NotifyEntity {
     private Integer notifySender;
 
     private Integer notifyReceiver;
+
+    public String getNotifyTitle() {
+        return notifyTitle;
+    }
+
+    public void setNotifyTitle(String notifyTitle) {
+        this.notifyTitle = notifyTitle;
+    }
 
     public Integer getNotifyId() {
         return notifyId;
@@ -78,9 +88,7 @@ public class NotifyEntity {
     public String toString() {
         return "NotifyEntity{" +
                 "notifyId=" + notifyId +
-                ", notifyContent='" + notifyContent + '\'' +
-                ", notifyTime=" + notifyTime +
-                ", isFinished=" + isFinished +
+                ", notifyTitle='" + notifyTitle + '\'' +
                 ", notifyType=" + notifyType +
                 ", notifySender=" + notifySender +
                 ", notifyReceiver=" + notifyReceiver +
@@ -90,11 +98,11 @@ public class NotifyEntity {
     public NotifyEntity() {
     }
 
-    public NotifyEntity(String notifyContent, NotifyType notifyType, Integer notifySender, Integer notifyReceiver) {
-        this.notifyContent = notifyContent;
+    public NotifyEntity(String content, String title, NotifyType notifyType, Date time, Integer receiver) {
+        this.notifyTitle = title;
+        this.notifyContent = content;
         this.notifyType = notifyType;
-        this.notifySender = notifySender;
-        this.notifyReceiver = notifyReceiver;
-        this.notifyTime = new Date();
+        this.notifyTime = time;
+        this.notifyReceiver = receiver;
     }
 }

@@ -4,13 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.UserNotifyMapper">
 
-    <select id="selectUnread" resultType="entity.UserNotifyEntity">
-        select *
-        from user_notify
-        where user_id = #{id}
-          and is_read = 0
-    </select>
-
     <select id="selectOne" resultType="entity.UserNotifyEntity">
         SELECT *
         FROM user_notify
@@ -33,7 +26,7 @@
         set user_id   = #{userId},
             notify_id = #{notifyId},
             is_read   = #{isRead}
-        where user_notify_id = #{is}
+        where user_notify_id = #{id}
     </update>
 
     <delete id="delete">
@@ -42,11 +35,12 @@
         where user_notify_id = #{id}
     </delete>
 
-    <select id="select" resultMap="notifyDTO">
+    <select id="select" resultType="dto.NotifyDTO">
         select user_notify_id as id,
                user_id        as userId,
                n.notify_id    as notifyId,
                notify_content as content,
+               notify_title   as title,
                notify_time    as time,
                notify_type    as type,
                un.is_read     as isRead
@@ -54,13 +48,15 @@
              user_notify un
         where un.user_id = #{id}
           and n.notify_id = un.notify_id
+        order by user_notify_id desc
     </select>
 
-    <select id="selectLimit" resultMap="notifyDTO">
+    <select id="selectLimit" resultType="dto.NotifyDTO">
         select user_notify_id as id,
                user_id        as userId,
                n.notify_id    as notifyId,
                notify_content as content,
+               notify_title   as title,
                notify_time    as time,
                notify_type    as type,
                un.is_read     as isRead
@@ -68,6 +64,7 @@
              user_notify un
         where un.user_id = #{id}
           and n.notify_id = un.notify_id
+        order by user_notify_id desc
         limit #{start}, #{offset}
     </select>
 
@@ -79,14 +76,12 @@
           and n.notify_id = un.notify_id
     </select>
 
-    <resultMap id="notifyDTO" type="dto.NotifyDTO">
-        <id column="id" property="id"/>
-        <result column="userId" property="userId"/>
-        <result column="notifyId" property="notifyId"/>
-        <result column="content" property="content"/>
-        <result column="time" property="time"/>
-        <result column="type" property="type"/>
-        <result column="isRead" property="isRead"/>
-    </resultMap>
+    <insert id="saveList">
+        insert into user_notify (notify_id, user_id, is_read)
+        values
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.notifyId},#{item.userId}, #{item.isRead} )
+        </foreach>
+    </insert>
 
 </mapper>

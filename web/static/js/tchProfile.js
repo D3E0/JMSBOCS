@@ -24,10 +24,11 @@ var tchProfile = {
                     id: this.$root.uid,
                 }
             }).then(response => {
-                this.loading = false;
                 this.tch = response.data.data;
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         onSubmit() {
@@ -48,8 +49,8 @@ var tchProfile = {
             params.append('phone', this.tch.telephone);
             params.append('email', this.tch.email);
             params.append('office', this.tch.office);
+            this.loading = true;
             axios.post('/api/user/tch', params).then(response => {
-                this.loading = false;
                 if (response.data.message === 'success') {
                     this.$message({
                         message: '修改成功',
@@ -61,6 +62,8 @@ var tchProfile = {
                 }
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         resetForm() {

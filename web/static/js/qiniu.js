@@ -1,6 +1,7 @@
 var qiniu = {
     data() {
         return {
+            loading: false,
             milk: {
                 ak: "",
                 sk: "",
@@ -19,6 +20,7 @@ var qiniu = {
             params.append('accessKey', this.milk.ak);
             params.append('secretKey', this.milk.sk);
             params.append('bucket', this.milk.bucket);
+            this.loading = true;
             axios.post('/api/qiniu', params).then(response => {
                 if (response.data.message === 'success') {
                     this.$message({
@@ -30,6 +32,8 @@ var qiniu = {
                 }
             }).catch(error => {
                 this.$message.error(error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         resetForm(formName) {

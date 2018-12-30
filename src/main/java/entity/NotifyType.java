@@ -2,23 +2,16 @@ package entity;
 
 public enum NotifyType {
     /**
-     *
+     * 点对点
      */
-    COURSEADD,
+    PEERTOPEER(0),
     /**
-     *
+     * 课程范围 Pub/Sub 发布订阅模型
      */
-    JOBSUBMMIT,
-    /**
-     *
-     */
-    JOBPUBLISH,
-    /**
-     *
-     */
-    COMMENTREPLY,
-    /**
-     *
-     */
-    COMMENTUPVOTE
+    COURSEWIDE(1);
+    private int code;
+
+    NotifyType(int code) {
+        this.code = code;
+    }
 }

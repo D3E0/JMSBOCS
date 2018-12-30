@@ -48,7 +48,6 @@ public class UserNotifyEntity {
                 "userNotifyId=" + userNotifyId +
                 ", notifyId=" + notifyId +
                 ", userId=" + userId +
-                ", isRead=" + isRead +
                 '}';
     }
 

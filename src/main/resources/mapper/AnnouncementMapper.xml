@@ -81,4 +81,20 @@
         order by announcementId desc
     </select>
 
+    <select id="selectCourseAnnouncementDTO" resultType="dto.CourseAnnouncementDTO">
+        select a.course_id          as courseId,
+               announcement_id      as announcementId,
+               announcement_time    as announcementTime,
+               announcement_content as announcementContent,
+               announcement_title   as announcementTitle,
+               c.course_name        as courseName,
+               u.username           as teacherName
+        from announcement a,
+             course c,
+             user u
+        where a.announcement_id = #{id}
+          and c.course_id = a.course_id
+          and u.user_id = c.teacher_id
+    </select>
+
 </mapper>
