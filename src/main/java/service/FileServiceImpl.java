@@ -12,10 +12,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import util.QiniuUtil;
 import vo.FileVO;
 import vo.FileVOs;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -127,5 +130,16 @@ public class FileServiceImpl implements FileService {
     @Override
     public String getPublicUrl(String remoteSrcUrl, String key) {
         return QiniuUtil.getPublicUrl(remoteSrcUrl, key);
+    }
+
+    @Override
+    public int uploadMDimages(String key, MultipartFile file) throws IOException {
+        QiniuEntity qiniuEntity=qiniuMapper.selectOne(1);
+        return QiniuUtil.uploadMDimages(qiniuEntity,key,file);
+    }
+
+    public String queryMDimagesDomain() {
+        QiniuEntity qiniuEntity = qiniuMapper.selectOne(1);
+        return QiniuUtil.queryMDimagesDomain(qiniuEntity);
     }
 }

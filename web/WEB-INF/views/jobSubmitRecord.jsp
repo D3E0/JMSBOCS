@@ -22,7 +22,7 @@
 <div class="panel">
     <div class="panel-title">作业提交记录</div>
     <div class="op">
-        <button id="downloadAll" class="layui-btn">点击下载所有文件</button>
+        <%--<button id="downloadAll" class="layui-btn">点击下载所有文件</button>--%>
         <span class="jobInfo">提交情况：${already}/${need}</span>
         <div class="searchdiv">
             <input type="text" id="search" placeholder="keyword">
@@ -38,19 +38,13 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-sm detailbtn" lay-event="detail">查看提交文件</a>
 </script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button id="downloadAll" class="layui-btn" lay-event="downloadAll">点击下载所有文件</button>
+    </div>
+</script>
 <script>
     let jobId = $("#jobId").val();
-    function urlToPromise(url) {
-        return new Promise(function (resolve, reject) {
-            JSZipUtils.getBinaryContent(url, function (err, data) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
-    }
     layui.use(['table', 'layer', 'element'], function () {
         let table = layui.table, layer = layui.layer,element = layui.element;
         $("#downloadAll").click(function () {
@@ -64,11 +58,11 @@
         });
         let tableIns = table.render({
             elem: '#demo'
-            , height: 480
+            , height: 570
             , url: '/jobSubmitRecord' //数据接口
             , page: true //开启分页
             , method: "post"
-            , toolbar: ''
+            ,toolbar: '#toolbarDemo'
             , where: {
                 jobId: jobId, keyword: function () {
                     return $("#search").val()
@@ -107,6 +101,16 @@
                     content: ['/jobFileList' + param, 'no']
                 });
             }
+        });
+        table.on('toolbar(record)', function (obj) {
+            console.info('table.on');
+            layer.open({
+                title: '任务下载中',
+                area: ['600px', '200px'],
+                type: 2,
+                scrollbar: true,
+                content: ['/downloadAll?jobId='+jobId, 'no']
+            });
         });
         let lastTime;
         $("#search").keyup(function (event) {

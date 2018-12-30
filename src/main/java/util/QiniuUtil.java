@@ -1,11 +1,14 @@
 package util;
 
+import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FetchRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
@@ -13,8 +16,11 @@ import com.qiniu.util.StringMap;
 import entity.QiniuEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 import vo.FileVO;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -46,6 +52,11 @@ public class QiniuUtil {
             e.printStackTrace();
         }
         return "http://" + domain;
+    }
+
+    public static String queryMDimagesDomain(QiniuEntity qiniuEntity) {
+        qiniuEntity.setBucket("mdimages");
+        return queryDomain(qiniuEntity);
     }
 
     public static int deleteFile(QiniuEntity qiniuEntity, String key) {
@@ -134,8 +145,9 @@ public class QiniuUtil {
         }
         return finalUrl;
     }
-    public static int fileRename(QiniuEntity qiniuEntity,String fromKey,String toKey){
-        int ans=1;
+
+    public static int fileRename(QiniuEntity qiniuEntity, String fromKey, String toKey) {
+        int ans = 1;
         Configuration cfg = new Configuration(Zone.zone0());
         Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
         BucketManager bucketManager = new BucketManager(auth, cfg);
@@ -145,18 +157,35 @@ public class QiniuUtil {
             //如果遇到异常，说明移动失败
             System.err.println(ex.code());
             System.err.println(ex.response.toString());
-            ans=0;
+            ans = 0;
         }
         return ans;
     }
-    public static int deleteFileList(QiniuEntity qiniuEntity, String prefix){
-        List<FileVO> fileVOS=getFileList(qiniuEntity,prefix);
-        int ans=1;
-        for (FileVO fileVO:fileVOS) {
-            if(deleteFile(qiniuEntity,fileVO.getFileName())==0){
-                ans=0;
+
+    public static int deleteFileList(QiniuEntity qiniuEntity, String prefix) {
+        List<FileVO> fileVOS = getFileList(qiniuEntity, prefix);
+        int ans = 1;
+        for (FileVO fileVO : fileVOS) {
+            if (deleteFile(qiniuEntity, fileVO.getFileName()) == 0) {
+                ans = 0;
             }
         }
+        return ans;
+    }
+
+    public static int uploadMDimages(QiniuEntity qiniuEntity, String key, MultipartFile file) throws IOException {
+        int ans = 0;
+        Configuration cfg = new Configuration(Zone.zone0());
+        UploadManager uploadManager = new UploadManager(cfg);
+        String bucket = "mdimages";
+        Auth auth = Auth.create(qiniuEntity.getAk(), qiniuEntity.getSk());
+        String upToken = auth.uploadToken(bucket);
+        Response response = uploadManager.put(file.getBytes(), key, upToken);
+        //解析上传成功的结果
+        DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+        System.out.println(putRet.key);
+        ans = 1;
+        System.out.println(putRet.hash);
         return ans;
     }
 }

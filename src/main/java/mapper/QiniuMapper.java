@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
  * @descripition
  */
 @Component
-public interface QiniuMapper extends BaseMapper<JobEntity>{
+public interface QiniuMapper extends BaseMapper<QiniuEntity>{
     QiniuEntity getQiniuByCourseId(int courseId);
 }

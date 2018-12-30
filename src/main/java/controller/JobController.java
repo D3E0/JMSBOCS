@@ -68,9 +68,11 @@ public class JobController {
 
     @RequestMapping(value = "job",method = RequestMethod.GET)
     public String job(Model model, int jobId, HttpSession session) {
+        int userId= UserSecurity.getId();
         logger.info(jobService.findJobById(jobId).toString());
         model.addAttribute("job", jobService.findJobById(jobId));
         model.addAttribute("jobId", jobId);
+        model.addAttribute("userId", userId);
         model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePrefix());
         return "job";
     }

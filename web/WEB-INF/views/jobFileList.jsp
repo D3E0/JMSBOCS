@@ -20,6 +20,7 @@
 <div>
     <input id="jobId" hidden value="${jobId}">
     <input id="courseId" hidden value="${courseId}">
+    <input id="studentId" hidden value="${studentId}">
     <div class="content">
         <div class="nothing layui-col-md-offset4 layui-col-md4">
             <div>
@@ -45,10 +46,11 @@
         var length=0;
         let courseId = $("#courseId").val();
         let jobId = $("#jobId").val();
+        let studentId= $("#studentId").val();
         $.post('/uploadFiles', {
             jobId: jobId,
             courseId: courseId,
-            studentId: 1160299001
+            studentId: studentId
         }, function (data) {
             if (data.length === 0) {
                 $('.nothing').show();

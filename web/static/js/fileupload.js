@@ -4,6 +4,7 @@ layui.use('upload', function () {
         , upload = layui.upload;
     let courseId = $("#courseId").val();
     let jobId=$('#jobId').val();
+    let userId=$('#userId').val();
     test = "test";
     $.post('/qiniu', {
             courseId: courseId
@@ -62,7 +63,7 @@ layui.use('upload', function () {
                         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
                         tds.eq(3).html(''); //清空操作
                         console.info(this.files[index].name);
-                        $.post('/jobItemSubmit', {jobId: jobId, fileName:this.files[index].name, userId: 2},function (data) {});
+                        $.post('/jobItemSubmit', {jobId: jobId, fileName:this.files[index].name, userId: userId},function (data) {});
                         return delete this.files[index]; //删除文件队列已经上传成功的文件
                     }
                     this.error(index, upload);

@@ -1,5 +1,8 @@
 package controller;
 
+import com.alibaba.fastjson.JSONObject;
+import entity.QiniuEntity;
+import org.apache.logging.log4j.core.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,11 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import service.FileService;
 import service.JobService;
 import vo.FileVO;
 import vo.FileVOs;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -64,6 +72,7 @@ public class FileController {
         int courseId=jobService.findJobById(jobId).getCourseId();
         model.addAttribute("jobId",jobId);
         model.addAttribute("courseId",courseId);
+        model.addAttribute("studentId",studentId);
         model.addAttribute("jobFileList",fileService.getFileList(courseId,jobId,studentId));
         return "jobFileList";
     }
@@ -78,5 +87,26 @@ public class FileController {
     @RequestMapping(value = "getPublicUrl")
     public String getPublicUrl(String remoteSrcUrl, String key){
         return "https://view.officeapps.live.com/op/view.aspx?src="+fileService.getPublicUrl(remoteSrcUrl,key);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/uploadMdimage", method = RequestMethod.POST)
+    public JSONObject hello(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = "editormd-image-file", required = false) MultipartFile attach) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            request.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "text/html");
+            Long time=Calendar.getInstance().getTimeInMillis();
+            fileService.uploadMDimages(time+attach.getOriginalFilename(),attach);
+            String url=fileService.queryMDimagesDomain();
+            jsonObject.put("success", 1);
+            jsonObject.put("message", "上传成功");
+            jsonObject.put("url", url+"/" + time+attach.getOriginalFilename());
+        } catch (Exception e) {
+            jsonObject.put("success", 0);
+            jsonObject.put("message", "上传失败");
+        }
+
+        return jsonObject;
     }
 }

@@ -34,8 +34,8 @@ public class JobSubmitServiceImpl implements JobSubmitService{
         return jobSubmitItemMapper.countJobSubmitRecordNum(jobId);
     }
     @Caching(evict = {
-            @CacheEvict(cacheNames = "fileList", key = "#+'j'+jobId+'u'+userId")
-            , @CacheEvict(cacheNames = "allFile", key = "#jobId")
+            @CacheEvict(cacheNames = "fileList", key = "'j'+#jobId+'u'+#userId"),
+            @CacheEvict(cacheNames = "allFile", key = "#jobId")
     })
     public void jobItemSubmit(int jobId, int userId, String fileName) {
         if (jobSubmitItemMapper.isSameFile(jobId,fileName,userId)==0) {

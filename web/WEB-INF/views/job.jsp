@@ -35,6 +35,7 @@
         <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
         <input id="jobId" hidden value="<c:out value="${jobId}"/>">
+        <input id="userId" hidden value="<c:out value="${userId}"/>">
         <p class="title">作业描述</p>
         <div id="content" class="content">
         </div>

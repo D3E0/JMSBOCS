@@ -2,9 +2,12 @@ package service;
 
 import dto.JobFilePrefix;
 import entity.QiniuEntity;
+import org.springframework.web.multipart.MultipartFile;
 import vo.FileVO;
 import vo.FileVOs;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,4 +37,6 @@ public interface FileService {
     int deleteResource(int courseId, String path);
 
     String getPublicUrl(String remoteSrcUrl, String key);
+    int  uploadMDimages(String key, MultipartFile file) throws IOException;
+    String queryMDimagesDomain();
 }

@@ -13,7 +13,7 @@
           and user.qiniu_id = qiniu.qiniu_id;
     </select>
 
-    <select id="selectOne">
+    <select id="selectOne" resultType="entity.QiniuEntity">
         select *
         from qiniu
         where qiniu_id = #{id}
@@ -25,7 +25,7 @@
         where qiniu_id = #{id};
     </delete>
 
-    <update id="update">
+    <update id="update" >
         update qiniu
         set bucket = #{bucket},
             ak     = #{ak},
@@ -33,7 +33,7 @@
         where qiniu_id = #{qiniuId};
     </update>
 
-    <select id="selectAll">
+    <select id="selectAll" resultType="entity.QiniuEntity">
         select *
         from qiniu
     </select>
