@@ -29,8 +29,10 @@
 <div class="panel layui-row layui-col-space10">
     <div class="job-content layui-col-md10">
         <div class="panel-title"><c:out value="${job.jobTitle}"/>
+            <c:if test="${!student}">
             <button id="delbtn" class="layui-btn redColor" style="float: right;margin-right: 1%">删除</button>
             <button id="updatebtn" class="layui-btn layui-bg-orange" style="float: right;margin-right: 1%">修改</button>
+            </c:if>
         </div>
         <input id="filePrefix" hidden value="<c:out value="${filePrefix}"/>">
         <input id="courseId" hidden value="<c:out value="${job.courseId}"/>">
@@ -83,15 +85,8 @@
     </div>
     <script>
         let courseId=$("#courseId").val();
+        let userId=$("#userId").val();
         let jobId=$("#jobId").val();
-        $.post('/getJobContent',{jobId},function (data) {
-            testEditor = editormd.markdownToHTML("content", {
-                markdown:data,
-                htmlDecode      : "style,script,iframe",  // you can filter tags decode
-                emoji           : true,
-                taskList        : true,
-            });
-        });
         layui.use(['layer'], function () {
             let layer=layui.layer;
             $("#delbtn").click(function () {
@@ -106,20 +101,9 @@
                 let param = "?jobId=${job.jobId}&jobTitle=${job.jobTitle}&jobBeginTime=${job.jobBeginTime}&jobEndTime=${job.jobEndTime}";
                 window.location.href="/updateJob"+param;
             });
-            $('#fileList').click(function () {
-                let param="?jobId="+jobId+"&studentId="+1160299001;
-                console.info("fileList click");
-                layer.open({
-                    offset: '100px',
-                    title: false,
-                    area: ['700px', '500px'],
-                    type: 2,
-                    scrollbar: true,
-                    content: ['/jobFileList'+param]
-                });
-            });
         });
     </script>
+    <script src="<c:url value="/static/js/job.js"/>"></script>
     <script src="<c:url value="/static/js/fileupload.js"/>"></script>
 </div>
 </body>

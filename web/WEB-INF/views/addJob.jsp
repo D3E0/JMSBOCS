@@ -135,5 +135,7 @@
         });
     });
 </script>
+<script src="<c:url value="/static/js/addJob.js"/>">
+</script>
 </body>
 </html>

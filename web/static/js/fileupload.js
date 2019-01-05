@@ -36,7 +36,7 @@ layui.use('upload', function () {
                             , '<button class="layui-btn layui-btn-sm delbtn demo-delete">删除</button>'
                             , '</td>'
                             , '</tr>'].join(''));
-                        test = $('#filePrefix').val()+'/1160299001/' + file.name;
+                        test = $('#filePrefix').val()+'/'+userId+'/' + file.name;
                         // layui.$.post('/jobItemSubmit', {jobId: jobId, fileName: file.name, userId: 2},function (data) {});
                         //单个重传
                         tr.find('.demo-reload').on('click', function () {

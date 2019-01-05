@@ -5,7 +5,9 @@ function close(){
 }
 layui.use(['laypage', 'element', 'layer'], function () {
     var laypage = layui.laypage, $ = layui.$,layer=layui.layer;
-
+    $(".additem").click(function () {
+        window.location.href="/addJob"
+    });
     function laypageReload() {
         var count = 0;
         $.post("/countJob",

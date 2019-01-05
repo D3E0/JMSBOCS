@@ -2,6 +2,8 @@ package controller;
 
 import dto.JobItemDTO;
 import entity.JobEntity;
+import entity.UserEntity;
+import entity.UserType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import service.CourseService;
 import service.FileService;
 import service.JobService;
+import service.UserService;
 import util.UserSecurity;
 import vo.AddJobVO;
 import vo.UpdateJobVO;
@@ -34,6 +37,12 @@ public class JobController {
     private JobService jobService;
     private FileService fileService;
     private CourseService courseService;
+    private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Autowired
     public void setCourseService(CourseService courseService) {
         this.courseService = courseService;
@@ -55,7 +64,13 @@ public class JobController {
     }
 
     @RequestMapping(value = "jobList", method = RequestMethod.GET)
-    public String jobList() {
+    public String jobList(Model model) {
+        int userId= UserSecurity.getId();
+        UserEntity userEntity=userService.selectOne(userId);
+        logger.debug(userId);
+        if(userEntity.getType()== UserType.STUDENT){
+            model.addAttribute("student",true);
+        }
         return "jobList";
     }
 
@@ -73,11 +88,15 @@ public class JobController {
         model.addAttribute("job", jobService.findJobById(jobId));
         model.addAttribute("jobId", jobId);
         model.addAttribute("userId", userId);
+        UserEntity userEntity=userService.selectOne(userId);
+        if(userEntity.getType()== UserType.STUDENT){
+            model.addAttribute("student",true);
+        }
         model.addAttribute("filePrefix",fileService.findFilePrefixByJobId(jobId).getFilePrefix());
         return "job";
     }
     @ResponseBody
-    @RequestMapping(value = "getJobContent",method = RequestMethod.POST)
+    @RequestMapping(value = "getJobContent",method = RequestMethod.POST,produces = {"text/html;charset=UTF-8"})
     public String job(int jobId) {
         return jobService.findJobById(jobId).getJobContent();
     }
