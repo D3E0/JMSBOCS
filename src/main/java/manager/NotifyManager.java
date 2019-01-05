@@ -32,6 +32,12 @@ public class NotifyManager {
         handlerMap = new ConcurrentHashMap<>();
     }
 
+    /**
+     * 注册 NotifyHandler
+     *
+     * @param handler
+     * @param type
+     */
     public void registerHandler(NotifyHandler handler, NotifyType type) {
         boolean res = false;
         if (status == 0) {
@@ -41,6 +47,9 @@ public class NotifyManager {
         logger.info(String.format("Associates %s with %s %s", handler.getClass().getSimpleName(), type, res));
     }
 
+    /**
+     * 初始化阻塞队列，添加未完成的任务到队列
+     */
     private void init() {
         consumer = new NotifyConsumer();
         List<NotifyEntity> list = mapper.getUnfinished();
@@ -48,6 +57,9 @@ public class NotifyManager {
         notifyQueue.addAll(mapper.getUnfinished());
     }
 
+    /**
+     * 容器启动时，开启消费者线程
+     */
     @PostConstruct
     public synchronized void start() {
         if (status != 0) {
@@ -59,6 +71,9 @@ public class NotifyManager {
         consumer.start();
     }
 
+    /**
+     * 容器关闭时，中断消费者线程
+     */
     @PreDestroy
     public synchronized void stop() {
         consumer.interrupt();
@@ -89,6 +104,7 @@ public class NotifyManager {
                 try {
                     entity = notifyQueue.take();
                 } catch (InterruptedException e) {
+                    // 响应中断请求
                     logger.info("Thread consumer interrupt");
                     break;
                 }

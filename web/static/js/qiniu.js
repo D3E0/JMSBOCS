@@ -41,7 +41,8 @@ var qiniu = {
         }
     },
     template: `
-    <el-form ref="qiniuForm" :model="milk" label-width="90px" style="width: 500px">
+    <el-form ref="qiniuForm" :model="milk" label-width="90px" style="width: 500px"
+     v-loading="loading" >
         <el-form-item label="Access Key" prop="ak">
             <el-input v-model="milk.ak" type="text"></el-input>
         </el-form-item>

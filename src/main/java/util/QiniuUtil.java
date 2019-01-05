@@ -43,11 +43,14 @@ public class QiniuUtil {
         StringMap parameter = auth.authorization(url);
         System.out.println(parameter.get("Authorization"));
         System.out.println(url);
-        String domain = null;
+        String domain = "";
         try {
             r = httpManager.get(url, parameter);
             String temp = r.bodyString();
-            domain = temp.substring(2, temp.length() - 2);
+            logger.info("response"+temp);
+            if(temp.length()>4) {
+                domain = temp.substring(2, temp.length() - 2);
+            }
         } catch (QiniuException e) {
             e.printStackTrace();
         }

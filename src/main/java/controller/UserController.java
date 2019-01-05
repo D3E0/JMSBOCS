@@ -1,6 +1,7 @@
 package controller;
 
 import dto.UserDTO;
+import entity.QiniuEntity;
 import entity.UserEntity;
 import entity.UserType;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import service.QiniuService;
 import service.UserServiceImpl;
+import util.QiniuUtil;
 import util.RestResult;
 
 /**
@@ -23,10 +26,12 @@ public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);
 
     private final UserServiceImpl service;
+    private final QiniuService qiniuService;
 
     @Autowired
-    public UserController(UserServiceImpl service) {
+    public UserController(UserServiceImpl service, QiniuService qiniuService) {
         this.service = service;
+        this.qiniuService = qiniuService;
     }
 
     /**
@@ -141,6 +146,17 @@ public class UserController {
                                    @RequestParam String secretKey,
                                    @RequestParam String bucket) {
         logger.info(String.format("update bucket %d %s %s %s", id, accessKey, secretKey, bucket));
-        return new RestResult.Builder(200).message("success").build();
+        QiniuEntity qiniuEntity = new QiniuEntity(secretKey, accessKey, bucket);
+        String domain = QiniuUtil.queryDomain(qiniuEntity);
+        logger.info(domain);
+        if (!"http://".equals(domain)) {
+            int qiniu = qiniuService.save(qiniuEntity);
+            logger.info(String.format("save %s ==> %d", qiniuEntity, qiniu));
+            if (qiniu > 0) {
+                int res = service.updateQiniu(id, qiniu);
+                return new RestResult.Builder(200).message(res == 1 ? "success" : "fail").build();
+            }
+        }
+        return new RestResult.Builder(200).message("fail").build();
     }
 }

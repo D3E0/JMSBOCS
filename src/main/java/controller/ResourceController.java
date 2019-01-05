@@ -93,8 +93,8 @@ public class ResourceController {
     /**
      * 获取课程的资源上传 token
      *
-     * @param id
-     * @return
+     * @param id courseId
+     * @return token
      */
     @RequestMapping(value = "/api/token", method = RequestMethod.GET)
     @ResponseBody

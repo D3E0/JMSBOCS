@@ -87,6 +87,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateQiniu(int id, int qiniu) {
+        UserEntity entity = selectOne(id);
+        if (entity != null) {
+            entity.setQiniuId(qiniu);
+            int res = update(entity);
+            logger.info(String.format("update qiniuId %d %d ==> %d", id, qiniu, res));
+            return res;
+        }
+        return 0;
+    }
+
+    @Override
     public int update(UserEntity entity) {
         return mapper.update(entity);
     }

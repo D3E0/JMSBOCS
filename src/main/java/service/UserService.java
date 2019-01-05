@@ -1,9 +1,9 @@
 package service;
 
 import dto.UserDTO;
+import dto.UserInfo;
 import dto.UserSDTO;
 import entity.UserEntity;
-import dto.UserInfo;
 
 import java.util.Set;
 
@@ -41,5 +41,7 @@ public interface UserService extends BaseService<UserEntity> {
      * @return
      */
     UserInfo selectUserInfo(int id);
+
+    int updateQiniu(int id, int qiniu);
 
 }

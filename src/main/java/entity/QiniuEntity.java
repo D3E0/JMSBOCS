@@ -12,6 +12,15 @@ public class QiniuEntity implements Serializable {
 
     private String bucket;
 
+    public QiniuEntity() {
+    }
+
+    public QiniuEntity(String sk, String ak, String bucket) {
+        this.sk = sk;
+        this.ak = ak;
+        this.bucket = bucket;
+    }
+
     public Integer getQiniuId() {
         return qiniuId;
     }

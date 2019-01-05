@@ -38,7 +38,7 @@
         from qiniu
     </select>
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="qiniuId" keyColumn="qiniu_id">
         insert qiniu (sk, ak, bucket)
         VALUES (#{sk}, #{ak}, #{bucket})
     </insert>
