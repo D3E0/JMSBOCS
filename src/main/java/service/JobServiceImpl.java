@@ -112,7 +112,6 @@ public class JobServiceImpl implements JobService {
         return jobMapper.save(jobEntity);
     }
 
-    @Override
     public int isSameJobTitle(int courseId, String jobTitle) {
         return jobMapper.isSameJobTitle(courseId, jobTitle);
     }

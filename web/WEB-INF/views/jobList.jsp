@@ -26,11 +26,11 @@
             <i class=" fa-search fa fa-fw"></i>
         </div>
         &nbsp;&nbsp;
-        <a href="<c:url value="/addJob"/>">
+        <c:if test="${!student}">
             <button class="layui-btn additem">
                 <a class="fa fa-plus fa-fw" style="color: #FFFFFF"></a>&nbsp;&nbsp;添加作业
             </button>
-        </a>
+        </c:if>
     </div>
     <div class="content">
         <ul class="list" id="list">
@@ -39,7 +39,6 @@
     <div id="mypage"></div>
 </div>
 <script src="<c:url value="/static/js/joblist.js"/>">
-
 </script>
 <script src="<c:url value="/static/js/Date.js"/>"></script>
 </body>
