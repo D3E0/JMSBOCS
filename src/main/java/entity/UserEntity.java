@@ -126,7 +126,10 @@ public class UserEntity {
     public String toString() {
         return "UserEntity{" +
                 "userId=" + userId +
+                ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
+                ", qiniuId=" + qiniuId +
+                ", type=" + type +
                 '}';
     }
 }

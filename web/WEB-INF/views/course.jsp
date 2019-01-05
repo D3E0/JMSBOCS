@@ -53,7 +53,6 @@
 <script type="text/javascript" src="<c:url value="/static/js/vue-router.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/qiniu.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/elementui/index.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/elementui/index.js"/>"></script>
 <script src="<c:url value="/static/js/course-main.js"/>" type="module"></script>
 
 </body>

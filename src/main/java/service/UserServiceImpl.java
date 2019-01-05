@@ -1,10 +1,10 @@
 package service;
 
 import dto.UserDTO;
+import dto.UserInfo;
 import dto.UserSDTO;
 import entity.UserEntity;
 import entity.UserType;
-import dto.UserInfo;
 import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,8 +36,9 @@ public class UserServiceImpl implements UserService {
         if (entity != null && entity.getPassword().equals(password)) {
             entity.setLastLoginTime(new Date());
             update(entity);
+            return entity;
         }
-        return entity;
+        return null;
     }
 
     @Override
