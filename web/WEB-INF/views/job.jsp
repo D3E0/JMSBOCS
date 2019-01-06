@@ -78,9 +78,11 @@
             <li>
                 <a id="fileList" href="javascript:;" style="color: #3091f2">查看已提交作业</a>
             </li>
-            <li>
-                <a  href="${pageContext.request.contextPath}/jobSubmitRecord?jobId=${jobId}" style="color: #3091f2">查看作业提交记录</a>
-            </li>
+            <c:if test="${!student}">
+                <li>
+                    <a  href="${pageContext.request.contextPath}/jobSubmitRecord?jobId=${jobId}" style="color: #3091f2">查看作业提交记录</a>
+                </li>
+            </c:if>
         </ul>
     </div>
     <script>

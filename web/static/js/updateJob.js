@@ -8,7 +8,7 @@ $.post('/getJobContent',{jobId},function (data) {
         width: "90%",
         height: 400,
         syncScrolling: "single",
-        path: '<c:url value="/static/editor.md-master/lib/"/>',   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
+        path: '../static/editor.md-master/lib/',   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
         emoji: true,
         taskList: true,
         tocm: true,         // Using [TOCM]

@@ -14,6 +14,9 @@ testEditor = editormd("test-editormd", {
     toolbarIcons: function () {  //自定义工具栏，后面有详细介绍
         return editormd.toolbarModes['full']; // full, simple, mini
     },
+    imageUpload : true,
+    imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+    imageUploadURL : "/uploadMdimage",
 });
 layui.use(['form', 'laydate','layer'], function () {
     let form = layui.form, laydate = layui.laydate,layer=layui.layer;
