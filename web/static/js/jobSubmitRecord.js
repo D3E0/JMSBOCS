@@ -24,7 +24,7 @@ layui.use(['table', 'layer', 'element'], function () {
             , {field: 'fileCount', title: '作业提交文件数', width: '15%'}
             , {
                 field: 'lastSubmitTime', title: '提交作业时间', width: '21%', sort: true, templet: function (d) {
-                    if (d.lastSubmitTime === undefined)
+                    if (d.lastSubmitTime === null)
                         return '无';
                     return new Date(d.lastSubmitTime).toLocaleString();
                 }
