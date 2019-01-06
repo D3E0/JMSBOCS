@@ -2,7 +2,9 @@ package dto;
 
 import entity.UserType;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private Integer id;
     private String name;
     private UserType type;

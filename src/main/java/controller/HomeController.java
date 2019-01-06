@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.CourseService;
-import service.UserServiceImpl;
+import service.UserService;
 import util.RestResult;
 import util.UserSecurity;
 
@@ -32,13 +32,13 @@ public class HomeController {
 
     private static final Logger logger = LogManager.getLogger(HomeController.class);
 
-    private final UserServiceImpl service;
+    private final UserService service;
     private final AuthRepository repository;
     private final CourseService courseService;
 
 
     @Autowired
-    public HomeController(UserServiceImpl service, AuthRepository repository, CourseService courseService) {
+    public HomeController(UserService service, AuthRepository repository, CourseService courseService) {
         this.service = service;
         this.repository = repository;
         this.courseService = courseService;

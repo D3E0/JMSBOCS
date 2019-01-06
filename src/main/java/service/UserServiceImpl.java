@@ -9,6 +9,7 @@ import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +89,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfo selectUserInfo(int id) {
+        return mapper.selectUserInfo(id);
+    }
+
+    @Cacheable(cacheNames = "userInfo",key = "#id")
+    public UserInfo selectUserInfoTest(int id) {
         return mapper.selectUserInfo(id);
     }
 

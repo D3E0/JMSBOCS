@@ -12,7 +12,6 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import java.util.Set;
 
 @Configuration
 @EnableCaching
-@EnableScheduling
 @ComponentScan(basePackages = "service")
 public class CacheConfig {
     @Bean
@@ -56,6 +54,7 @@ public class CacheConfig {
         cacheNames.add("fileList");
         cacheNames.add("allFile");
         cacheNames.add("resource");
+        cacheNames.add("userInfo");
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         for (String s:cacheNames) {
             configMap.put(s,config);

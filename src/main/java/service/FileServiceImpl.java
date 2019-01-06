@@ -17,7 +17,6 @@ import util.QiniuUtil;
 import vo.FileVO;
 import vo.FileVOs;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 

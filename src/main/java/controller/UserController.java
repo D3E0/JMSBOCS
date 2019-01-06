@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.QiniuService;
-import service.UserServiceImpl;
+import service.UserService;
 import util.QiniuUtil;
 import util.RestResult;
 
@@ -26,12 +26,12 @@ public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
 
-    private final UserServiceImpl service;
+    private final UserService service;
     private final QiniuService qiniuService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserServiceImpl service, QiniuService qiniuService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService service, QiniuService qiniuService, PasswordEncoder passwordEncoder) {
         this.service = service;
         this.qiniuService = qiniuService;
         this.passwordEncoder = passwordEncoder;
