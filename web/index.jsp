@@ -9,12 +9,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <title>基于开放云储存的作业管理系统</title>
+    <link rel="icon" type="image/x-icon" href="<c:url value="/static/favicon.ico"/>"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="<c:url value="/static/layui/layui.js"/>"></script>
-    <title>导航界面</title>
     <style>
         .f {
             width: 500px;
+            height: 200px;
             position: absolute;
             top: 50%;
             left: 50%;

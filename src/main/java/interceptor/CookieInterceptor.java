@@ -58,6 +58,7 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
                         if (userInfo != null) {
                             logger.info(String.format("uid %s ==> %s", uid, userInfo));
                             UserSecurity.setUser(userInfo.getId(), userInfo.getName(), userInfo.getType());
+                            request.getSession().setAttribute("username", userInfo.getName());
                             return true;
                         }
                     }

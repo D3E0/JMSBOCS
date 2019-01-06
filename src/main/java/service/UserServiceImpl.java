@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
     private static final String PWD = "888888";
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserMapper mapper, PasswordEncoder passwordEncoder) {
         this.mapper = mapper;
@@ -38,8 +39,8 @@ public class UserServiceImpl implements UserService {
         UserEntity entity = selectOne(id);
         logger.info(password);
         logger.info(entity.getPassword());
-        logger.info(passwordEncoder.matches(password,entity.getPassword()));
-        if (entity != null && passwordEncoder.matches(password,entity.getPassword())) {
+        logger.info(passwordEncoder.matches(password, entity.getPassword()));
+        if (entity != null && passwordEncoder.matches(password, entity.getPassword())) {
             entity.setLastLoginTime(new Date());
             update(entity);
             return entity;
@@ -88,12 +89,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(cacheNames = "userInfo", key = "#id")
     public UserInfo selectUserInfo(int id) {
-        return mapper.selectUserInfo(id);
-    }
-
-    @Cacheable(cacheNames = "userInfo",key = "#id")
-    public UserInfo selectUserInfoTest(int id) {
         return mapper.selectUserInfo(id);
     }
 

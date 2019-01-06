@@ -36,7 +36,6 @@ public class HomeController {
     private final AuthRepository repository;
     private final CourseService courseService;
 
-
     @Autowired
     public HomeController(UserService service, AuthRepository repository, CourseService courseService) {
         this.service = service;
@@ -75,7 +74,6 @@ public class HomeController {
         addUserInfo(model);
         return "user";
     }
-
 
     /**
      * 课程列表界面
