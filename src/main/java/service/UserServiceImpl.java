@@ -9,6 +9,7 @@ import mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,16 +25,20 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private final UserMapper mapper;
     private static final String PWD = "888888";
-
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserMapper mapper) {
+    public UserServiceImpl(UserMapper mapper, PasswordEncoder passwordEncoder) {
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserEntity processLogin(Integer id, String password) {
         UserEntity entity = selectOne(id);
-        if (entity != null && entity.getPassword().equals(password)) {
+        logger.info(password);
+        logger.info(entity.getPassword());
+        logger.info(passwordEncoder.matches(password,entity.getPassword()));
+        if (entity != null && passwordEncoder.matches(password,entity.getPassword())) {
             entity.setLastLoginTime(new Date());
             update(entity);
             return entity;
@@ -51,7 +56,7 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> list = new ArrayList<UserEntity>();
         for (UserSDTO user : set) {
             UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.TEACHER);
-            entity.setPassword(PWD);
+            entity.setPassword(passwordEncoder.encode(PWD));
             list.add(entity);
         }
         logger.info(String.format("to add %d tch to DB ==> %s", list.size(), list));
@@ -69,7 +74,7 @@ public class UserServiceImpl implements UserService {
         for (UserSDTO user : set) {
             UserEntity entity = new UserEntity(user.getUserId(), user.getUsername(), UserType.STUDENT);
             entity.setSpecialty(user.getSpecialty());
-            entity.setPassword(PWD);
+            entity.setPassword(passwordEncoder.encode(PWD));
             list.add(entity);
         }
         logger.info(String.format("to add %d stu to DB ==> %s", list.size(), list));

@@ -54,12 +54,12 @@ layui.use(['laypage', 'element', 'layer'], function () {
                     let job='javascript:;';
                     let status='organgedot';
                     let text='Not Started';
-                    if (obj.isEnded === true) {
+                    if (obj.ended === true) {
                         status='reddot';
                         text='Ended';
                         job='/job?jobId=' + obj.jobId;
                     }
-                    else if(obj.isStarted === true){
+                    else if(obj.started === true){
                         status='greendot';
                         text='Underway';
                         job='/job?jobId=' + obj.jobId;

@@ -7,6 +7,7 @@ import entity.UserType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,11 +28,13 @@ public class UserController {
 
     private final UserServiceImpl service;
     private final QiniuService qiniuService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserServiceImpl service, QiniuService qiniuService) {
+    public UserController(UserServiceImpl service, QiniuService qiniuService, PasswordEncoder passwordEncoder) {
         this.service = service;
         this.qiniuService = qiniuService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -119,8 +122,8 @@ public class UserController {
         logger.info(String.format("update password {%d} %s %s", id, oldPass, newPass));
         UserEntity entity = service.selectOne(id);
         String msg = "fail";
-        if (oldPass.equals(entity.getPassword()) && newPass.equals(checkPass)) {
-            entity.setPassword(newPass);
+        if (passwordEncoder.matches(oldPass,entity.getPassword()) && newPass.equals(checkPass)) {
+            entity.setPassword(passwordEncoder.encode(newPass));
             int res = service.update(entity);
             if (res > 0) {
                 msg = "success";
