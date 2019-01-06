@@ -116,7 +116,7 @@ public class UserDTO {
         this.userId = entity.getUserId();
         this.username = entity.getUsername();
         this.specialty = entity.getSpecialty();
-        this.email = entity.getTelephone();
+        this.email = entity.getEmail();
         this.telephone = entity.getTelephone();
     }
 
