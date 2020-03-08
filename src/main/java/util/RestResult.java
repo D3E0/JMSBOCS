@@ -1,5 +1,11 @@
 package util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sun.org.apache.xpath.internal.objects.XObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class RestResult {
 
     private int code;
@@ -62,6 +68,9 @@ public class RestResult {
         private Long count;
         private Object data = null;
 
+        public Builder() {
+        }
+
         public Builder(int code) {
             this.code = code;
         }
@@ -80,6 +89,24 @@ public class RestResult {
             this.count = count;
             return this;
         }
+
+        public Builder add(String key, Object value) {
+            if (data == null) {
+                data = new JSONObject();
+            }
+            if (data instanceof JSONObject) {
+                ((JSONObject) data).put(key, value);
+            }
+            return this;
+        }
+
+        public Builder success(Object data) {
+            this.code = 200;
+            this.message = "success";
+            this.data = data;
+            return this;
+        }
+
 
         public RestResult build() {
             return new RestResult(this);

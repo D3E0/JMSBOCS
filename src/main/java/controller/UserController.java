@@ -1,6 +1,10 @@
 package controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
 import dto.UserDTO;
+import dto.UserInfo;
 import entity.QiniuEntity;
 import entity.UserEntity;
 import entity.UserType;
@@ -9,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +22,7 @@ import service.QiniuService;
 import service.UserService;
 import util.QiniuUtil;
 import util.RestResult;
+import util.UserSecurity;
 
 /**
  * @author ACM-PC
@@ -55,6 +61,29 @@ public class UserController {
         }
         logger.info(String.format("query user %d ==> %s", id, dto));
         return new RestResult.Builder(200).data(dto).build();
+    }
+
+    /**
+     * 个人资料
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/user/info", method = RequestMethod.GET)
+    @ResponseBody
+    public RestResult getUser() {
+        UserInfo userInfo = UserSecurity.getUser();
+        JSONObject object = new JSONObject();
+        if (userInfo != null) {
+            object.put("id", userInfo.getId());
+            object.put("name", userInfo.getName());
+            JSONArray roles = new JSONArray();
+            roles.add("teacher");
+            roles.add("student");
+            roles.add("admin");
+            roles.add("assistant");
+            object.put("roles", roles);
+        }
+        return new RestResult.Builder().success(object).build();
     }
 
     /**
@@ -122,7 +151,7 @@ public class UserController {
         logger.info(String.format("update password {%d} %s %s", id, oldPass, newPass));
         UserEntity entity = service.selectOne(id);
         String msg = "fail";
-        if (passwordEncoder.matches(oldPass,entity.getPassword()) && newPass.equals(checkPass)) {
+        if (passwordEncoder.matches(oldPass, entity.getPassword()) && newPass.equals(checkPass)) {
             entity.setPassword(passwordEncoder.encode(newPass));
             int res = service.update(entity);
             if (res > 0) {

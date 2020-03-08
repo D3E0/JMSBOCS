@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new BaseInterceptor());
-        registry.addInterceptor(cookieInterceptor).addPathPatterns(CookieInterceptor.PATH);
+        registry.addInterceptor(cookieInterceptor).addPathPatterns(CookieInterceptor.PATH).excludePathPatterns("/error/**");
     }
 
     /**

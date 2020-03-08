@@ -9,10 +9,9 @@ import org.springframework.util.StringUtils;
 
 public class UserSecurity {
 
-
     private static final Logger logger = LogManager.getLogger(UserSecurity.class);
 
-    private static final ThreadLocal<UserInfo> USER_INFO_THREAD_LOCAL = new NamedThreadLocal<UserInfo>("Jmsbocs-id");
+    private static final ThreadLocal<UserInfo> USER_INFO_THREAD_LOCAL = new NamedThreadLocal<>("Jmsbocs-id");
 
     public static String getName() {
         UserInfo userInfo = USER_INFO_THREAD_LOCAL.get();

@@ -10,6 +10,7 @@ import manager.AuthRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+
+import static interceptor.BaseInterceptor.TOKEN_KEY;
+import static interceptor.CookieInterceptor.JMSBOCS_COOKIE;
 
 /**
  * @author ACM-PC
@@ -123,7 +127,7 @@ public class HomeController {
         }
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (CookieInterceptor.JMSBOCS_COOKIE.equals(cookie.getName())) {
+            if (JMSBOCS_COOKIE.equals(cookie.getName())) {
                 String path = "".equals(request.getContextPath()) ? "/" : request.getContextPath();
                 cookie.setPath(path);
                 cookie.setMaxAge(0);
@@ -154,7 +158,8 @@ public class HomeController {
         } else {
             addAuthCookie(entity, response, request);
             addUserInfo(model);
-            return new RestResult.Builder(200).message("success").build();
+            String auth = getAuthToken(entity);
+            return new RestResult.Builder(200).message("success").add("token", auth).build();
         }
     }
 
@@ -163,13 +168,18 @@ public class HomeController {
                                HttpServletRequest request) {
         String auth = repository.addAuth(entity.getUserId());
         UserSecurity.setUser(entity.getUserId(), entity.getUsername(), entity.getType());
-        Cookie cookie = new Cookie(CookieInterceptor.JMSBOCS_COOKIE, auth);
+        Cookie cookie = new Cookie(JMSBOCS_COOKIE, auth);
         String path = "".equals(request.getContextPath()) ? "/" : request.getContextPath();
         cookie.setPath(path);
         response.addCookie(cookie);
         cookie.setMaxAge(60 * 60 * 24 * 7);
         response.addCookie(cookie);
+        response.addHeader(TOKEN_KEY, auth);
         logger.info(String.format("add cookie %s to path %s", auth, path));
+    }
+
+    private String getAuthToken(UserEntity entity) {
+        return repository.addAuth(entity.getUserId());
     }
 
     private void addUserInfo(Model model) {
@@ -191,7 +201,16 @@ public class HomeController {
     @RequestMapping(value = "/error/api")
     @ResponseBody
     public RestResult doError() {
-        return new RestResult.Builder(500).message("fail").build();
+        return new RestResult.Builder(200).message("fail").build();
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @RequestMapping(value = "/test")
+    @ResponseBody
+    public RestResult test(@RequestParam String password) {
+        return new RestResult.Builder(500).message(passwordEncoder.encode(password)).build();
     }
 
 }
